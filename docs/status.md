@@ -4,7 +4,7 @@ Sist oppdatert: 22.08.2026
 
 ## Hvor vi er nå
 Nettstedet er live på **heartofgold.pages.dev** og bygger automatisk ved hver push til `main`.
-Det gjenstår to steg av publiseringen: domenet og innloggingen til redigeringsløsningen.
+Bare ett steg av publiseringen gjenstår: domenet.
 
 | Steg | Status |
 |---|---|
@@ -39,11 +39,23 @@ Nepal er ikke en aktivitetstype: quizene går dit, men det gjorde konserten i
 2016 og Montessoriskolens julemarknad også.
 
 ## Valg som er tatt
-- **Designretning:** C «Fargesprut» – lyst og moderne
+- **Designretning:** «Fargesprut» – lyst og moderne
 - **Plattform:** Astro (statisk) → GitHub → Cloudflare Pages. Gratis, reklamefritt, eget domene
 - **CMS:** Sveltia CMS på `/admin`, GitHub-innlogging for Siv og Thor Arne
 - **Prosjektsider:** hvert prosjekt har egen adresse med bildegalleri. Oversikten på
   `/prosjekter/` beholder full tekst, men viser bare ett utvalgt bilde per prosjekt
+- **Farger hentet fra logoen.** Paletten hadde turkisgrønt og sterk korall, toner
+  logoen ikke inneholder. Verdiene er trukket ut av logofila og mørknet så vidt at
+  tekst oppå dem holder kontrastkravet. Ligger i `src/styles/global.css`
+- **Robert er tonet ned.** Hovedformålet er å gjøre gode ting for andre, og det har
+  hovedfokus. Minnesiden ligger urørt på `/robert`, men nås fra tre diskré steder i
+  stedet for fra hovedmenyen
+- **Jubileumskavalkade på forsiden.** Slås av med `"jubileum": false` i
+  `src/data/nettsted.json`, eller fra CMS-et under Innstillinger. Da forsvinner både
+  seksjonen og JavaScript-en
+- **Tilbakelenke på mobil** i stedet for å måtte åpne menyen. Den følger historikken
+  når man kom fra en annen side på nettstedet, så scroll-posisjonen beholdes. Kommer
+  noen rett fra et søk, faller den tilbake på stien og sier hvor den fører
 
 ## Innhold som er migrert
 - **31 prosjekter, 2001–2026**, med beløp, mottaker og medvirkende musikere
@@ -52,7 +64,7 @@ Nepal er ikke en aktivitetstype: quizene går dit, men det gjorde konserten i
   (+ 4 typesider), Nepal, aktuelt, bilder, støtt oss, kontakt, vedtekter, 404
 - **Vipps: #86319**
 - RSS, sitemap, favicon, robots.txt, omdirigering fra alle gamle Blogger-URL-er
-- Testet uten horisontal overflyt på 390, 820 og 1440 piksler
+- Testet uten horisontal overflyt på 320, 390, 700, 820 og 1440 piksler
 
 ### Bilder
 Alle **15** bildene fra `bildemanifest.md` hentes fra Blogger-arkivet under bygging av
@@ -64,14 +76,22 @@ Bildene er **ikke** committet – de hentes på nytt ved hvert bygg. Det betyr a
 lokalt, blir fila fylt på disk – ikke commit den i den tilstanden, ellers peker
 HTML-en på filer som ikke finnes dersom nedlastingen skulle svikte.
 
+Manifestet inneholder også målene på hvert bilde. De brukes til å luke ut det som
+ikke tåler å vises stort – jubileumskavalkaden hopper over alt under 400 px og alt
+mer avlangt enn 2:1.
+
+Seks bilder hentet fra Facebook ligger derimot **committet** i `public/bilder/`, siden
+de ikke kan hentes på nytt automatisk: tre fra quizen i 2026, konsertplakaten fra 2024,
+et udatert bilde fra Magnor og logoen.
+
 > **Merk:** `publisering.md` sier at Blogger-bloggen kan slettes når alt er verifisert.
-> Gjør ikke det før bildene enten er committet eller erstattet med originaler –
+> Gjør ikke det før arkivbildene enten er committet eller erstattet med originaler –
 > ellers forsvinner alle 15 ved neste bygg.
 
 ## Gjenstår
 
 ### Publisering
-Steg 3 og 4 over.
+Steg 3 over.
 
 **Domenet:** heartofgold.no peker i dag på en «Parked»-side hos One.com (104.37.39.71),
 altså ikke lenger på Blogger. Den gamle siden lever bare på
@@ -96,15 +116,26 @@ foreningen har altså ikke e-post på domenet, og navnetjenerbyttet er risikofri
 
 ## Kjente svakheter
 
-### Logoen
-Logoen i koden (`src/components/Logo.astro` og `public/favicon.svg`) er et **selvtegnet
-SVG-hjerte med gradient** – ikke foreningens egen logo. Den ekte er et konturhjerte med
-«Heart of Gold» skrevet inni, oppå en malt fargesprut i gult, magenta og blått.
+### Logoen er ekte, men for liten
+Foreningens egen logo er i bruk overalt: i toppen, i hero på forsiden, som favicon og
+som apple-touch-icon. Den ligger i `public/bilder/logo-hjerte.png`, og både
+`Logo.astro` og forsiden peker på samme fil – et bytte er én filutskifting.
 
-Facebook har den bare som **640×452 JPEG, 14 kB, på hvit bakgrunn**. Ingen større
-variant finnes der. Det holder til header og favicon, men ikke til delingsbilder eller
-større flater, og bakgrunnen er ikke gjennomsiktig. Originalfilen bør skaffes fra den
-som designet logoen – helst vektor, ellers PNG med transparens på minst 1000 px.
+Kilden er hentet fra Facebook og er bare **339 px bred** etter beskjæring. Derfor vises
+den aldri større enn det: 339 px i hero, 34 px i toppen. Det er nok til de bruksområdene,
+men ikke til delingsbilder eller store flater.
+
+Bakgrunnen er fjernet med flomfyll fra bildekanten, ikke på farge alene. Det er med
+vilje: de hvite hjertekonturene og teksten er utsparinger i designet, og et enkelt
+fargefilter ville gjort dem gjennomsiktige slik at bakgrunnen slo gjennom.
+
+**Originalfilen bør skaffes** fra den som designet logoen – helst vektor, ellers PNG
+med transparens på minst 1000 px. Da bør fargeverdiene i `global.css` sjekkes på nytt,
+særlig cyanen, som bare utgjør 5 % av flaten og derfor er det svakeste målepunktet.
+
+Foreningen har tre logovarianter i omløp: fargesprut-hjertet (den som brukes), et
+oransje hjerte med «Heart of Gold» under, og et banner med rosa/blå gradient og teksten
+«gjør verden bedre for noen». Verdt å avklare med Siv hvilken som er *den*.
 
 ### Bildekvaliteten fra Blogger
 Dette er originalene Blogger har; `/s1600/` gir ikke mer.
@@ -128,25 +159,35 @@ Bildet fra 2001 er en ren miniatyr og bør neppe vises før originalen finnes.
 Når originalbilder i god kvalitet er på plass, kan `scripts/hent-bilder.mjs` og
 `prebuild`-linjen i `package.json` slettes.
 
-### Facebook som bildekilde
-Gjennomgang av siden 22.08.2026: **bare 8 bilder** ligger i bildefanen – quiz-plakat,
-et trubadurbilde, vinnerlaget «Agata Quizti», fargesprut-logoen (to ganger), en oransje
-hjertelogo, konsertplakaten for 26.10.2024 og ett mørkt arrangementsbilde.
+### Facebook er tømt
+Siden hadde **8 bilder** i bildefanen. Seks er hentet ned og lagt inn; de to som ble
+igjen er logovarianter vi ikke bruker. Bildene fra quizen i 2026 var 1152×2048 – langt
+bedre enn Blogger-arkivet.
 
-**Ingen artistlister.** Plakaten for 2024 sier bare «60 lokale aktører i aksjon.
-Sangere, musikere, dansere», uten navn. Facebook er altså ikke kilden til
-prosjektbilder for 2001–2023, og heller ikke til artistlistene.
+**Ingen artistlister der.** Plakaten for 2024 sier bare «60 lokale aktører i aksjon.
+Sangere, musikere, dansere», uten navn, og innlegget om 2025-konserten sier «mange
+flinke musikere og band». Facebook er verken kilden til prosjektbilder for 2001–2023
+eller til artistlistene.
 
 Neste steg for bilder er Facebooks egen dataeksport (Meta Business Suite →
 Last ned informasjonen din, mediekvalitet **Høy**), som gir originalene i stedet for
-komprimerte visningsversjoner.
+komprimerte visningsversjoner. Google Photos-eksporten er den andre kilden.
+
+Merk at nedlasting fra Facebook krever at Chrome får lov til å laste ned flere filer
+fra samme side. Uten det stopper det etter den første.
 
 ### Bilder som ikke vises noe sted
 Portrettene av Siv og Bjørn Olav (`portrett-siv.jpg`, `portrett-bjorn-olav.jpg`) lastes
 ned og ligger på serveren, men brukes ingen steder. De er merket `skjulIGalleri: true`,
 så de var tiltenkt et sted – antakelig Om oss, som i dag ikke har bilder i det hele
 tatt. Portrettet av Bjørn Olav er bare 121×170 og tåler ikke å vises stort.
-Det samme gjelder `hog-gullhjerte.jpg`, som ligger i galleriet uten å brukes som logo.
+
+`quiz-magnor-ukjent-ar.jpg` viser en quizkveld på Magnor med Heart of Gold-banneret på
+veggen, men året er ikke fastslått. Det kan være 2020 på ungdomslokalet eller 2023 på
+Magnor Torg. Bildet er committet, men ikke knyttet til noe prosjekt.
+
+`hog-gullhjerte.jpg` fra Blogger-arkivet ligger i galleriet. Det er en eldre logovariant
+og brukes ikke som logo – den rollen har `logo-hjerte.png`.
 
 ## Arbeidsform
 Hver push til `main` går rett i produksjon – det finnes ingen mellomstasjon.
