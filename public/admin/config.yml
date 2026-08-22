@@ -1,12 +1,13 @@
 # Sveltia CMS – redigeringsløsning for heartofgold.no
-# TODO ved oppsett: bytt ut BRUKERNAVN/REPONAVN og base_url til auth-workeren.
+#
+# base_url må peke på innloggingstjenesten (en Cloudflare Worker som kjører
+# sveltia/sveltia-cms-auth). Se docs/cms-oppsett.md for hvordan den settes opp.
 
 backend:
   name: github
-  repo: BRUKERNAVN/REPONAVN
+  repo: HoGEidskog/heartofgold
   branch: main
   base_url: https://AUTH-WORKER-ADRESSE.workers.dev
-  site_domain: www.heartofgold.no
 
 locale: no
 publish_mode: simple
