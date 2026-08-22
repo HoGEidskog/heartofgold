@@ -18,7 +18,7 @@ Base: https://blogger.googleusercontent.com/img/b/R29vZ2xl/
 | 11 | fa.jpg | Frelsesarmeen 2004 | **Hentet fra frelsesarmeen.no – tredjepart, brukes ikke** |
 | 12 | handå holde.jpg | «En hånd å holde i» 2002 | Logo tredjepart – sjekkes |
 | 13 | siv og linda.jpg | Konsert 2001 | Egen |
-| 14 | siv(2).jpg | Portrett Siv Berg Rønhovde | Egen |
+| 14 | siv(2).jpg | Portrett Siv Monica Berg | Egen |
 | 15 | botan333.jpg | Portrett Bjørn Olav Rønhovde | Egen |
 
 ## Døde/eksterne bilder i gammelt innhold (tas ikke med)

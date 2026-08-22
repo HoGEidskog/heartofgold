@@ -35,7 +35,7 @@ const BILDER = [
   { fil: '2004-frelsesarmeen.jpg',    kilde: 'AVvXsEgFlnCzdWoHmg18WGb-qIG9pZTlAr1Xxqrt1JaQoI_qvaYqyMpG6hruFesFYc4WptQPdYcVlq9HNJ48LtiDjKhuvDxgH9UqNCW1RyQXKtxxIor4dgNPB0dv9iE1pr9MrtPpnejxAr8qVBMI/s1600/fa.jpg', tekst: 'Suppebussen til Frelsesarmeen', aar: '2004', prosjekt: '2004-suppebussen' },
   { fil: '2002-en-hand-a-holde-i.jpg',kilde:'AVvXsEj1gwvirBKJiVDrWVtg_HIZyPmAwFLAJAhLz5D12CfNdXS8DjRncc1KNksWL3MStMkFKcAa3m9WIhdL7TEswNrSLOAzc2k49sHbxZc5JAHbBhbvsYC-M8rJ2lHn2VUywXRLrPq9B7K1VI-j/s1600/hand%C3%A5+holde.jpg', tekst: 'Støtteforeningen En hånd å holde i', aar: '2002', prosjekt: '2002-en-hand-a-holde-i' },
   { fil: '2001-siv-og-linda.jpg',     kilde: 'AVvXsEhoEPHq_ldcdg60D0weUwZB8sZ-H9uMVWA3ORNb4OXdW5YkXkcbWqIG133GqfZ-AV8BnCm_gkGdqdY2G4E5FtQmdPdaTZGAv14UbHMOHnyka1Lz52vT2vJJMhd1de7EAHiOOytVqncLoX6Y/s1600/siv+og+linda.jpg', tekst: 'Siv og Linda på den aller første konserten', aar: '2001', prosjekt: '2001-ulleval' },
-  { fil: 'portrett-siv.jpg',          kilde: 'AVvXsEhA76s_zPllV_K2_iy2tN_rJewcH08piLTCpF82AlK-jUbY2FLB4-FBT9qJWX3zb5EGQA48WKMriFizlYVWVj3M-6a2lwXCHZ4Q1s_A7Onl_qUHZ470NarYsNEnRQEPY_qcYuytfgDyT-l4/s1600/siv(2).jpg', tekst: 'Siv Berg Rønhovde', skjulIGalleri: true },
+  { fil: 'portrett-siv.jpg',          kilde: 'AVvXsEhA76s_zPllV_K2_iy2tN_rJewcH08piLTCpF82AlK-jUbY2FLB4-FBT9qJWX3zb5EGQA48WKMriFizlYVWVj3M-6a2lwXCHZ4Q1s_A7Onl_qUHZ470NarYsNEnRQEPY_qcYuytfgDyT-l4/s1600/siv(2).jpg', tekst: 'Siv Monica Berg', skjulIGalleri: true },
   { fil: 'portrett-bjorn-olav.jpg',   kilde: 'AVvXsEgU4PfvKfNSj66-1s7-TowwDMcl-ffFlW0XW0apue8dEcSI95dtlSRy2-5hfhUpJEypy04FTh8gk0eFn3f8ceioGNPsXT-dVf3OM915rMyecHgAX1FGi_2kb0Vv_rSmIclE4L2_aOcB6bDS/s1600/botan333.jpg', tekst: 'Bjørn Olav Rønhovde', skjulIGalleri: true },
 ];
 

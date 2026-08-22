@@ -15,7 +15,7 @@ medvirkende:
   - "Anne Huse"
   - "Vivi-Ann Huse"
   - "Birgit Fjeld"
-  - "Tom Høiby & Siv Rønhovde"
+  - "Tom Høiby & Siv Monica Berg"
 ---
 
 Vi arrangerte konsert til inntekt for Sykehusklovnene og ga bort 25 310 kroner.

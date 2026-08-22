@@ -9,7 +9,7 @@ medvirkende:
   - "Napoleons Slot – Sten Tuhus, Lars Gunnar Moraseter, Einar Olsen og Martin Krogstad"
   - "Jørgen Reisersen og Zandra Krogstad"
   - "Monica Walter"
-  - "Vivi-Ann Huse, Birgit Fjeld, Anne Huse & Siv Rønhovde"
+  - "Vivi-Ann Huse, Birgit Fjeld, Anne Huse & Siv Monica Berg"
   - "Duo J – Thomas Bratsberg & Gjermund Håkelia"
   - "Botan Band – Geir Vestli, June Maribo, Pål Møllerbråten & Bjørn Olav Rønhovde"
 konferansier: "Anita Seterlien Olsson"
