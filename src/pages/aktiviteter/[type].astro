@@ -1,0 +1,129 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { kr } from '../../lib/format';
+import { AKTIVITETER, finnAktivitet } from '../../lib/aktiviteter';
+import arkiv from '../../data/arkivbilder.json';
+import { bilderFor } from '../../lib/prosjektbilder';
+
+export async function getStaticPaths() {
+  const alle = await getCollection('prosjekter');
+  // Bare typer som faktisk er i bruk får en side
+  return AKTIVITETER
+    .filter(a => alle.some(p => p.data.type === a.verdi))
+    .map(a => ({ params: { type: a.verdi } }));
+}
+
+const { type } = Astro.params;
+const akt = finnAktivitet(type!);
+
+const mine = (await getCollection('prosjekter'))
+  .filter(p => p.data.type === akt.verdi)
+  .sort((a, b) => {
+    if (b.data.aar !== a.data.aar) return b.data.aar - a.data.aar;
+    return (b.data.maned ?? '').localeCompare(a.data.maned ?? '');
+  });
+
+const sum = mine.reduce((s, p) => s + (p.data.belop ?? 0), 0);
+const manglerBelop = mine.filter(p => !p.data.belop).length;
+const arkivbilder = (arkiv.bilder ?? []) as any[];
+const medBilde = mine.map(p => ({ p, ...bilderFor(p.id, p.data, arkivbilder) }));
+
+// Går noen av disse til et langvarig arbeid?
+const nepal = mine.filter(p => p.data.serie === 'nepal').length;
+---
+<Base tittel={akt.flertall} beskrivelse={akt.ingress}>
+  <section>
+    <div class="wrap">
+      <nav class="brodsmuler" aria-label="Du er her">
+        <a href="/aktiviteter/">Aktiviteter</a>
+        <span aria-hidden="true">/</span>
+        <span>{akt.flertall}</span>
+      </nav>
+
+      <div class="tittelblokk">
+        <span class="merkelapp">Aktivitet</span>
+        <h1>{akt.flertall}</h1>
+        <p class="undertekst">{akt.beskrivelse}</p>
+      </div>
+
+      <div class="fakta">
+        <div><b>{mine.length}</b><span>{mine.length === 1 ? 'gang' : 'ganger'}</span></div>
+        {sum > 0 && <div><b>{kr(sum)}</b><span>samlet inn</span></div>}
+      </div>
+      {manglerBelop > 0 && (
+        <p class="fotnote">For {manglerBelop} av dem mangler vi tallene.</p>
+      )}
+
+      {nepal > 0 && (
+        <p class="serie-lenke">
+          {nepal === mine.length ? 'Alle' : `${nepal} av disse`} går til
+          <a href="/nepal/"> skolen og barnehjemmet i Nepal</a>
+          <span aria-hidden="true"> →</span>
+        </p>
+      )}
+
+      <ol class="liste">
+        {medBilde.map(({ p, utvalgt }) => (
+          <li>
+            <a href={`/prosjekter/${p.id}/`}>
+              <div class="bilde">
+                {utvalgt
+                  ? <img src={utvalgt.fil} alt="" loading="lazy" />
+                  : <div class="tomt" aria-hidden="true"></div>}
+              </div>
+              <div class="tekst">
+                <span class="ar">{p.data.maned ? `${p.data.maned} ${p.data.aar}` : p.data.aar}</span>
+                <h2>{p.data.tittel}</h2>
+                {p.data.mottaker && <p class="mottaker">{p.data.mottaker}</p>}
+                {p.data.belop && <p class="sum">{kr(p.data.belop)}</p>}
+              </div>
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      <a class="lenke-videre" href="/aktiviteter/">Alle aktivitetstyper →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .brodsmuler{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--blekk-mykt);margin-bottom:22px;}
+  .brodsmuler a{color:var(--indigo);text-decoration:none;font-weight:600;}
+  .brodsmuler a:hover{text-decoration:underline;}
+  @media (max-width:900px){ .brodsmuler{display:none;} }
+
+  .fakta{display:flex;flex-wrap:wrap;gap:36px;margin-bottom:8px;}
+  .fakta b{display:block;font-family:var(--display);font-weight:800;
+    font-size:clamp(26px,4vw,38px);line-height:1.05;font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .fakta span{display:block;margin-top:4px;font-size:14.5px;color:var(--blekk-mykt);font-weight:600;}
+  .fotnote{margin:10px 0 0;font-size:14.5px;color:var(--blekk-mykt);}
+  .serie-lenke{margin:18px 0 0;font-size:15.5px;color:var(--blekk-mykt);}
+  .serie-lenke a{color:var(--indigo);text-decoration:none;font-weight:600;}
+  .serie-lenke a:hover{text-decoration:underline;}
+
+  .liste{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:16px;}
+  .liste a{display:grid;grid-template-columns:180px minmax(0,1fr);gap:22px;align-items:center;
+    text-decoration:none;color:inherit;border:1px solid var(--kant);border-radius:var(--radius);
+    padding:16px;transition:border-color .18s ease;}
+  .liste a:hover{border-color:var(--magenta);}
+  .bilde{border-radius:14px;overflow:hidden;aspect-ratio:4/3;}
+  .bilde img{width:100%;height:100%;object-fit:cover;display:block;}
+  .tomt{width:100%;height:100%;
+    background:linear-gradient(135deg,#FBDCE8,#FDF0CE 55%,#D6EAF2);}
+  .ar{font-size:13px;font-weight:700;color:var(--blekk-mykt);}
+  .liste h2{font-size:clamp(18px,2.2vw,22px);margin:6px 0 0;}
+  .mottaker{margin:6px 0 0;font-size:14.5px;color:var(--blekk-mykt);}
+  .sum{margin:8px 0 0;font-family:var(--display);font-weight:800;font-size:18px;
+    font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+
+  @media (max-width:640px){
+    .liste a{grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start;}
+    .bilde{aspect-ratio:1;}
+  }
+</style>

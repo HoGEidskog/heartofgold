@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { kr } from '../../lib/format';
 import arkiv from '../../data/arkivbilder.json';
 import { bilderFor } from '../../lib/prosjektbilder';
+import { finnAktivitet } from '../../lib/aktiviteter';
 
 export async function getStaticPaths() {
   const alle = await getCollection('prosjekter');
@@ -13,6 +14,7 @@ export async function getStaticPaths() {
 const { p } = Astro.props;
 const { Content } = await render(p);
 const { alle: bilder } = bilderFor(p.id, p.data, (arkiv.bilder ?? []) as any[]);
+const akt = finnAktivitet(p.data.type);
 
 // Naboprosjektene, så man kan bla seg gjennom historien
 const sortert = (await getCollection('prosjekter')).sort((a, b) => {
@@ -41,6 +43,7 @@ const beskrivelse = p.data.mottaker
         <span class="merkelapp">{p.data.maned ? `${p.data.maned} ${p.data.aar}` : p.data.aar}</span>
         <h1>{p.data.tittel}</h1>
         <div class="meta">
+          <a class="typemerke" href={`/aktiviteter/${akt.verdi}/`}>{akt.navn}</a>
           {p.data.mottaker && <span class="mottaker">{p.data.mottaker}</span>}
           {p.data.utfylt === false && <span class="venter-merke">Innhold kommer</span>}
         </div>
@@ -112,9 +115,12 @@ const beskrivelse = p.data.mottaker
   @media (max-width:900px){ .brodsmuler{display:none;} }
 
   .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-  .meta span{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--tak);color:var(--blekk-mykt);}
+  .meta span,.meta a{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;
+    background:var(--tak);color:var(--blekk-mykt);}
   .meta .mottaker{background:rgba(31,123,153,.14);color:#0E5C7A;}
   .venter-merke{background:rgba(255,193,69,.22) !important;color:#7A5600 !important;}
+  .meta .typemerke{text-decoration:none;background:var(--tak);color:var(--indigo);font-weight:600;}
+  .meta .typemerke:hover{background:var(--indigo);color:#fff;}
   .serie-lenke{margin:14px 0 0;font-size:15px;color:var(--blekk-mykt);}
   .serie-lenke a{color:var(--indigo);text-decoration:none;font-weight:600;}
   .serie-lenke a:hover{text-decoration:underline;}

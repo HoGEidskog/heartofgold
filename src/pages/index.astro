@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { kr, dato } from '../lib/format';
+import { AKTIVITETER } from '../lib/aktiviteter';
 
 const prosjekter = (await getCollection('prosjekter')).sort((a, b) => b.data.aar - a.data.aar);
 const totalt = prosjekter.reduce((s, p) => s + (p.data.belop ?? 0), 0);
@@ -19,6 +20,11 @@ const hoydepunkter = [...perAar.values()].sort((a, b) => b.data.aar - a.data.aar
 const nyheter = (await getCollection('nyheter'))
   .sort((a, b) => b.data.dato.valueOf() - a.data.dato.valueOf())
   .slice(0, 3);
+
+// Aktivitetstypene som faktisk er i bruk, med antall
+const typer = AKTIVITETER
+  .map(a => ({ ...a, antall: prosjekter.filter(p => p.data.type === a.verdi).length }))
+  .filter(a => a.antall > 0);
 
 // Nepal er det lengste engasjementet. Tallene regnes ut, ikke skrives inn.
 const nepal = prosjekter.filter(p => p.data.serie === 'nepal');
@@ -59,7 +65,18 @@ const nepalSum = nepal.reduce((s, p) => s + (p.data.belop ?? 0), 0);
         <p class="undertekst">Heart of Gold støtter gode formål og tiltak, fortrinnsvis med økonomiske bidrag. Inntektene skapes gjennom konserter, quizkvelder og dugnad, og overskuddet går i sin helhet til veldedige formål. Ingen sak er for liten, og ingen er for stor.</p>
       </div>
       <p class="minne-linje">Foreningen bærer samtidig minnet om <a href="/robert">Robert Rønhovde</a>, og støtter hvert år en hjertesak i hans navn.</p>
-      <a class="lenke-videre" href="/om-oss">Mer om foreningen og historien →</a>
+
+      <div class="aktiviteter">
+        {typer.map(a => (
+          <a class="akt" href={`/aktiviteter/${a.verdi}/`}>
+            <b>{a.flertall}</b>
+            <span class="antall">{a.antall}</span>
+            <span class="ing">{a.ingress}</span>
+          </a>
+        ))}
+      </div>
+
+      <a class="lenke-videre" href="/aktiviteter/">Mer om hvordan vi samler inn →</a>
     </div>
   </section>
 
@@ -177,6 +194,18 @@ const nepalSum = nepal.reduce((s, p) => s + (p.data.belop ?? 0), 0);
     margin:0 0 30px;padding-left:16px;border-left:2px solid var(--kant);}
   .minne-linje a{color:var(--indigo);text-decoration:none;border-bottom:1px solid var(--kant);}
   .minne-linje a:hover{border-bottom-color:var(--indigo);}
+
+  .aktiviteter{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:14px;margin-top:30px;}
+  .akt{border:1px solid var(--kant);border-radius:18px;padding:20px;text-decoration:none;
+    color:inherit;display:flex;flex-direction:column;transition:border-color .18s ease;}
+  .akt:hover{border-color:var(--magenta);}
+  .akt b{font-family:var(--display);font-size:18px;font-weight:700;}
+  .akt .antall{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.1;
+    margin-top:6px;font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .akt .ing{margin-top:8px;font-size:14.5px;color:var(--blekk-mykt);}
 
   .nepal-blokk{background:var(--tak);}
   .nepal-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);

@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { kr } from '../../lib/format';
+import { AKTIVITETER } from '../../lib/aktiviteter';
+
+const alle = await getCollection('prosjekter');
+
+// Tallene under hver type regnes ut, slik at de aldri kommer i utakt med innholdet
+const medTall = AKTIVITETER.map(a => {
+  const mine = alle.filter(p => p.data.type === a.verdi);
+  const aar = mine.map(p => p.data.aar);
+  return {
+    ...a,
+    antall: mine.length,
+    sum: mine.reduce((s, p) => s + (p.data.belop ?? 0), 0),
+    fra: aar.length ? Math.min(...aar) : null,
+    til: aar.length ? Math.max(...aar) : null,
+  };
+}).filter(a => a.antall > 0);
+
+const totalt = alle.reduce((s, p) => s + (p.data.belop ?? 0), 0);
+---
+<Base
+  tittel="Slik samler vi inn"
+  beskrivelse="Konserter, quizkvelder og dugnad. Dette er måtene Heart of Gold skaffer pengene på."
+>
+  <section>
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp">Aktiviteter</span>
+        <h1>Slik samler vi inn</h1>
+        <p class="undertekst">
+          Pengene kommer ikke av seg selv. Her er måtene vi skaffer dem på, og hvor mye
+          hver av dem har gitt. Til sammen {kr(totalt)} siden 2001.
+        </p>
+      </div>
+
+      <div class="typer">
+        {medTall.map(a => (
+          <a class={`typekort f-${a.farge}`} href={`/aktiviteter/${a.verdi}/`}>
+            <div class="topp">
+              <h2>{a.flertall}</h2>
+              <span class="antall">{a.antall}</span>
+            </div>
+            <p class="ingress">{a.ingress}</p>
+            <p class="tekst">{a.beskrivelse}</p>
+            <div class="bunn">
+              {a.sum > 0 && <span class="sum">{kr(a.sum)}</span>}
+              <span class="aar">{a.fra === a.til ? a.fra : `${a.fra}–${a.til}`}</span>
+            </div>
+            <span class="videre">Se alle {a.flertall.toLowerCase()}<span aria-hidden="true"> →</span></span>
+          </a>
+        ))}
+      </div>
+
+      <p class="fotnote">
+        Alle arrangementene ligger i <a href="/prosjekter/">prosjekttidslinjen</a>, år for år.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* min(300px,100%) så kortet kan krympe under 300 px på de smaleste telefonene */
+  .typer{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:22px;}
+  .typekort{border:1px solid var(--kant);border-radius:var(--radius);padding:28px;
+    background:#fff;text-decoration:none;color:inherit;display:flex;flex-direction:column;
+    transition:border-color .18s ease,transform .18s ease;}
+  .typekort:hover{transform:translateY(-2px);}
+  .typekort.f-magenta:hover{border-color:var(--magenta);}
+  .typekort.f-indigo:hover{border-color:var(--indigo);}
+  .typekort.f-gul:hover{border-color:var(--gul);}
+  .typekort.f-turkis:hover{border-color:var(--turkis);}
+  .typekort.f-korall:hover{border-color:var(--korall);}
+
+  .topp{display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
+  .typekort h2{font-size:clamp(21px,2.6vw,26px);}
+  .antall{font-family:var(--display);font-weight:800;font-size:26px;line-height:1;
+    font-variant-numeric:tabular-nums;}
+  .f-magenta .antall{color:var(--magenta);}
+  .f-indigo .antall{color:var(--indigo);}
+  .f-gul .antall{color:#8A6A00;}
+  .f-turkis .antall{color:var(--turkis);}
+  .f-korall .antall{color:var(--korall);}
+
+  .ingress{margin:12px 0 0;font-weight:600;font-size:16px;}
+  .tekst{margin:12px 0 0;color:var(--blekk-mykt);font-size:15.5px;}
+  /* auto dytter tall og årstall ned, så de står på linje på tvers av kortene
+     selv når beskrivelsene er ulikt lange */
+  .bunn{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-top:auto;
+    padding-top:16px;border-top:1px solid var(--kant);}
+  .sum{font-family:var(--display);font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .aar{font-size:14px;color:var(--blekk-mykt);margin-left:auto;font-variant-numeric:tabular-nums;}
+  .videre{margin-top:16px;font-family:var(--display);font-weight:700;font-size:14.5px;
+    color:var(--indigo);}
+
+  .fotnote{margin-top:32px;color:var(--blekk-mykt);font-size:15.5px;}
+  .fotnote a{color:var(--indigo);font-weight:600;}
+</style>
