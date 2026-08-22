@@ -4,9 +4,22 @@ maned: Oktober
 tittel: Heart of Gold-konsert på Magnor ungdomslokale
 mottaker: Renovering av scenen på Magnor ungdomslokale
 type: konsert
+bilde: /bilder/konsert-2024-salen.jpg
+bildetekst: Fullsatt sal på Magnor ungdomslokale
+bilder:
+  - fil: /bilder/konsert-2024-scenen.jpg
+    tekst: Fra scenen
+  - fil: /bilder/konsert-2024-duo.jpg
+    tekst: Gitar og sang
+  - fil: /bilder/konsert-2024-band.jpg
+    tekst: Band i aksjon
+  - fil: /bilder/konsert-2024-dansere.jpg
+    tekst: Dansere på scenen
+  - fil: /bilder/konsert-2024-publikum.jpg
+    tekst: Publikum i salen
+  - fil: /bilder/2024-konsert-plakat.jpg
+    tekst: Plakaten for konserten
 medvirkende: []
-bilde: /bilder/2024-konsert-plakat.jpg
-bildetekst: Plakaten for konserten 26. oktober 2024
 utfylt: false
 ---
 

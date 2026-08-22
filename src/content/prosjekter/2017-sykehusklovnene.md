@@ -4,6 +4,8 @@ tittel: "Konsert for Sykehusklovnene"
 mottaker: "Sykehusklovnene"
 belop: 25310
 type: konsert
+bilde: /bilder/2017-plakat-sykehusklovnene.jpg
+bildetekst: Plakaten for konserten på Magnordagen
 medvirkende:
   - "Birgit Brinck"
   - "June Maribo & Grethe Elgåen"

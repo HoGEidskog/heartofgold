@@ -4,6 +4,19 @@ maned: Oktober
 tittel: Heart of Gold-konsert og Vinylmessa
 mottaker: Demensforskning
 type: konsert
+bilde: /bilder/konsert-2025-band.jpg
+bildetekst: Konsert på Spiseriet Karaket & Meg
+bilder:
+  - fil: /bilder/konsert-2025-duo.jpg
+    tekst: Gitar og sang
+  - fil: /bilder/konsert-2025-sang.jpg
+    tekst: Fra scenen
+  - fil: /bilder/konsert-2025-keyboard.jpg
+    tekst: Bandet spiller
+  - fil: /bilder/konsert-2025-takk.jpg
+    tekst: Takk til de medvirkende
+  - fil: /bilder/konsert-2025-avslutning.jpg
+    tekst: Mot slutten av kvelden
 hjelpere:
   - spiseriet-karaket-og-meg
 medvirkende: []

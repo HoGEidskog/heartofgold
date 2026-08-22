@@ -52,7 +52,10 @@ img{max-width:100%;height:auto;display:block;}
 a{color:inherit;}
 :focus-visible{outline:3px solid var(--indigo);outline-offset:3px;border-radius:4px;}
 
-h1,h2,h3,h4{margin:0;font-family:var(--display);line-height:1.05;letter-spacing:-.02em;text-wrap:balance;}
+/* Lange sammensatte ord – «Sykehusklovnene», «Montessoriskole» – er bredere enn
+   en smal telefonskjerm ved stor skriftgrad. Orddeling der det trengs. */
+h1,h2,h3,h4{margin:0;font-family:var(--display);line-height:1.05;letter-spacing:-.02em;
+  text-wrap:balance;overflow-wrap:break-word;hyphens:auto;}
 h1{font-size:clamp(38px,6.4vw,68px);font-weight:800;}
 h2{font-size:clamp(28px,4.6vw,44px);font-weight:700;}
 h3{font-size:clamp(20px,2.6vw,25px);font-weight:700;}

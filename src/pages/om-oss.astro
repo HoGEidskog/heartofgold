@@ -10,6 +10,9 @@ import Base from '../layouts/Base.astro';
         <p class="undertekst">«Å gjøre verden bedre for noen.»</p>
       </div>
       <div class="artikkel">
+        <figure class="toppbilde">
+          <img src="/bilder/foreningen-banner.jpg" alt="Medlemmer av Heart of Gold med foreningens banner" />
+        </figure>
         <p>Heart of Gold er en frivillig forening i Eidskog med to hovedformål: å støtte gode formål og tiltak, fortrinnsvis med økonomiske bidrag, og å hedre <a href="/robert">Robert Rønhovdes</a> minne og videreføre hans åndelige arv.</p>
         <p>Inntektsgrunnlaget for bidragene skapes gjennom tiltak og arrangementer. Overskuddet fra foreningens virksomhet går i sin helhet til veldedige formål. Ingen i foreningen tar ut penger.</p>
 
@@ -25,3 +28,8 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 </Base>
+
+<style>
+  .toppbilde{margin:0 0 30px;}
+  .toppbilde img{width:100%;border-radius:var(--radius);max-height:440px;object-fit:cover;}
+</style>
