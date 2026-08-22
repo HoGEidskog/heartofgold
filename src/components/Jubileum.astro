@@ -1,0 +1,150 @@
+---
+/**
+ * Bildekavalkade for 25-årsjubileet.
+ *
+ * Slås av med "jubileum": false i src/data/nettsted.json. Da forsvinner hele
+ * seksjonen, og JavaScript-en under lastes ikke.
+ *
+ * Sveipingen er ren CSS (scroll-snap), så kavalkaden virker uten JavaScript.
+ * Skriptet gjør bare én ting: dytter den videre av seg selv. Det stopper når
+ * noen tar over, når musen er over, når noe i den får tastaturfokus, når
+ * fanen er skjult, og for de som har bedt om mindre bevegelse.
+ */
+export type Bilde = { fil: string; tekst: string; aar: string | null };
+const { bilder = [], tittel, ingress } = Astro.props as {
+  bilder: Bilde[];
+  tittel: string;
+  ingress: string;
+};
+---
+{bilder.length > 0 && (
+  <section class="jubileum">
+    <div class="wrap">
+      <div class="topp">
+        <div>
+          <span class="merkelapp">Jubileum</span>
+          <h2>{tittel}</h2>
+          <p class="ingress">{ingress}</p>
+        </div>
+        <button class="pause" type="button" data-pause aria-pressed="false">
+          <span data-pause-tekst>Pause</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="spor" data-kavalkade role="region" aria-roledescription="bildekavalkade" aria-label={tittel}>
+      {bilder.map((b, i) => (
+        <figure class="bilde" data-lysbilde aria-label={`${i + 1} av ${bilder.length}`}>
+          <img src={b.fil} alt={b.tekst} loading={i < 2 ? 'eager' : 'lazy'} />
+          <figcaption>
+            {b.aar && <span class="ar">{b.aar}</span>}
+            {b.tekst}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="wrap">
+      <p class="hint">Sveip for å bla, eller bruk piltastene.</p>
+    </div>
+  </section>
+)}
+
+<style>
+  .jubileum{padding:clamp(48px,7vw,76px) 0;
+    background:linear-gradient(180deg,var(--tak),#fff);}
+  .topp{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    margin-bottom:28px;}
+  .jubileum h2{margin-top:16px;}
+  .ingress{color:var(--blekk-mykt);max-width:52ch;margin-top:14px;}
+
+  .pause{flex:none;border:1px solid var(--kant);background:#fff;border-radius:999px;
+    padding:10px 20px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;
+    color:var(--indigo);}
+  .pause:hover{border-color:var(--indigo);}
+
+  /* Selve kavalkaden. Negative marger lar den gå helt ut til skjermkanten;
+     den scroller internt og gir derfor ingen overflyt på siden. */
+  .spor{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:4px 24px 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    scroll-behavior:smooth;}
+  .spor::-webkit-scrollbar{display:none;}
+  .bilde{flex:none;width:min(78vw,420px);margin:0;scroll-snap-align:center;}
+  .bilde img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);
+    background:var(--tak);display:block;}
+  .bilde figcaption{margin-top:12px;font-size:15px;color:var(--blekk-mykt);}
+  .ar{display:inline-block;font-family:var(--display);font-weight:800;font-size:13px;
+    color:var(--indigo);background:var(--tak);padding:3px 10px;border-radius:999px;
+    margin-right:8px;font-variant-numeric:tabular-nums;}
+
+  .hint{margin-top:6px;font-size:14px;color:var(--blekk-mykt);}
+
+  /* Har noen bedt om mindre bevegelse, skal den ikke gli heller */
+  @media (prefers-reduced-motion:reduce){
+    .spor{scroll-behavior:auto;}
+  }
+
+  @media (min-width:901px){
+    .hint{display:none;}
+  }
+</style>
+
+<script>
+  const spor = document.querySelector<HTMLElement>('[data-kavalkade]');
+  const knapp = document.querySelector<HTMLButtonElement>('[data-pause]');
+  const knappTekst = document.querySelector<HTMLElement>('[data-pause-tekst]');
+
+  if (spor && knapp && knappTekst) {
+    const roligere = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const INTERVALL = 5000;
+    let timer: number | undefined;
+    // Brukeren har tatt over ved å sveipe eller klikke – da slutter vi å dytte
+    let overtatt = false;
+    let pauset = roligere.matches;
+
+    const skalGaa = () => !pauset && !overtatt && !document.hidden && !roligere.matches;
+
+    const neste = () => {
+      const lysbilder = [...spor.querySelectorAll<HTMLElement>('[data-lysbilde]')];
+      if (!lysbilder.length) return;
+      const naa = spor.scrollLeft;
+      const bredde = lysbilder[0].offsetWidth + 18;
+      const sisteStart = spor.scrollWidth - spor.clientWidth;
+      // Er vi ved enden, begynner vi forfra
+      spor.scrollTo({ left: naa >= sisteStart - 4 ? 0 : naa + bredde, behavior: 'smooth' });
+    };
+
+    const start = () => { stopp(); if (skalGaa()) timer = window.setInterval(neste, INTERVALL); };
+    const stopp = () => { if (timer) { clearInterval(timer); timer = undefined; } };
+
+    const settKnapp = () => {
+      const av = pauset || roligere.matches;
+      knapp.setAttribute('aria-pressed', String(av));
+      knappTekst.textContent = av ? 'Spill av' : 'Pause';
+      knapp.hidden = overtatt && !pauset ? false : knapp.hidden;
+    };
+
+    knapp.addEventListener('click', () => {
+      pauset = !pauset;
+      // Trykker man «spill av» etter å ha sveipet, tar kavalkaden over igjen
+      if (!pauset) overtatt = false;
+      settKnapp();
+      start();
+    });
+
+    // Sveip, museklikk og hjulscroll regnes som å ta over
+    for (const h of ['pointerdown', 'wheel', 'touchstart'] as const) {
+      spor.addEventListener(h, () => { overtatt = true; stopp(); }, { passive: true });
+    }
+    // Stå stille mens noen leser
+    spor.addEventListener('mouseenter', stopp);
+    spor.addEventListener('mouseleave', start);
+    spor.addEventListener('focusin', stopp);
+    spor.addEventListener('focusout', start);
+    document.addEventListener('visibilitychange', start);
+    roligere.addEventListener('change', () => { settKnapp(); start(); });
+
+    settKnapp();
+    start();
+  }
+</script>

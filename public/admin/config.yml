@@ -84,6 +84,18 @@ collections:
       - { name: utfylt, label: Ferdig utfylt, widget: boolean, default: true, hint: 'Slå av så lenge oppføringen bare er en plassholder.' }
       - { name: body, label: Beskrivelse, widget: markdown }
 
+  - name: innstillinger
+    label: Innstillinger
+    files:
+      - name: nettsted
+        label: Forsiden
+        file: src/data/nettsted.json
+        fields:
+          - { name: jubileum, label: Vis jubileumskavalkaden, widget: boolean, default: true, hint: 'Slå av når jubileumsåret er over. Da forsvinner hele seksjonen fra forsiden.' }
+          - { name: jubileumsaar, label: Jubileumsår, widget: number, value_type: int }
+          - { name: jubileumstittel, label: Overskrift, widget: string }
+          - { name: jubileumsingress, label: Ingress, widget: text }
+
   - name: galleri
     label: Bildegalleri
     files:

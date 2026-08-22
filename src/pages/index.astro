@@ -3,6 +3,9 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { kr, dato } from '../lib/format';
 import { AKTIVITETER } from '../lib/aktiviteter';
+import Jubileum from '../components/Jubileum.astro';
+import arkiv from '../data/arkivbilder.json';
+import nettsted from '../data/nettsted.json';
 
 const prosjekter = (await getCollection('prosjekter')).sort((a, b) => b.data.aar - a.data.aar);
 const totalt = prosjekter.reduce((s, p) => s + (p.data.belop ?? 0), 0);
@@ -20,6 +23,38 @@ const hoydepunkter = [...perAar.values()].sort((a, b) => b.data.aar - a.data.aar
 const nyheter = (await getCollection('nyheter'))
   .sort((a, b) => b.data.dato.valueOf() - a.data.dato.valueOf())
   .slice(0, 3);
+
+// Bilder til jubileumskavalkaden: ett per prosjekt som har et, pluss arkivet.
+// Eldst først, så den leses som en reise gjennom årene.
+const jubileumsbilder = nettsted.jubileum
+  ? (() => {
+      const sett = new Set<string>();
+      const ut: { fil: string; tekst: string; aar: string | null }[] = [];
+      const fraProsjekter = [...prosjekter]
+        .sort((a, b) => a.data.aar - b.data.aar)
+        .filter(p => p.data.bilde)
+        .map(p => ({ fil: p.data.bilde!, tekst: p.data.bildetekst || p.data.tittel, aar: String(p.data.aar) }));
+      // Ikke alt tåler å vises stort. Logoer er avlange, og de eldste
+      // Blogger-bildene er små nok til å bli grøt når de blåses opp.
+      // Kravene lempes av seg selv når originalbildene kommer.
+      const MIN_BREDDE = 400;
+      const MAKS_FORHOLD = 2;
+      const fraArkiv = ((arkiv.bilder ?? []) as any[])
+        .filter(b => b.aar && !b.skjulIGalleri)
+        .filter(b => {
+          if (!b.bredde || !b.hoyde) return false;
+          const forhold = b.bredde / b.hoyde;
+          return b.bredde >= MIN_BREDDE && forhold <= MAKS_FORHOLD && forhold >= 1 / MAKS_FORHOLD;
+        })
+        .map(b => ({ fil: b.fil as string, tekst: b.tekst as string, aar: b.aar as string }));
+      for (const b of [...fraProsjekter, ...fraArkiv].sort((a, b) => (a.aar ?? '').localeCompare(b.aar ?? ''))) {
+        if (sett.has(b.fil)) continue;
+        sett.add(b.fil);
+        ut.push(b);
+      }
+      return ut;
+    })()
+  : [];
 
 // Aktivitetstypene som faktisk er i bruk, med antall
 const typer = AKTIVITETER
@@ -48,6 +83,14 @@ const nepalSum = nepal.reduce((s, p) => s + (p.data.belop ?? 0), 0);
       </div>
     </div>
   </div>
+
+  {nettsted.jubileum && (
+    <Jubileum
+      bilder={jubileumsbilder}
+      tittel={nettsted.jubileumstittel}
+      ingress={nettsted.jubileumsingress}
+    />
+  )}
 
   <div class="tallrad">
     <div class="wrap tall-grid">

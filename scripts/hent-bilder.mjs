@@ -48,6 +48,9 @@ let nye = 0, hoppet = 0, feilet = 0;
 for (const b of BILDER) {
   const mal = path.join(UT, b.fil);
   if (existsSync(mal)) {
+    // Målene skal med i manifestet også når bildet lå der fra før
+    const m = await sharp(mal).metadata();
+    b.bredde = m.width; b.hoyde = m.height;
     hentet.push(b); hoppet++;
     continue;
   }
@@ -61,6 +64,8 @@ for (const b of BILDER) {
       .jpeg({ quality: 78, mozjpeg: true })
       .toBuffer();
     await writeFile(mal, ut);
+    const m = await sharp(ut).metadata();
+    b.bredde = m.width; b.hoyde = m.height;
     hentet.push(b); nye++;
     console.log(`  hentet  ${b.fil}  ${Math.round(ut.length / 1024)} kB`);
   } catch (e) {
@@ -77,6 +82,10 @@ const manifest = {
     prosjekt: b.prosjekt ?? null,
     kreditering: b.kreditering ?? null,
     skjulIGalleri: b.skjulIGalleri ?? false,
+    // Målene brukes til å luke ut bilder som er for små eller for avlange
+    // til å vises store, f.eks. i jubileumskavalkaden
+    bredde: b.bredde ?? null,
+    hoyde: b.hoyde ?? null,
   })),
 };
 await writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
