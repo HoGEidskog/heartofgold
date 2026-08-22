@@ -10,11 +10,13 @@
   --tak:#F5F3FA;
   --kant:#E6E2F0;
 
-  --magenta:#E8437F;
-  --korall:#FF6B4A;
-  --gul:#FFC145;
-  --turkis:#1FB39C;
-  --indigo:#4B54C8;
+  /* Hentet fra foreningens logo: rosa, gul og cyan er logoens tre kjernetoner.
+     Alle er mørknet så vidt at tekst oppå dem holder kontrastkravet. */
+  --magenta:#D53579;
+  --korall:#E2734F;
+  --gul:#F7D658;
+  --turkis:#1F7B99;
+  --indigo:#0A6E9C;
 
   /* Typografi */
   --display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
@@ -129,7 +131,7 @@ footer.bunn a:hover{color:var(--magenta);}
 .kort{background:#fff;border:1px solid var(--kant);border-radius:var(--radius);overflow:hidden;
   display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:border-color .18s ease,transform .18s ease;}
 .kort:hover{border-color:var(--magenta);}
-.kort-bilde{aspect-ratio:16/10;background:linear-gradient(135deg,#FFD9E4,#FFE6C2 55%,#CFF3EA);overflow:hidden;}
+.kort-bilde{aspect-ratio:16/10;background:linear-gradient(135deg,#FBDCE8,#FDF0CE 55%,#D6EAF2);overflow:hidden;}
 .kort-bilde img{width:100%;height:100%;object-fit:cover;}
 .kort-tekst{padding:22px;display:flex;flex-direction:column;gap:8px;flex:1;}
 .kort h3,.kort b,.pkort b,.pkort .sum{text-decoration:none;}
@@ -144,7 +146,7 @@ footer.bunn a:hover{color:var(--magenta);}
 .pkort .ar{font-family:var(--display);font-weight:800;font-size:15px;padding:4px 12px;
   border-radius:999px;align-self:flex-start;color:#fff;}
 .pkort .ar.f0{background:var(--magenta);}
-.pkort .ar.f1{background:var(--korall);}
+.pkort .ar.f1{background:var(--korall);color:#4A1D0C;}
 .pkort .ar.f2{background:var(--gul);color:#3A2A00;}
 .pkort .ar.f3{background:var(--turkis);}
 .pkort .ar.f4{background:var(--indigo);}
