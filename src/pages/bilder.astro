@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import galleri from '../data/galleri.json';
+const bilder = galleri.bilder ?? [];
+---
+<Base tittel="Bilder" beskrivelse="Bilder fra konserter, quizkvelder og aksjoner gjennom Heart of Golds historie.">
+  <section>
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp">Bilder</span>
+        <h1>Fra arkivet</h1>
+        <p class="undertekst">Bilder fra konserter, quizkvelder og aksjoner gjennom årene.</p>
+      </div>
+      {bilder.length === 0 ? (
+        <p class="undertekst">Bildene legges ut fortløpende.</p>
+      ) : (
+        <div class="galleri">
+          {bilder.map((b: any) => (
+            <figure>
+              <img src={b.fil} alt={b.tekst} loading="lazy" />
+              <figcaption>
+                <span>{b.tekst}</span>
+                {b.aar && <span class="ar">{b.aar}</span>}
+                {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .galleri{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
+  figure{margin:0;border:1px solid var(--kant);border-radius:var(--radius);overflow:hidden;background:#fff;}
+  figure img{width:100%;aspect-ratio:4/3;object-fit:cover;}
+  figcaption{padding:16px 18px;display:flex;flex-direction:column;gap:4px;font-size:14.5px;}
+  figcaption .ar{font-family:var(--display);font-weight:700;color:var(--magenta);font-size:13px;}
+  figcaption .kred{color:var(--blekk-mykt);font-size:13px;}
+</style>

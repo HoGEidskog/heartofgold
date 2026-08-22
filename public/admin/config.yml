@@ -1,0 +1,81 @@
+# Sveltia CMS – redigeringsløsning for heartofgold.no
+# TODO ved oppsett: bytt ut BRUKERNAVN/REPONAVN og base_url til auth-workeren.
+
+backend:
+  name: github
+  repo: BRUKERNAVN/REPONAVN
+  branch: main
+  base_url: https://AUTH-WORKER-ADRESSE.workers.dev
+  site_domain: www.heartofgold.no
+
+locale: no
+publish_mode: simple
+media_folder: public/bilder
+public_folder: /bilder
+
+collections:
+  - name: nyheter
+    label: Nyheter
+    label_singular: Nyhet
+    folder: src/content/nyheter
+    create: true
+    slug: '{{year}}-{{month}}-{{slug}}'
+    summary: '{{dato | date("DD.MM.YYYY")}} – {{tittel}}'
+    sortable_fields: [dato, tittel]
+    view_filters:
+      - label: I år
+        field: dato
+        pattern: '2026'
+    fields:
+      - { name: tittel, label: Overskrift, widget: string }
+      - { name: dato, label: Dato, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, picker_utc: true }
+      - { name: ingress, label: Ingress, widget: text, required: false, hint: 'Én til to setninger som vises i listen og på forsiden.' }
+      - { name: bilde, label: Hovedbilde, widget: image, required: false }
+      - { name: bildetekst, label: Bildetekst, widget: string, required: false }
+      - { name: body, label: Tekst, widget: markdown }
+
+  - name: prosjekter
+    label: Prosjekter
+    label_singular: Prosjekt
+    folder: src/content/prosjekter
+    create: true
+    slug: '{{aar}}-{{slug}}'
+    summary: '{{aar}} – {{tittel}}'
+    sortable_fields: [aar, belop, tittel]
+    fields:
+      - { name: aar, label: År, widget: number, value_type: int, min: 2001, max: 2100 }
+      - { name: maned, label: Måned, widget: string, required: false, hint: 'F.eks. Februar. Kan stå tomt.' }
+      - { name: tittel, label: Tittel, widget: string }
+      - { name: mottaker, label: Hvem fikk pengene, widget: string, required: false }
+      - { name: belop, label: Beløp i kroner, widget: number, value_type: int, required: false }
+      - name: type
+        label: Type arrangement
+        widget: select
+        default: annet
+        options:
+          - { label: Konsert, value: konsert }
+          - { label: Quizkveld, value: quiz }
+          - { label: Aksjon, value: aksjon }
+          - { label: Annet, value: annet }
+      - { name: medvirkende, label: Medvirkende, widget: list, required: false, hint: 'Ett navn eller band per linje.' }
+      - { name: konferansier, label: Konferansier, widget: string, required: false }
+      - { name: bilde, label: Bilde, widget: image, required: false }
+      - { name: bildekreditering, label: Fotograf, widget: string, required: false }
+      - { name: utfylt, label: Ferdig utfylt, widget: boolean, default: true, hint: 'Slå av så lenge oppføringen bare er en plassholder.' }
+      - { name: body, label: Beskrivelse, widget: markdown }
+
+  - name: galleri
+    label: Bildegalleri
+    files:
+      - name: bilder
+        label: Bilder
+        file: src/data/galleri.json
+        fields:
+          - name: bilder
+            label: Bilder
+            widget: list
+            fields:
+              - { name: fil, label: Bilde, widget: image }
+              - { name: tekst, label: Bildetekst, widget: string }
+              - { name: aar, label: År, widget: string, required: false }
+              - { name: kreditering, label: Fotograf, widget: string, required: false }

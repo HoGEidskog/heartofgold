@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { kr } from '../lib/format';
+
+const alle = (await getCollection('prosjekter')).sort((a, b) => {
+  if (b.data.aar !== a.data.aar) return b.data.aar - a.data.aar;
+  return (b.data.maned ?? '').localeCompare(a.data.maned ?? '');
+});
+const totalt = alle.reduce((s, p) => s + (p.data.belop ?? 0), 0);
+const manglerBelop = alle.filter(p => !p.data.belop).length;
+
+const rendret = await Promise.all(alle.map(async p => ({ p, Innhold: (await render(p)).Content })));
+
+const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
+---
+<Base tittel="Prosjekter" beskrivelse="Alt Heart of Gold har samlet inn og gitt videre siden 2001 – år for år.">
+  <section>
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp">Prosjekter</span>
+        <h1>Hver krone videre</h1>
+        <p class="undertekst">Her kan du lese om tiltakene våre og hva vi har samlet penger til. Registrerte bidrag utgjør så langt <strong>{kr(totalt)}</strong>. For {manglerBelop} av arrangementene mangler vi tallene, så det reelle beløpet er høyere.</p>
+      </div>
+
+      <nav class="arvelger" aria-label="Hopp til år">
+        {aar.map(a => <a href={`#aar-${a}`}>{a}</a>)}
+      </nav>
+
+      <div class="tidslinje">
+        {aar.map(a => (
+          <div class="argruppe" id={`aar-${a}`}>
+            <h2 class="artittel">{a}</h2>
+            <div class="oppforinger">
+              {rendret.filter(r => r.p.data.aar === a).map(({ p, Innhold }) => (
+                <article class={`oppforing${p.data.utfylt === false ? ' venter' : ''}`} id={p.id}>
+                  <header>
+                    <h3>{p.data.tittel}</h3>
+                    <div class="meta">
+                      {p.data.maned && <span class="maned">{p.data.maned}</span>}
+                      {p.data.mottaker && <span class="mottaker">{p.data.mottaker}</span>}
+                      {p.data.utfylt === false && <span class="venter-merke">Innhold kommer</span>}
+                    </div>
+                  </header>
+                  {p.data.belop && <p class="belop">{kr(p.data.belop)}</p>}
+                  <div class="tekst"><Innhold /></div>
+                  {p.data.medvirkende.length > 0 && (
+                    <div class="medvirkende">
+                      <h4>Medvirkende</h4>
+                      <ul>{p.data.medvirkende.map(m => <li>{m}</li>)}</ul>
+                      {p.data.konferansier && <p class="konf">Konferansier: {p.data.konferansier}</p>}
+                    </div>
+                  )}
+                  {!p.data.medvirkende.length && p.data.konferansier && (
+                    <p class="konf">Konferansier: {p.data.konferansier}</p>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .arvelger{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;}
+  .arvelger a{text-decoration:none;font-family:var(--display);font-weight:700;font-size:14px;
+    padding:6px 14px;border-radius:999px;background:var(--tak);color:var(--indigo);}
+  .arvelger a:hover{background:var(--indigo);color:#fff;}
+
+  .argruppe{padding-top:14px;scroll-margin-top:90px;}
+  .argruppe + .argruppe{margin-top:44px;}
+  .artittel{font-size:clamp(34px,6vw,58px);font-weight:800;color:var(--kant);line-height:1;
+    border-bottom:1px solid var(--kant);padding-bottom:14px;margin-bottom:26px;font-variant-numeric:tabular-nums;}
+  .oppforinger{display:grid;gap:22px;}
+  .oppforing{border:1px solid var(--kant);border-radius:var(--radius);padding:26px;scroll-margin-top:90px;}
+  .oppforing h3{font-size:clamp(19px,2.4vw,24px);}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .meta span{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--tak);color:var(--blekk-mykt);}
+  .meta .mottaker{background:rgba(31,179,156,.14);color:#12786A;}
+  .venter-merke{background:rgba(255,193,69,.22) !important;color:#7A5600 !important;}
+  .belop{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.4vw,32px);
+    margin:16px 0 10px;font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .tekst{color:var(--blekk-mykt);max-width:66ch;}
+  .tekst :global(p){margin-bottom:.8em;}
+  .medvirkende{margin-top:20px;padding-top:18px;border-top:1px solid var(--kant);}
+  .medvirkende h4{font-family:var(--display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blekk-mykt);margin:0 0 10px;font-weight:700;}
+  .medvirkende ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+  .medvirkende li{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--tak);}
+  .konf{margin-top:12px;font-size:14.5px;color:var(--blekk-mykt);}
+  .oppforing.venter{background:repeating-linear-gradient(135deg,#fff,#fff 12px,#FDFBFF 12px,#FDFBFF 24px);
+    border-style:dashed;}
+</style>

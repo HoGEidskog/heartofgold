@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { dato } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const nyheter = await getCollection('nyheter');
+  return nyheter.map(n => ({ params: { id: n.id }, props: { n } }));
+}
+
+const { n } = Astro.props;
+const { Content } = await render(n);
+---
+<Base tittel={n.data.tittel} beskrivelse={n.data.ingress} bilde={n.data.bilde}>
+  <section>
+    <div class="wrap">
+      <p><a class="tilbake" href="/aktuelt">← Alle nyheter</a></p>
+      <div class="tittelblokk">
+        <time class="merkelapp" datetime={n.data.dato.toISOString()}>{dato(n.data.dato)}</time>
+        <h1>{n.data.tittel}</h1>
+        {n.data.ingress && <p class="undertekst">{n.data.ingress}</p>}
+      </div>
+      {n.data.bilde && (
+        <figure>
+          <img src={n.data.bilde} alt={n.data.bildetekst ?? ''} />
+          {n.data.bildetekst && <figcaption>{n.data.bildetekst}</figcaption>}
+        </figure>
+      )}
+      <div class="artikkel"><Content /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tilbake{text-decoration:none;color:var(--indigo);font-weight:600;font-size:15px;}
+  figure{margin:0 0 34px;}
+  figure img{border-radius:var(--radius);}
+  figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+</style>

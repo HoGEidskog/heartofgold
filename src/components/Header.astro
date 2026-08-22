@@ -1,0 +1,38 @@
+---
+import Logo from './Logo.astro';
+const sti = Astro.url.pathname.replace(/\/$/, '') || '/';
+const meny = [
+  { url: '/om-oss', navn: 'Om oss' },
+  { url: '/robert', navn: 'Robert' },
+  { url: '/prosjekter', navn: 'Prosjekter' },
+  { url: '/aktuelt', navn: 'Aktuelt' },
+  { url: '/bilder', navn: 'Bilder' },
+  { url: '/kontakt', navn: 'Kontakt' },
+];
+---
+<header class="topp">
+  <div class="wrap topp-inner">
+    <a class="logo" href="/"><Logo /> Heart of Gold</a>
+    <nav class="hovedmeny" aria-label="Hovedmeny">
+      {meny.map(m => (
+        <a href={m.url} aria-current={sti === m.url ? 'page' : undefined}>{m.navn}</a>
+      ))}
+    </nav>
+    <a class="kn-topp" href="/stott-oss">Støtt oss</a>
+    <button class="meny-knapp" id="meny-knapp" aria-expanded="false" aria-controls="mobilmeny">Meny</button>
+  </div>
+  <div class="mobilmeny" id="mobilmeny">
+    <nav class="wrap" aria-label="Meny">
+      {meny.map(m => <a href={m.url}>{m.navn}</a>)}
+      <a href="/stott-oss">Støtt oss</a>
+    </nav>
+  </div>
+</header>
+<script>
+  const kn = document.getElementById('meny-knapp');
+  const meny = document.getElementById('mobilmeny');
+  kn?.addEventListener('click', () => {
+    const apen = meny?.classList.toggle('apen');
+    kn.setAttribute('aria-expanded', String(!!apen));
+  });
+</script>

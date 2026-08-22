@@ -1,0 +1,179 @@
+/* ==========================================================================
+   Heart of Gold – designsystem «Fargesprut»
+   ========================================================================== */
+
+:root{
+  /* Farger */
+  --hvit:#FFFFFF;
+  --blekk:#181524;
+  --blekk-mykt:#5C5670;
+  --tak:#F5F3FA;
+  --kant:#E6E2F0;
+
+  --magenta:#E8437F;
+  --korall:#FF6B4A;
+  --gul:#FFC145;
+  --turkis:#1FB39C;
+  --indigo:#4B54C8;
+
+  /* Typografi */
+  --display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --brod:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+
+  /* Mål */
+  --maks:1160px;
+  --smal:720px;
+  --radius:22px;
+  --radius-stor:34px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+}
+
+body{
+  margin:0;
+  background:var(--hvit);
+  color:var(--blekk);
+  font-family:var(--brod);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+img{max-width:100%;height:auto;display:block;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px;border-radius:4px;}
+
+h1,h2,h3,h4{margin:0;font-family:var(--display);line-height:1.05;letter-spacing:-.02em;text-wrap:balance;}
+h1{font-size:clamp(38px,6.4vw,68px);font-weight:800;}
+h2{font-size:clamp(28px,4.6vw,44px);font-weight:700;}
+h3{font-size:clamp(20px,2.6vw,25px);font-weight:700;}
+p{margin:0 0 1.1em;}
+p:last-child{margin-bottom:0;}
+
+.wrap{max-width:var(--maks);margin:0 auto;padding:0 24px;}
+.smal{max-width:var(--smal);margin:0 auto;}
+section{padding:clamp(48px,7vw,76px) 0;}
+
+/* Hjelpere ------------------------------------------------------------ */
+.merkelapp{
+  display:inline-block;font-size:12.5px;font-weight:700;
+  padding:6px 14px;border-radius:999px;background:var(--tak);color:var(--indigo);
+}
+.merkelapp.pa-morkt{background:rgba(255,255,255,.12);color:var(--gul);}
+.undertekst{color:var(--blekk-mykt);max-width:60ch;margin-top:14px;}
+.tittelblokk{margin-bottom:34px;}
+.tittelblokk h1,.tittelblokk h2{margin-top:16px;}
+
+.kn{
+  display:inline-block;text-decoration:none;font-weight:700;font-size:15.5px;
+  padding:14px 26px;border-radius:999px;border:0;cursor:pointer;font-family:var(--brod);
+  transition:background .18s ease,color .18s ease,transform .18s ease;
+}
+.kn-p{background:var(--magenta);color:#fff;}
+.kn-p:hover{background:var(--korall);}
+.kn-s{background:var(--tak);color:var(--blekk);}
+.kn-s:hover{background:var(--kant);}
+.kn-hvit{background:#fff;color:var(--blekk);}
+.kn-hvit:hover{background:var(--tak);}
+
+.lenke-videre{
+  display:inline-block;margin-top:26px;font-weight:700;color:var(--indigo);
+  text-decoration:none;border-bottom:2px solid var(--kant);padding-bottom:3px;
+}
+.lenke-videre:hover{border-bottom-color:var(--indigo);}
+
+/* Toppmeny ------------------------------------------------------------ */
+.topp{
+  position:sticky;top:0;z-index:60;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--kant);
+}
+.topp-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:70px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--blekk);
+  font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em;}
+.logo svg{width:30px;height:30px;flex:none;}
+.hovedmeny{display:flex;gap:22px;font-size:15px;font-weight:500;}
+.hovedmeny a{text-decoration:none;color:var(--blekk-mykt);padding:4px 0;}
+.hovedmeny a:hover{color:var(--magenta);}
+.hovedmeny a[aria-current="page"]{color:var(--blekk);font-weight:600;}
+.topp .kn-topp{background:var(--blekk);color:#fff;text-decoration:none;font-weight:700;
+  font-size:14.5px;padding:11px 20px;border-radius:999px;}
+.topp .kn-topp:hover{background:var(--magenta);}
+.meny-knapp{display:none;border:1px solid var(--kant);background:#fff;border-radius:999px;
+  padding:9px 15px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;color:var(--blekk);}
+.mobilmeny{display:none;border-top:1px solid var(--kant);background:#fff;}
+.mobilmeny.apen{display:block;}
+.mobilmeny nav{display:flex;flex-direction:column;padding:12px 0 20px;}
+.mobilmeny a{text-decoration:none;color:var(--blekk);padding:12px 0;font-weight:600;border-bottom:1px solid var(--tak);}
+
+/* Bunn ---------------------------------------------------------------- */
+footer.bunn{padding:56px 0 32px;border-top:1px solid var(--kant);font-size:15.5px;color:var(--blekk-mykt);}
+.bunn-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;}
+footer.bunn h4{font-family:var(--display);font-size:16px;color:var(--blekk);margin:0 0 12px;font-weight:700;}
+footer.bunn a{color:var(--blekk-mykt);}
+footer.bunn a:hover{color:var(--magenta);}
+.bunn-linje{margin-top:42px;padding-top:20px;border-top:1px solid var(--kant);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;}
+
+/* Kort ---------------------------------------------------------------- */
+.kortgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+.kort{background:#fff;border:1px solid var(--kant);border-radius:var(--radius);overflow:hidden;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:border-color .18s ease,transform .18s ease;}
+.kort:hover{border-color:var(--magenta);}
+.kort-bilde{aspect-ratio:16/10;background:linear-gradient(135deg,#FFD9E4,#FFE6C2 55%,#CFF3EA);overflow:hidden;}
+.kort-bilde img{width:100%;height:100%;object-fit:cover;}
+.kort-tekst{padding:22px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.kort h3,.kort b,.pkort b,.pkort .sum{text-decoration:none;}
+.kort time{font-size:13px;font-weight:700;color:var(--magenta);}
+.kort p{margin:0;color:var(--blekk-mykt);font-size:15.5px;}
+
+/* Prosjektkort -------------------------------------------------------- */
+.pkort{border:1px solid var(--kant);border-radius:20px;padding:22px;background:#fff;
+  display:flex;flex-direction:column;gap:8px;transition:border-color .18s ease;
+  text-decoration:none;color:inherit;}
+.pkort:hover{border-color:var(--magenta);}
+.pkort .ar{font-family:var(--display);font-weight:800;font-size:15px;padding:4px 12px;
+  border-radius:999px;align-self:flex-start;color:#fff;}
+.pkort .ar.f0{background:var(--magenta);}
+.pkort .ar.f1{background:var(--korall);}
+.pkort .ar.f2{background:var(--gul);color:#3A2A00;}
+.pkort .ar.f3{background:var(--turkis);}
+.pkort .ar.f4{background:var(--indigo);}
+.pkort b{font-size:17.5px;font-weight:700;}
+.pkort small{color:var(--blekk-mykt);font-size:14.5px;}
+.pkort .sum{margin-top:auto;padding-top:12px;font-family:var(--display);font-weight:800;
+  font-size:21px;font-variant-numeric:tabular-nums;}
+
+/* Brødtekst i artikler ------------------------------------------------ */
+.artikkel{max-width:68ch;}
+.artikkel h2{font-size:clamp(24px,3.4vw,32px);margin:1.7em 0 .5em;}
+.artikkel h3{margin:1.5em 0 .4em;}
+.artikkel ul,.artikkel ol{padding-left:1.3em;margin:0 0 1.2em;}
+.artikkel li{margin-bottom:.4em;}
+.artikkel blockquote{
+  margin:1.6em 0;padding:4px 0 4px 22px;border-left:3px solid var(--gul);
+  font-family:var(--display);font-weight:500;font-size:clamp(19px,2.6vw,24px);line-height:1.4;
+}
+.artikkel a{color:var(--indigo);}
+.artikkel img{border-radius:var(--radius);margin:1.6em 0;}
+.artikkel figure{margin:1.6em 0;}
+.artikkel figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+
+/* Tabell/liste for lover ---------------------------------------------- */
+.paragraf{border-top:1px solid var(--kant);padding-top:22px;margin-top:22px;}
+.paragraf h3{color:var(--indigo);font-size:19px;}
+
+/* Responsivt ----------------------------------------------------------- */
+@media (max-width:900px){
+  .hovedmeny{display:none;}
+  .topp .kn-topp{display:none;}
+  .meny-knapp{display:block;}
+  .bunn-grid{grid-template-columns:1fr;gap:26px;}
+}

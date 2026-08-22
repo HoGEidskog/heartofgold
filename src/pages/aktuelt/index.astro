@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { dato } from '../../lib/format';
+
+const nyheter = (await getCollection('nyheter'))
+  .sort((a, b) => b.data.dato.valueOf() - a.data.dato.valueOf());
+---
+<Base tittel="Aktuelt" beskrivelse="Nyheter og arrangementer fra Heart of Gold.">
+  <section>
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp">Aktuelt</span>
+        <h1>Nyheter</h1>
+        <p class="undertekst">Arrangementer, utdelinger og annet som skjer i foreningen.</p>
+      </div>
+      {nyheter.length === 0 ? (
+        <p class="undertekst">Ingen nyheter er lagt ut ennå.</p>
+      ) : (
+        <div class="kortgrid">
+          {nyheter.map(n => (
+            <a class="kort" href={`/aktuelt/${n.id}`}>
+              <div class="kort-bilde">{n.data.bilde && <img src={n.data.bilde} alt="" loading="lazy" />}</div>
+              <div class="kort-tekst">
+                <time datetime={n.data.dato.toISOString()}>{dato(n.data.dato)}</time>
+                <h3>{n.data.tittel}</h3>
+                {n.data.ingress && <p>{n.data.ingress}</p>}
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

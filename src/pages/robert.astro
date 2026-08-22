@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base tittel="Robert" beskrivelse="Heart of Gold bæres videre i Robert Rønhovdes navn. Dette er historien om ham.">
+  <section class="minne">
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp pa-morkt">Robert Rønhovde</span>
+        <h1>En gutt med det aller største hjertet</h1>
+      </div>
+      <div class="artikkel">
+        <p class="stor">22. juli er en sorgfull dato for mange i Norge etter terroraksjonen på Utøya. Nøyaktig samme dato ett år tidligere, i 2010, mistet vi vår kjære Robert Rønhovde i en meningsløs og tragisk ulykke, 17 år gammel.</p>
+
+        <p>Ordene vennene til Robert skrev da de opprettet en minneside om ham, lyder:</p>
+
+        <blockquote>
+          Alles kjære Robert Rønhovde ♥<br>
+          En gutt med det aller største hjertet.<br>
+          Han dømte aldri noen.<br>
+          Han var glad i alle uansett form, farge eller kjønn.<br>
+          Ingen kan noen gang si noe vondt om den gutten.<br>
+          Elsker alle, elsket av alle ♥<br>
+          Vi vil møtes igjen.
+        </blockquote>
+
+        <p>I minneordene som ble holdt i kirken i forbindelse med begravelsen og minnestunden, sa presten at Robert med sin væremåte <em>gjorde verden til et bedre sted å være</em>. Vi som foreldre er så stolte over Robert.</p>
+
+        <p>Vi vil derfor videreføre Heart of Gold i Roberts navn, for å ivareta hans åndelige arv og hans minne. Dette er også en måte å forsøke å gi mening til det meningsløse.</p>
+
+        <p>Heart of Gold vil hvert år støtte en hjertesak på lik linje med sakene som har fått penger tidligere år. Ingen sak er for liten og ingen sak er for stor.</p>
+
+        <p class="signatur">RR</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .minne{background:var(--blekk);color:#C7C1DA;}
+  .minne :global(h1){color:#fff;margin-top:18px;}
+  .minne :global(.artikkel){max-width:62ch;}
+  .minne :global(.stor){font-size:19.5px;color:#EDEAF6;}
+  .minne :global(blockquote){border-left-color:var(--gul);color:#fff;}
+  .minne :global(em){color:var(--gul);font-style:italic;}
+  .signatur{margin-top:2.4em;font-family:var(--display);font-weight:700;letter-spacing:.2em;color:var(--gul);}
+</style>
