@@ -8,10 +8,41 @@ const meny = [
   { url: '/bilder', navn: 'Bilder' },
   { url: '/kontakt', navn: 'Kontakt' },
 ];
+
+// Tilbakelenke for mobil. Vi går ett nivå opp i stien i stedet for å bruke
+// nettleserhistorikken – da virker den også når noen kommer rett fra et søk
+// eller en delt lenke, der «tilbake» ville ført ut av nettstedet.
+const sidenavn: Record<string, string> = {
+  '/': 'Forsiden',
+  '/om-oss': 'Om oss',
+  '/prosjekter': 'Prosjekter',
+  '/aktuelt': 'Aktuelt',
+  '/bilder': 'Bilder',
+  '/kontakt': 'Kontakt',
+};
+// Undersider som hører hjemme under en annen side enn forsiden
+const hoererUnder: Record<string, string> = {
+  '/robert': '/om-oss',
+  '/vedtekter': '/om-oss',
+};
+const deler = sti.split('/').filter(Boolean);
+const opp = sti === '/' ? null
+  : deler.length > 1 ? '/' + deler.slice(0, -1).join('/')
+  : (hoererUnder[sti] ?? '/');
+const oppNavn = opp ? (sidenavn[opp] ?? 'Tilbake') : '';
 ---
 <header class="topp">
   <div class="wrap topp-inner">
-    <a class="logo" href="/"><Logo /> Heart of Gold</a>
+    {opp && (
+      <a class="tilbake" href={opp} aria-label={`Tilbake til ${oppNavn}`}>
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false">
+          <path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{oppNavn}</span>
+      </a>
+    )}
+    <a class="logo" href="/"><Logo /> <span class="logo-tekst">Heart of Gold</span></a>
     <nav class="hovedmeny" aria-label="Hovedmeny">
       {meny.map(m => (
         <a href={m.url} aria-current={sti === m.url ? 'page' : undefined}>{m.navn}</a>

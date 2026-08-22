@@ -103,6 +103,12 @@ section{padding:clamp(48px,7vw,76px) 0;}
 /* Logoen er en fargesprut med luft i formen, så den tåler å være litt større
    enn et kompakt ikon ville vært. */
 .logo img{height:34px;width:auto;flex:none;}
+/* Tilbakelenke – bare på mobil, der hovedmenyen er skjult bak Meny-knappen */
+.tilbake{display:none;align-items:center;gap:5px;flex:none;text-decoration:none;
+  color:var(--indigo);font-weight:600;font-size:14.5px;
+  margin-left:-8px;padding:10px 8px;border-radius:999px;}
+.tilbake:active{background:var(--tak);}
+.tilbake svg{flex:none;}
 .hovedmeny{display:flex;gap:22px;font-size:15px;font-weight:500;}
 .hovedmeny a{text-decoration:none;color:var(--blekk-mykt);padding:4px 0;}
 .hovedmeny a:hover{color:var(--magenta);}
@@ -179,5 +185,14 @@ footer.bunn a:hover{color:var(--magenta);}
   .hovedmeny{display:none;}
   .topp .kn-topp{display:none;}
   .meny-knapp{display:block;}
+  .tilbake{display:inline-flex;}
   .bunn-grid{grid-template-columns:1fr;gap:26px;}
+}
+
+/* På smale telefoner blir toppen trang når tilbakelenken er der. Logoteksten
+   viker først – merket er tydelig nok alene, og tilbakelenken er viktigere
+   å nå enn ordene ved siden av logoen. */
+@media (max-width:460px){
+  .topp-inner:has(.tilbake) .logo-tekst{display:none;}
+  .tilbake span{max-width:11ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 }

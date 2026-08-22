@@ -90,6 +90,18 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
     padding:6px 14px;border-radius:999px;background:var(--tak);color:var(--indigo);}
   .arvelger a:hover{background:var(--indigo);color:#fff;}
 
+  /* På telefon tok 26 årstall seks linjer før innholdet i det hele tatt begynte.
+     Her blir det én linje som sveipes sidelengs. De negative margene lar raden
+     gå helt ut til skjermkanten, så det synes at det er mer å hente. Raden
+     scroller internt og gir derfor ingen overflyt på siden. */
+  @media (max-width:700px){
+    .arvelger{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;
+      margin:0 -24px 26px;padding:2px 24px 8px;scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;}
+    .arvelger::-webkit-scrollbar{display:none;}
+    .arvelger a{flex:none;scroll-snap-align:center;}
+  }
+
   .argruppe{padding-top:14px;scroll-margin-top:90px;}
   .argruppe + .argruppe{margin-top:44px;}
   .artittel{font-size:clamp(34px,6vw,58px);font-weight:800;color:var(--kant);line-height:1;

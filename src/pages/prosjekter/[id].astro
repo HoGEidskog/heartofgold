@@ -101,6 +101,9 @@ const beskrivelse = p.data.mottaker
   .brodsmuler{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--blekk-mykt);margin-bottom:22px;}
   .brodsmuler a{color:var(--indigo);text-decoration:none;font-weight:600;}
   .brodsmuler a:hover{text-decoration:underline;}
+  /* På mobil gjør tilbakelenken i toppen den samme jobben, og da blir
+     brødsmulene bare en gjentakelse rett under. */
+  @media (max-width:900px){ .brodsmuler{display:none;} }
 
   .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
   .meta span{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--tak);color:var(--blekk-mykt);}
