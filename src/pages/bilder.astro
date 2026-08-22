@@ -1,7 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import galleri from '../data/galleri.json';
-const bilder = galleri.bilder ?? [];
+import arkiv from '../data/arkivbilder.json';
+
+// Galleriet er CMS-redigert. Arkivbildene hentes fra den gamle Blogger-siden
+// under bygging, og vises etter de nyere bildene.
+const arkivbilder = (arkiv.bilder ?? [])
+  .filter((b: any) => !b.skjulIGalleri)
+  .map((b: any) => ({ fil: b.fil, tekst: b.tekst, aar: b.aar, kreditering: b.kreditering ?? null }));
+const bilder = [...(galleri.bilder ?? []), ...arkivbilder];
 ---
 <Base tittel="Bilder" beskrivelse="Bilder fra konserter, quizkvelder og aksjoner gjennom Heart of Golds historie.">
   <section>

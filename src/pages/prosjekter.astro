@@ -3,6 +3,13 @@ import { getCollection } from 'astro:content';
 import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { kr } from '../lib/format';
+import arkiv from '../data/arkivbilder.json';
+
+// Bilder fra det gamle arkivet knyttes til prosjektet de hører til
+const arkivPerProsjekt = new Map<string, any>();
+for (const b of (arkiv.bilder ?? []) as any[]) {
+  if (b.prosjekt) arkivPerProsjekt.set(b.prosjekt, b);
+}
 
 const alle = (await getCollection('prosjekter')).sort((a, b) => {
   if (b.data.aar !== a.data.aar) return b.data.aar - a.data.aar;
@@ -44,6 +51,20 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
                     </div>
                   </header>
                   {p.data.belop && <p class="belop">{kr(p.data.belop)}</p>}
+                  {(() => { const b = p.data.bilde
+                      ? { fil: p.data.bilde, tekst: '', kreditering: p.data.bildekreditering }
+                      : arkivPerProsjekt.get(p.id);
+                    return b ? (
+                    <figure class="pbilde">
+                      <img src={b.fil} alt={b.tekst ?? ''} loading="lazy" />
+                      {(b.tekst || b.kreditering) && (
+                        <figcaption>
+                          {b.tekst}
+                          {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ) : null; })()}
                   <div class="tekst"><Innhold /></div>
                   {p.data.medvirkende.length > 0 && (
                     <div class="medvirkende">
@@ -85,6 +106,10 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
   .belop{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.4vw,32px);
     margin:16px 0 10px;font-variant-numeric:tabular-nums;
     background:linear-gradient(100deg,var(--magenta),var(--korall));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .pbilde{margin:0 0 18px;}
+  .pbilde img{width:100%;max-width:620px;border-radius:14px;}
+  .pbilde figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+  .pbilde figcaption .kred{display:block;font-size:13px;}
   .tekst{color:var(--blekk-mykt);max-width:66ch;}
   .tekst :global(p){margin-bottom:.8em;}
   .medvirkende{margin-top:20px;padding-top:18px;border-top:1px solid var(--kant);}
