@@ -19,6 +19,10 @@ const hoydepunkter = [...perAar.values()].sort((a, b) => b.data.aar - a.data.aar
 const nyheter = (await getCollection('nyheter'))
   .sort((a, b) => b.data.dato.valueOf() - a.data.dato.valueOf())
   .slice(0, 3);
+
+// Nepal er det lengste engasjementet. Tallene regnes ut, ikke skrives inn.
+const nepal = prosjekter.filter(p => p.data.serie === 'nepal');
+const nepalSum = nepal.reduce((s, p) => s + (p.data.belop ?? 0), 0);
 ---
 <Base tittel="Heart of Gold">
   <div class="hero">
@@ -58,6 +62,27 @@ const nyheter = (await getCollection('nyheter'))
       <a class="lenke-videre" href="/om-oss">Mer om foreningen og historien →</a>
     </div>
   </section>
+
+  {nepal.length > 0 && (
+    <section class="nepal-blokk">
+      <div class="wrap nepal-inner">
+        <div>
+          <span class="merkelapp">Hjertesak</span>
+          <h2>Skolen og barnehjemmet i Nepal</h2>
+          <p>
+            Det lengste engasjementet vårt. Det begynte med et besøk i Katmandu i 2016,
+            og har fortsatt siden. Heart of Gold-quizen er dedikert til dette formålet, og
+            elevene ved Finnskogen Montessoriskole har samlet inn selv.
+          </p>
+          <p class="nepal-tall"><strong>{kr(nepalSum)}</strong> sendt så langt</p>
+          <a class="lenke-videre" href="/nepal/">Les om arbeidet i Nepal →</a>
+        </div>
+        <div class="nepal-bilde">
+          <img src="/bilder/2018-quizkveld.jpg" alt="Quizkveld til inntekt for Nepal" loading="lazy" />
+        </div>
+      </div>
+    </section>
+  )}
 
   <section>
     <div class="wrap">
@@ -153,6 +178,17 @@ const nyheter = (await getCollection('nyheter'))
   .minne-linje a{color:var(--indigo);text-decoration:none;border-bottom:1px solid var(--kant);}
   .minne-linje a:hover{border-bottom-color:var(--indigo);}
 
+  .nepal-blokk{background:var(--tak);}
+  .nepal-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+    gap:44px;align-items:center;padding-top:clamp(48px,7vw,76px);padding-bottom:clamp(48px,7vw,76px);}
+  .nepal-blokk h2{margin-top:16px;}
+  .nepal-blokk p{color:var(--blekk-mykt);max-width:56ch;margin-top:18px;}
+  .nepal-tall{font-family:var(--display);font-size:19px;color:var(--blekk) !important;}
+  .nepal-tall strong{font-weight:800;font-size:26px;font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .nepal-bilde img{width:100%;border-radius:var(--radius);max-height:380px;object-fit:cover;}
+
   .aktuelt-blokk{background:var(--tak);}
 
   .stotte-boks{background:linear-gradient(135deg,var(--magenta),var(--korall) 45%,var(--gul));
@@ -164,6 +200,8 @@ const nyheter = (await getCollection('nyheter'))
     .hero-inner{grid-template-columns:1fr;gap:34px;}
     .hjerte-boks{order:-1;}
     .hjerte-boks img{width:min(72%,260px);}
+    .nepal-inner{grid-template-columns:1fr;gap:28px;}
+    .nepal-bilde{order:-1;}
     .tall-grid{grid-template-columns:1fr;}
   }
 </style>

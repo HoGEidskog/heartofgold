@@ -55,7 +55,8 @@ collections:
         options:
           - { label: Konsert, value: konsert }
           - { label: Quizkveld, value: quiz }
-          - { label: Aksjon, value: aksjon }
+          - { label: Dugnad, value: dugnad }
+          - { label: Direkte støtte, value: stotte }
           - { label: Annet, value: annet }
       - { name: medvirkende, label: Medvirkende, widget: list, required: false, hint: 'Ett navn eller band per linje.' }
       - { name: konferansier, label: Konferansier, widget: string, required: false }
@@ -73,6 +74,13 @@ collections:
           - { name: fil, label: Bilde, widget: image }
           - { name: tekst, label: Bildetekst, widget: string, required: false }
           - { name: kreditering, label: Fotograf, widget: string, required: false }
+      - name: serie
+        label: Del av et langvarig arbeid
+        widget: select
+        required: false
+        hint: 'Knytter prosjektet til en egen temaside. La stå tomt for vanlige prosjekter.'
+        options:
+          - { label: Skolen og barnehjemmet i Nepal, value: nepal }
       - { name: utfylt, label: Ferdig utfylt, widget: boolean, default: true, hint: 'Slå av så lenge oppføringen bare er en plassholder.' }
       - { name: body, label: Beskrivelse, widget: markdown }
 
@@ -91,3 +99,29 @@ collections:
               - { name: tekst, label: Bildetekst, widget: string }
               - { name: aar, label: År, widget: string, required: false }
               - { name: kreditering, label: Fotograf, widget: string, required: false }
+
+  - name: nepal
+    label: Nytt fra Nepal
+    label_singular: Oppdatering
+    folder: src/content/nepal
+    create: true
+    slug: '{{year}}-{{month}}-{{slug}}'
+    summary: '{{dato | date("DD.MM.YYYY")}} – {{tittel}}'
+    sortable_fields: [dato, tittel]
+    fields:
+      - { name: tittel, label: Overskrift, widget: string }
+      - { name: dato, label: Dato, widget: datetime, format: 'YYYY-MM-DD', date_format: 'DD.MM.YYYY', time_format: false, picker_utc: true }
+      - { name: ingress, label: Ingress, widget: text, required: false }
+      - { name: bilde, label: Hovedbilde, widget: image, required: false }
+      - { name: bildetekst, label: Bildetekst, widget: string, required: false }
+      - name: bilder
+        label: Flere bilder
+        label_singular: Bilde
+        widget: list
+        required: false
+        summary: '{{fields.tekst}}'
+        fields:
+          - { name: fil, label: Bilde, widget: image }
+          - { name: tekst, label: Bildetekst, widget: string, required: false }
+          - { name: kreditering, label: Fotograf, widget: string, required: false }
+      - { name: body, label: Tekst, widget: markdown }

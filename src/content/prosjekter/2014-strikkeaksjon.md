@@ -2,7 +2,7 @@
 aar: 2014
 tittel: "Strikkeaksjon: 360 babyluer"
 mottaker: "Leger Uten Grenser"
-type: aksjon
+type: dugnad
 medvirkende: []
 ---
 

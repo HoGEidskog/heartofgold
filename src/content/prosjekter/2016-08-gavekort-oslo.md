@@ -2,7 +2,7 @@
 aar: 2016
 maned: "August"
 tittel: "Gavekort til uteliggere i Oslo"
-type: aksjon
+type: dugnad
 medvirkende: []
 ---
 

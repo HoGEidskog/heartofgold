@@ -20,7 +20,10 @@ const prosjekter = defineCollection({
     tittel: z.string(),
     mottaker: z.string().optional(),
     belop: z.number().optional(),
-    type: z.enum(['konsert', 'quiz', 'aksjon', 'annet']).default('annet'),
+    type: z.enum(['konsert', 'quiz', 'dugnad', 'stotte', 'annet']).default('annet'),
+    // Knytter prosjektet til et langvarig arbeid, f.eks. skolen og barnehjemmet
+    // i Nepal. Samler dem på en egen side uten å ta dem ut av tidslinjen.
+    serie: z.enum(['nepal']).optional(),
     medvirkende: z.array(z.string()).default([]),
     konferansier: z.string().optional(),
     bilde: z.string().optional(),
@@ -40,4 +43,20 @@ const prosjekter = defineCollection({
   }),
 });
 
-export const collections = { nyheter, prosjekter };
+// Oppdateringer fra Nepal – hilsener, bilder og nytt om hvordan pengene brukes.
+// Dette er ikke innsamlinger, og hører derfor ikke hjemme i prosjekttidslinjen.
+const nepal = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/nepal' }),
+  schema: z.object({
+    tittel: z.string(),
+    dato: z.coerce.date(),
+    ingress: z.string().optional(),
+    bilde: z.string().optional(),
+    bildetekst: z.string().optional(),
+    bilder: z
+      .array(z.object({ fil: z.string(), tekst: z.string().optional(), kreditering: z.string().optional() }))
+      .default([]),
+  }),
+});
+
+export const collections = { nyheter, prosjekter, nepal };

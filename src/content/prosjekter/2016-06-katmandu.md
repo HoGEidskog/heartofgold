@@ -5,6 +5,7 @@ tittel: "Education center og barnehjem i Katmandu"
 mottaker: "Katmandu, Nepal"
 belop: 22027
 type: konsert
+serie: nepal
 medvirkende:
   - "Sten Tuhus & Lars Moraseter"
   - "Jorid Kristiansen og Bardus Kristiansen"

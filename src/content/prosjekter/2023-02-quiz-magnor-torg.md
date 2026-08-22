@@ -4,6 +4,7 @@ maned: Februar
 tittel: Heart of Gold-quiz på Magnor Torg
 mottaker: Skolen og barnehjemmet i Katmandu, Nepal
 type: quiz
+serie: nepal
 medvirkende: []
 utfylt: false
 ---

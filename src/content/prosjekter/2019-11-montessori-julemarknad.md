@@ -4,7 +4,8 @@ maned: November
 tittel: Julemarknad på Finnskogen Montessoriskole
 mottaker: Barnehjemmet og skolen i Nepal
 belop: 16914
-type: aksjon
+type: dugnad
+serie: nepal
 medvirkende: []
 ---
 

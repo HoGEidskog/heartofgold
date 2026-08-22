@@ -1,0 +1,249 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { kr, dato } from '../lib/format';
+import arkiv from '../data/arkivbilder.json';
+import { bilderFor } from '../lib/prosjektbilder';
+
+const prosjekter = (await getCollection('prosjekter'))
+  .filter(p => p.data.serie === 'nepal')
+  .sort((a, b) => {
+    if (a.data.aar !== b.data.aar) return a.data.aar - b.data.aar;
+    return (a.data.maned ?? '').localeCompare(b.data.maned ?? '');
+  });
+
+const totalt = prosjekter.reduce((s, p) => s + (p.data.belop ?? 0), 0);
+const manglerBelop = prosjekter.filter(p => !p.data.belop).length;
+const foersteAar = prosjekter[0]?.data.aar ?? 2016;
+const sisteAar = prosjekter[prosjekter.length - 1]?.data.aar ?? foersteAar;
+
+// Bidragene fra Finnskogen Montessoriskole - barn som samler inn til andre barn
+const montessori = prosjekter.filter(p => /montessori/i.test(p.id));
+const montessoriSum = montessori.reduce((s, p) => s + (p.data.belop ?? 0), 0);
+
+const oppdateringer = (await getCollection('nepal'))
+  .sort((a, b) => b.data.dato.valueOf() - a.data.dato.valueOf());
+const rendretOppd = await Promise.all(
+  oppdateringer.map(async o => ({ o, Innhold: (await render(o)).Content })),
+);
+
+// Alle bilder som hoerer til Nepal-arbeidet, uten duplikater
+const arkivbilder = (arkiv.bilder ?? []) as any[];
+const fraProsjekter = prosjekter.flatMap(p => bilderFor(p.id, p.data, arkivbilder).alle);
+const fraOppdateringer = oppdateringer.flatMap(o => [
+  ...(o.data.bilde ? [{ fil: o.data.bilde, tekst: o.data.bildetekst ?? '', kreditering: null }] : []),
+  ...o.data.bilder.map(b => ({ fil: b.fil, tekst: b.tekst ?? '', kreditering: b.kreditering ?? null })),
+]);
+const sett = new Set<string>();
+const alleBilder = [...fraProsjekter, ...fraOppdateringer].filter(b => {
+  if (sett.has(b.fil)) return false;
+  sett.add(b.fil);
+  return true;
+});
+---
+<Base
+  tittel="Skolen og barnehjemmet i Nepal"
+  beskrivelse={`Siden ${foersteAar} har Heart of Gold stottet en skole og et barnehjem i Katmandu.`}
+>
+  <section>
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp">Hjertesak</span>
+        <h1>Skolen og barnehjemmet i Nepal</h1>
+        <p class="undertekst">
+          Dette er det lengste engasjementet vårt. Det begynte med et besøk i {foersteAar},
+          og har fortsatt siden.
+        </p>
+      </div>
+
+      <div class="tall-grid">
+        <div class="tallkort"><b>{kr(totalt)}</b><span>sendt til Nepal</span></div>
+        <div class="tallkort"><b>{sisteAar - foersteAar} år</b><span>siden første besøk</span></div>
+        <div class="tallkort"><b>{prosjekter.length}</b><span>innsamlinger</span></div>
+      </div>
+      {manglerBelop > 0 && (
+        <p class="fotnote">
+          For {manglerBelop} av innsamlingene mangler vi tallene, så summen er i virkeligheten høyere.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="pa-tak">
+    <div class="wrap smal">
+      <h2>Slik begynte det</h2>
+      <p>
+        I juni {foersteAar} reiste Siv Monica Berg til Katmandu sammen med Thor Arne Johansen og
+        Kristoffer Berg Johansen. De var med på å ruste opp et education center og et barnehjem,
+        og arbeidet der nede selv. Siden har skolen og barnehjemmet vært «våre».
+      </p>
+      <p>
+        Heart of Gold-quizen er dedikert til dette formålet. Overskuddet fra quizkveldene går
+        rett videre, år etter år.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="tittelblokk">
+        <span class="merkelapp">År for år</span>
+        <h2>Hva som er sendt</h2>
+      </div>
+      <ol class="tidslinje">
+        {prosjekter.map(p => (
+          <li>
+            <div class="ar">{p.data.aar}</div>
+            <div class="innhold">
+              <h3><a href={`/prosjekter/${p.id}/`}>{p.data.tittel}</a></h3>
+              {p.data.belop
+                ? <p class="sum">{kr(p.data.belop)}</p>
+                : <p class="sum mangler">Beløpet er ikke registrert</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {montessori.length > 0 && (
+    <section class="pa-tak">
+      <div class="wrap smal">
+        <h2>Barn som samler inn til barn</h2>
+        <p>
+          Elevene ved Finnskogen Montessoriskole har bidratt til Nepal gjennom Heart of Gold
+          {montessoriSum > 0 && <> – til sammen <strong>{kr(montessoriSum)}</strong></>}.
+          De ville hjelpe barn på andre siden av kloden, og fant sin egen måte å gjøre det på.
+        </p>
+        <ul class="enkel">
+          {montessori.map(p => (
+            <li><a href={`/prosjekter/${p.id}/`}>{p.data.aar} · {p.data.tittel}</a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {rendretOppd.length > 0 && (
+    <section>
+      <div class="wrap">
+        <div class="tittelblokk">
+          <span class="merkelapp">Nytt fra Nepal</span>
+          <h2>Hvordan det går</h2>
+        </div>
+        <div class="oppdateringer">
+          {rendretOppd.map(({ o, Innhold }) => (
+            <article class="oppdatering">
+              <time datetime={o.data.dato.toISOString()}>{dato(o.data.dato)}</time>
+              <h3>{o.data.tittel}</h3>
+              {o.data.bilde && (
+                <figure>
+                  <img src={o.data.bilde} alt={o.data.bildetekst ?? ''} loading="lazy" />
+                  {o.data.bildetekst && <figcaption>{o.data.bildetekst}</figcaption>}
+                </figure>
+              )}
+              <div class="tekst"><Innhold /></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {alleBilder.length > 0 && (
+    <section class="pa-tak">
+      <div class="wrap">
+        <div class="tittelblokk">
+          <span class="merkelapp">Bilder</span>
+          <h2>Fra arbeidet</h2>
+        </div>
+        <div class="rutenett">
+          {alleBilder.map(b => (
+            <figure>
+              <img src={b.fil} alt={b.tekst} loading="lazy" />
+              {(b.tekst || b.kreditering) && (
+                <figcaption>
+                  {b.tekst}
+                  {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section>
+    <div class="wrap">
+      <div class="stotte-boks">
+        <h2>Vil du bidra?</h2>
+        <p>Alt vi samler inn går uavkortet videre. Neste quizkveld går til Nepal.</p>
+        <a class="kn kn-hvit" href="/stott-oss">Slik støtter du oss</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tall-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .tallkort{border-radius:var(--radius);padding:28px 26px;color:#fff;}
+  .tallkort:nth-child(1){background:linear-gradient(140deg,var(--magenta),var(--korall));}
+  .tallkort:nth-child(2){background:linear-gradient(140deg,var(--indigo),var(--turkis));}
+  .tallkort:nth-child(3){background:linear-gradient(140deg,var(--gul),#FBE79A);color:var(--blekk);}
+  .tallkort b{font-family:var(--display);font-weight:800;font-size:clamp(26px,4.2vw,40px);
+    display:block;line-height:1.05;font-variant-numeric:tabular-nums;}
+  .tallkort span{display:block;margin-top:9px;font-weight:600;font-size:14.5px;opacity:.93;}
+  .fotnote{margin-top:16px;font-size:14.5px;color:var(--blekk-mykt);}
+
+  .pa-tak{background:var(--tak);}
+  .pa-tak h2{margin-bottom:18px;}
+  .pa-tak p{color:var(--blekk-mykt);}
+
+  .tidslinje{list-style:none;margin:0;padding:0;display:grid;gap:2px;}
+  .tidslinje li{display:grid;grid-template-columns:88px 1fr;gap:20px;align-items:baseline;
+    padding:18px 0;border-top:1px solid var(--kant);}
+  .tidslinje li:last-child{border-bottom:1px solid var(--kant);}
+  .tidslinje .ar{font-family:var(--display);font-weight:800;font-size:22px;color:var(--kant);
+    font-variant-numeric:tabular-nums;}
+  .tidslinje h3{font-size:18px;font-weight:700;}
+  .tidslinje h3 a{color:inherit;text-decoration:none;}
+  .tidslinje h3 a:hover{text-decoration:underline;}
+  .tidslinje .sum{margin:6px 0 0;font-family:var(--display);font-weight:800;font-size:19px;
+    font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .tidslinje .sum.mangler{background:none;color:var(--blekk-mykt);font-weight:600;font-size:15px;
+    font-family:var(--brod);}
+
+  .enkel{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:8px;}
+  .enkel a{color:var(--indigo);text-decoration:none;font-weight:600;}
+  .enkel a:hover{text-decoration:underline;}
+
+  .oppdateringer{display:grid;gap:26px;}
+  .oppdatering{border:1px solid var(--kant);border-radius:var(--radius);padding:26px;max-width:70ch;}
+  .oppdatering time{font-size:13px;font-weight:700;color:var(--magenta);}
+  .oppdatering h3{margin:8px 0 12px;}
+  .oppdatering figure{margin:0 0 16px;}
+  .oppdatering img{width:100%;max-width:620px;border-radius:14px;}
+  .oppdatering figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+  .oppdatering .tekst{color:var(--blekk-mykt);}
+
+  .rutenett{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .rutenett figure{margin:0;max-width:620px;}
+  .rutenett img{width:100%;display:block;border-radius:14px;background:#fff;
+    max-height:640px;object-fit:contain;}
+  .rutenett figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+  .rutenett figcaption .kred{display:block;font-size:13px;}
+
+  .stotte-boks{background:linear-gradient(135deg,var(--magenta),var(--korall) 45%,var(--gul));
+    border-radius:var(--radius-stor);padding:clamp(46px,6vw,64px) 30px;color:#fff;text-align:center;}
+  .stotte-boks h2{color:#fff;}
+  .stotte-boks p{max-width:48ch;margin:16px auto 28px;font-size:18px;color:rgba(255,255,255,.95);}
+
+  @media (max-width:700px){
+    .tall-grid{grid-template-columns:1fr;}
+    .tidslinje li{grid-template-columns:1fr;gap:4px;}
+    .tidslinje .ar{font-size:17px;color:var(--blekk-mykt);}
+  }
+</style>

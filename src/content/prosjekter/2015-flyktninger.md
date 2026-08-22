@@ -3,7 +3,7 @@ aar: 2015
 tittel: "T-skjorter og armbånd for flyktninger"
 mottaker: "Røde Kors og Leger Uten Grenser"
 belop: 10000
-type: aksjon
+type: dugnad
 medvirkende: []
 ---
 

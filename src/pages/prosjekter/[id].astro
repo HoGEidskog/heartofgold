@@ -44,6 +44,12 @@ const beskrivelse = p.data.mottaker
           {p.data.mottaker && <span class="mottaker">{p.data.mottaker}</span>}
           {p.data.utfylt === false && <span class="venter-merke">Innhold kommer</span>}
         </div>
+        {p.data.serie === 'nepal' && (
+          <p class="serie-lenke">
+            Del av arbeidet for <a href="/nepal/">skolen og barnehjemmet i Nepal</a>
+            <span aria-hidden="true"> →</span>
+          </p>
+        )}
         {p.data.belop && <p class="belop">{kr(p.data.belop)}</p>}
       </div>
 
@@ -109,6 +115,9 @@ const beskrivelse = p.data.mottaker
   .meta span{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--tak);color:var(--blekk-mykt);}
   .meta .mottaker{background:rgba(31,123,153,.14);color:#0E5C7A;}
   .venter-merke{background:rgba(255,193,69,.22) !important;color:#7A5600 !important;}
+  .serie-lenke{margin:14px 0 0;font-size:15px;color:var(--blekk-mykt);}
+  .serie-lenke a{color:var(--indigo);text-decoration:none;font-weight:600;}
+  .serie-lenke a:hover{text-decoration:underline;}
   .belop{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.4vw,40px);
     margin:18px 0 0;font-variant-numeric:tabular-nums;
     background:linear-gradient(100deg,var(--magenta),var(--korall));-webkit-background-clip:text;background-clip:text;color:transparent;}

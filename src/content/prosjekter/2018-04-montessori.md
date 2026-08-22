@@ -4,7 +4,8 @@ maned: "April"
 tittel: "Finnskogen Montessoriskole samlet inn til Nepal"
 mottaker: "Barnehjem og skole i Nepal"
 belop: 9777
-type: aksjon
+type: dugnad
+serie: nepal
 medvirkende: []
 ---
 
