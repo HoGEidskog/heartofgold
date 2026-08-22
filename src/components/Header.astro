@@ -9,9 +9,14 @@ const meny = [
   { url: '/kontakt', navn: 'Kontakt' },
 ];
 
-// Tilbakelenke for mobil. Vi går ett nivå opp i stien i stedet for å bruke
-// nettleserhistorikken – da virker den også når noen kommer rett fra et søk
-// eller en delt lenke, der «tilbake» ville ført ut av nettstedet.
+// Tilbakelenke for mobil. Den skal føre dit man faktisk kom fra, så skriptet
+// nederst lar den gå ett steg tilbake i historikken når forrige side var på
+// dette nettstedet. Da beholdes scroll-posisjonen også, slik at man havner
+// der man slapp i en lang liste.
+//
+// href-en peker likevel ett nivå opp i stien. Det er reserven som gjelder når
+// noen kommer rett fra et søk eller en delt lenke, og når JavaScript ikke
+// kjører – i de tilfellene ville «tilbake» ha ført ut av nettstedet.
 const sidenavn: Record<string, string> = {
   '/': 'Forsiden',
   '/om-oss': 'Om oss',
@@ -34,12 +39,12 @@ const oppNavn = opp ? (sidenavn[opp] ?? 'Tilbake') : '';
 <header class="topp">
   <div class="wrap topp-inner">
     {opp && (
-      <a class="tilbake" href={opp} aria-label={`Tilbake til ${oppNavn}`}>
+      <a class="tilbake" href={opp} data-tilbake data-opp-navn={oppNavn}>
         <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false">
           <path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.2"
                 stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span>{oppNavn}</span>
+        <span>Tilbake</span>
       </a>
     )}
     <a class="logo" href="/"><Logo /> <span class="logo-tekst">Heart of Gold</span></a>
@@ -65,4 +70,34 @@ const oppNavn = opp ? (sidenavn[opp] ?? 'Tilbake') : '';
     const apen = meny?.classList.toggle('apen');
     kn.setAttribute('aria-expanded', String(!!apen));
   });
+
+  // Kom vi hit fra en annen side på nettstedet, skal «Tilbake» føre dit –
+  // ikke ett nivå opp i stien. Ellers står href-en, som peker et fornuftig
+  // sted for folk som lander rett på siden fra et søk.
+  const tilbake = document.querySelector<HTMLAnchorElement>('[data-tilbake]');
+  if (tilbake) {
+    let fraSammeSted = false;
+    try {
+      fraSammeSted =
+        !!document.referrer &&
+        new URL(document.referrer).origin === location.origin &&
+        new URL(document.referrer).pathname !== location.pathname;
+    } catch {
+      fraSammeSted = false;
+    }
+
+    if (fraSammeSted && history.length > 1) {
+      tilbake.addEventListener('click', e => {
+        // La folk fortsatt åpne i ny fane med ctrl/cmd eller midtklikk
+        if (e.metaKey || e.ctrlKey || e.shiftKey || (e as MouseEvent).button !== 0) return;
+        e.preventDefault();
+        history.back();
+      });
+    } else {
+      // Uten historikk å gå tilbake til sier vi hvor lenken faktisk fører
+      const navn = tilbake.dataset.oppNavn;
+      const merke = tilbake.querySelector('span');
+      if (navn && merke) merke.textContent = navn;
+    }
+  }
 </script>
