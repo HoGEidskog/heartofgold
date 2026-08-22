@@ -3,9 +3,10 @@ navn: Magnor Torg
 bidrag:
   - lokale
   - servering
+  - penger
 rekkefolge: 30
 ---
 
-Magnor Torg har vært arena for både konsert og quiz. Ali gjorde i stand
-pizzabuffé til quizkvelden i 2023, slik at hele inngangspengene kunne gå
-videre til Nepal.
+Ali og Magnor Torg har vært arena for både konsert og quiz, med servering
+gjennom kvelden. De har også gitt en del av overskuddet sitt videre til
+foreningen.

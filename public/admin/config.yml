@@ -162,6 +162,7 @@ collections:
           - { label: Premier, value: premier }
           - { label: Servering, value: servering }
           - { label: Varer og samarbeid, value: varer }
+          - { label: Pengebidrag, value: penger }
       - { name: logo, label: Logo, widget: image, required: false, hint: 'Be bedriften om logoen. Uten logo vises navnet som tekst, og siden ser like hel ut.' }
       - { name: bilde, label: Bilde, widget: image, required: false }
       - { name: bildetekst, label: Bildetekst, widget: string, required: false }

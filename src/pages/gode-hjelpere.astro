@@ -7,6 +7,7 @@ const BIDRAG: Record<string, string> = {
   premier: 'Premier',
   servering: 'Servering',
   varer: 'Varer og samarbeid',
+  penger: 'Pengebidrag',
 };
 
 const prosjekter = await getCollection('prosjekter');
@@ -28,11 +29,10 @@ const medTall = await Promise.all(
   }),
 );
 
-const antallHjelpere = hjelpere.length;
 ---
 <Base
   tittel="Gode hjelpere"
-  beskrivelse="Bedriftene og folkene som har stilt opp med lokale, premier og servering gjennom årene."
+  beskrivelse="Bedriftene og folkene som har stilt opp for Heart of Gold gjennom årene."
 >
   <section>
     <div class="wrap">
@@ -41,8 +41,8 @@ const antallHjelpere = hjelpere.length;
         <h1>Gode hjelpere</h1>
         <p class="undertekst">
           Ingen av arrangementene våre hadde gått uten folk som stiller opp. Noen låner
-          oss lokalet, noen gir premier, noen lager mat. Alt sammen gratis, og alt sammen
-          gjør at inngangspengene kan gå uavkortet videre.
+          oss lokalet, noen gir premier, noen lager mat, noen gir av sitt eget overskudd.
+          Alt sammen gjør at inngangspengene kan gå uavkortet videre.
         </p>
       </div>
 
