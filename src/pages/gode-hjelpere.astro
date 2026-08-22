@@ -90,16 +90,33 @@ const medTall = await Promise.all(
 
       <div class="ogsaa">
         <h2>Og alle de andre</h2>
+
         <p>
           Musikerne som har spilt gratis siden 2001, de som har bakt, båret stoler,
           solgt lodd og vasket opp etterpå. Navnene på musikerne står under hvert
-          <a href="/prosjekter/"> arrangement</a>. Resten er for mange til å telle,
+          <a href="/prosjekter/">arrangement</a>. Resten er for mange til å telle,
           men ikke til å glemme.
         </p>
-        <p class="kontakt-lenke">
-          Vil bedriften din bidra? <a href="/kontakt/">Ta kontakt</a> – det trenger
-          ikke være penger.
+
+        <p>
+          Og alle som gir. Noen kjøper billett de ikke rekker å bruke, noen runder
+          godt opp i døra, noen sender en sum på Vipps uten å være i nærheten av
+          lokalet. Det er ofte disse bidragene som gjør at et arrangement går fra å
+          dekke kostnadene til å bety noe.
         </p>
+
+        <p>
+          Vi navngir dem ikke – de aller fleste vil helst være i fred. Men
+          givergleden i bygda er stor, og den skal ikke stå unevnt.
+        </p>
+
+        <div class="videre">
+          <a class="kn kn-p" href="/stott-oss/">Slik kan du bidra</a>
+          <p>
+            Vil bedriften din stille opp? <a href="/kontakt/">Ta kontakt</a> – det
+            trenger ikke være penger.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -135,11 +152,18 @@ const medTall = await Promise.all(
   .kort figure img{width:100%;max-width:520px;border-radius:14px;}
   .kort figcaption{margin-top:8px;font-size:14px;color:var(--blekk-mykt);}
 
-  .ogsaa{margin-top:40px;padding-top:30px;border-top:1px solid var(--kant);max-width:66ch;}
-  .ogsaa h2{font-size:clamp(22px,3vw,28px);margin-bottom:14px;}
-  .ogsaa p{color:var(--blekk-mykt);}
-  .ogsaa a{color:var(--indigo);font-weight:600;}
-  .kontakt-lenke{margin-top:16px;}
+  /* Egen blokk, ikke en fotnote. De aller fleste bidragene kommer herfra, og
+     de skal ikke stå med liten skrift nederst. */
+  .ogsaa{margin-top:44px;background:var(--tak);border-radius:var(--radius-stor);
+    padding:clamp(30px,4vw,44px);}
+  .ogsaa h2{font-size:clamp(24px,3.4vw,32px);margin-bottom:18px;}
+  .ogsaa p{color:var(--blekk-mykt);max-width:62ch;}
+  /* :not(.kn) – ellers arver knappen lenkefargen og blir blå på magenta */
+  .ogsaa a:not(.kn){color:var(--indigo);font-weight:600;}
+
+  .videre{margin-top:26px;padding-top:24px;border-top:1px solid var(--kant);
+    display:flex;flex-wrap:wrap;align-items:center;gap:18px;}
+  .videre p{margin:0;font-size:15px;}
 
   @media (max-width:700px){
     .kort{grid-template-columns:1fr;gap:18px;}
