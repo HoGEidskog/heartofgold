@@ -59,8 +59,20 @@ collections:
           - { label: Annet, value: annet }
       - { name: medvirkende, label: Medvirkende, widget: list, required: false, hint: 'Ett navn eller band per linje.' }
       - { name: konferansier, label: Konferansier, widget: string, required: false }
-      - { name: bilde, label: Bilde, widget: image, required: false }
+      - { name: bilde, label: Utvalgt bilde, widget: image, required: false, hint: 'Bildet som vises i oversikten over prosjekter. Står det tomt, brukes det første bildet i galleriet.' }
+      - { name: bildetekst, label: Bildetekst, widget: string, required: false }
       - { name: bildekreditering, label: Fotograf, widget: string, required: false }
+      - name: bilder
+        label: Bildegalleri
+        label_singular: Bilde
+        widget: list
+        required: false
+        hint: 'Bilder fra arrangementet. Vises på prosjektets egen side, ikke i oversikten.'
+        summary: '{{fields.tekst}}'
+        fields:
+          - { name: fil, label: Bilde, widget: image }
+          - { name: tekst, label: Bildetekst, widget: string, required: false }
+          - { name: kreditering, label: Fotograf, widget: string, required: false }
       - { name: utfylt, label: Ferdig utfylt, widget: boolean, default: true, hint: 'Slå av så lenge oppføringen bare er en plassholder.' }
       - { name: body, label: Beskrivelse, widget: markdown }
 

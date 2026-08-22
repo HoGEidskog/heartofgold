@@ -24,7 +24,18 @@ const prosjekter = defineCollection({
     medvirkende: z.array(z.string()).default([]),
     konferansier: z.string().optional(),
     bilde: z.string().optional(),
+    bildetekst: z.string().optional(),
     bildekreditering: z.string().optional(),
+    // Galleriet for prosjektsiden. Det utvalgte bildet over vises i oversikten.
+    bilder: z
+      .array(
+        z.object({
+          fil: z.string(),
+          tekst: z.string().optional(),
+          kreditering: z.string().optional(),
+        }),
+      )
+      .default([]),
     utfylt: z.boolean().default(true),
   }),
 });

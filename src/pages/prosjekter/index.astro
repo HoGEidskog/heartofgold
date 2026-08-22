@@ -1,15 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import { render } from 'astro:content';
-import Base from '../layouts/Base.astro';
-import { kr } from '../lib/format';
-import arkiv from '../data/arkivbilder.json';
-
-// Bilder fra det gamle arkivet knyttes til prosjektet de hører til
-const arkivPerProsjekt = new Map<string, any>();
-for (const b of (arkiv.bilder ?? []) as any[]) {
-  if (b.prosjekt) arkivPerProsjekt.set(b.prosjekt, b);
-}
+import Base from '../../layouts/Base.astro';
+import { kr } from '../../lib/format';
+import arkiv from '../../data/arkivbilder.json';
+import { bilderFor } from '../../lib/prosjektbilder';
 
 const alle = (await getCollection('prosjekter')).sort((a, b) => {
   if (b.data.aar !== a.data.aar) return b.data.aar - a.data.aar;
@@ -18,7 +13,13 @@ const alle = (await getCollection('prosjekter')).sort((a, b) => {
 const totalt = alle.reduce((s, p) => s + (p.data.belop ?? 0), 0);
 const manglerBelop = alle.filter(p => !p.data.belop).length;
 
-const rendret = await Promise.all(alle.map(async p => ({ p, Innhold: (await render(p)).Content })));
+const rendret = await Promise.all(
+  alle.map(async p => ({
+    p,
+    Innhold: (await render(p)).Content,
+    ...bilderFor(p.id, p.data, (arkiv.bilder ?? []) as any[]),
+  })),
+);
 
 const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
 ---
@@ -40,10 +41,10 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
           <div class="argruppe" id={`aar-${a}`}>
             <h2 class="artittel">{a}</h2>
             <div class="oppforinger">
-              {rendret.filter(r => r.p.data.aar === a).map(({ p, Innhold }) => (
+              {rendret.filter(r => r.p.data.aar === a).map(({ p, Innhold, utvalgt, alle: bilder }) => (
                 <article class={`oppforing${p.data.utfylt === false ? ' venter' : ''}`} id={p.id}>
                   <header>
-                    <h3>{p.data.tittel}</h3>
+                    <h3><a href={`/prosjekter/${p.id}/`}>{p.data.tittel}</a></h3>
                     <div class="meta">
                       {p.data.maned && <span class="maned">{p.data.maned}</span>}
                       {p.data.mottaker && <span class="mottaker">{p.data.mottaker}</span>}
@@ -51,20 +52,11 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
                     </div>
                   </header>
                   {p.data.belop && <p class="belop">{kr(p.data.belop)}</p>}
-                  {(() => { const b = p.data.bilde
-                      ? { fil: p.data.bilde, tekst: '', kreditering: p.data.bildekreditering }
-                      : arkivPerProsjekt.get(p.id);
-                    return b ? (
-                    <figure class="pbilde">
-                      <img src={b.fil} alt={b.tekst ?? ''} loading="lazy" />
-                      {(b.tekst || b.kreditering) && (
-                        <figcaption>
-                          {b.tekst}
-                          {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
-                        </figcaption>
-                      )}
-                    </figure>
-                  ) : null; })()}
+                  {utvalgt && (
+                    <a class="pbilde" href={`/prosjekter/${p.id}/`}>
+                      <img src={utvalgt.fil} alt={utvalgt.tekst} loading="lazy" />
+                    </a>
+                  )}
                   <div class="tekst"><Innhold /></div>
                   {p.data.medvirkende.length > 0 && (
                     <div class="medvirkende">
@@ -76,6 +68,12 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
                   {!p.data.medvirkende.length && p.data.konferansier && (
                     <p class="konf">Konferansier: {p.data.konferansier}</p>
                   )}
+                  <p class="mer">
+                    <a href={`/prosjekter/${p.id}/`}>
+                      {bilder.length > 1 ? `Se alle bilder (${bilder.length})` : 'Åpne prosjektsiden'}
+                      <span aria-hidden="true"> →</span>
+                    </a>
+                  </p>
                 </article>
               ))}
             </div>
@@ -106,10 +104,14 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
   .belop{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.4vw,32px);
     margin:16px 0 10px;font-variant-numeric:tabular-nums;
     background:linear-gradient(100deg,var(--magenta),var(--korall));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .pbilde{margin:0 0 18px;}
-  .pbilde img{width:100%;max-width:620px;border-radius:14px;}
-  .pbilde figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
-  .pbilde figcaption .kred{display:block;font-size:13px;}
+  .oppforing h3 a{color:inherit;text-decoration:none;}
+  .oppforing h3 a:hover{text-decoration:underline;}
+  .pbilde{display:block;margin:0 0 18px;max-width:620px;border-radius:14px;overflow:hidden;}
+  .pbilde img{width:100%;display:block;transition:transform .25s ease;}
+  .pbilde:hover img{transform:scale(1.02);}
+  .mer{margin-top:18px;}
+  .mer a{font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--indigo);text-decoration:none;}
+  .mer a:hover{text-decoration:underline;}
   .tekst{color:var(--blekk-mykt);max-width:66ch;}
   .tekst :global(p){margin-bottom:.8em;}
   .medvirkende{margin-top:20px;padding-top:18px;border-top:1px solid var(--kant);}

@@ -1,0 +1,141 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { kr } from '../../lib/format';
+import arkiv from '../../data/arkivbilder.json';
+import { bilderFor } from '../../lib/prosjektbilder';
+
+export async function getStaticPaths() {
+  const alle = await getCollection('prosjekter');
+  return alle.map(p => ({ params: { id: p.id }, props: { p } }));
+}
+
+const { p } = Astro.props;
+const { Content } = await render(p);
+const { alle: bilder } = bilderFor(p.id, p.data, (arkiv.bilder ?? []) as any[]);
+
+// Naboprosjektene, så man kan bla seg gjennom historien
+const sortert = (await getCollection('prosjekter')).sort((a, b) => {
+  if (b.data.aar !== a.data.aar) return b.data.aar - a.data.aar;
+  return (b.data.maned ?? '').localeCompare(a.data.maned ?? '');
+});
+const n = sortert.findIndex(x => x.id === p.id);
+const nyere = n > 0 ? sortert[n - 1] : null;
+const eldre = n < sortert.length - 1 ? sortert[n + 1] : null;
+
+const tittel = `${p.data.tittel} (${p.data.aar})`;
+const beskrivelse = p.data.mottaker
+  ? `${p.data.aar}: Heart of Gold samlet inn til ${p.data.mottaker}.`
+  : `Heart of Gold-prosjekt fra ${p.data.aar}.`;
+---
+<Base tittel={tittel} beskrivelse={beskrivelse}>
+  <section>
+    <div class="wrap">
+      <nav class="brodsmuler" aria-label="Du er her">
+        <a href="/prosjekter/">Prosjekter</a>
+        <span aria-hidden="true">/</span>
+        <span>{p.data.aar}</span>
+      </nav>
+
+      <div class="tittelblokk">
+        <span class="merkelapp">{p.data.maned ? `${p.data.maned} ${p.data.aar}` : p.data.aar}</span>
+        <h1>{p.data.tittel}</h1>
+        <div class="meta">
+          {p.data.mottaker && <span class="mottaker">{p.data.mottaker}</span>}
+          {p.data.utfylt === false && <span class="venter-merke">Innhold kommer</span>}
+        </div>
+        {p.data.belop && <p class="belop">{kr(p.data.belop)}</p>}
+      </div>
+
+      <div class="tekst"><Content /></div>
+
+      {p.data.medvirkende.length > 0 && (
+        <div class="medvirkende">
+          <h2>Medvirkende</h2>
+          <ul>{p.data.medvirkende.map(m => <li>{m}</li>)}</ul>
+          {p.data.konferansier && <p class="konf">Konferansier: {p.data.konferansier}</p>}
+        </div>
+      )}
+      {!p.data.medvirkende.length && p.data.konferansier && (
+        <p class="konf">Konferansier: {p.data.konferansier}</p>
+      )}
+
+      {bilder.length > 0 && (
+        <div class="galleri">
+          <h2>Bilder</h2>
+          <div class="rutenett">
+            {bilder.map(b => (
+              <figure>
+                <img src={b.fil} alt={b.tekst} loading="lazy" />
+                {(b.tekst || b.kreditering) && (
+                  <figcaption>
+                    {b.tekst}
+                    {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <nav class="naboer" aria-label="Andre prosjekter">
+        {nyere ? (
+          <a class="nabo" href={`/prosjekter/${nyere.id}/`}>
+            <span class="retning">Nyere</span>
+            <span class="navn">{nyere.data.tittel}</span>
+          </a>
+        ) : <span />}
+        {eldre && (
+          <a class="nabo hoyre" href={`/prosjekter/${eldre.id}/`}>
+            <span class="retning">Eldre</span>
+            <span class="navn">{eldre.data.tittel}</span>
+          </a>
+        )}
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .brodsmuler{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--blekk-mykt);margin-bottom:22px;}
+  .brodsmuler a{color:var(--indigo);text-decoration:none;font-weight:600;}
+  .brodsmuler a:hover{text-decoration:underline;}
+
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .meta span{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;background:var(--tak);color:var(--blekk-mykt);}
+  .meta .mottaker{background:rgba(31,179,156,.14);color:#12786A;}
+  .venter-merke{background:rgba(255,193,69,.22) !important;color:#7A5600 !important;}
+  .belop{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.4vw,40px);
+    margin:18px 0 0;font-variant-numeric:tabular-nums;
+    background:linear-gradient(100deg,var(--magenta),var(--korall));-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+  .tekst{color:var(--blekk-mykt);max-width:66ch;margin-top:30px;}
+  .tekst :global(p){margin-bottom:.9em;}
+
+  .medvirkende{margin-top:34px;padding-top:24px;border-top:1px solid var(--kant);}
+  .medvirkende h2{font-family:var(--display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blekk-mykt);margin:0 0 12px;font-weight:700;}
+  .medvirkende ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+  .medvirkende li{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--tak);}
+  .konf{margin-top:12px;font-size:14.5px;color:var(--blekk-mykt);}
+
+  .galleri{margin-top:40px;padding-top:26px;border-top:1px solid var(--kant);}
+  .galleri h2{font-family:var(--display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blekk-mykt);margin:0 0 16px;font-weight:700;}
+  /* auto-fit, ikke auto-fill: med få bilder skal de fylle plassen i stedet for
+     å bli stående små ved siden av tomme spor. Makshøyden holder et enkelt
+     stående bilde fra å ta over hele siden. */
+  .rutenett{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .rutenett figure{margin:0;max-width:620px;}
+  .rutenett img{width:100%;display:block;border-radius:14px;background:var(--tak);}
+  .rutenett figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+  .rutenett figcaption .kred{display:block;font-size:13px;}
+
+  .naboer{display:flex;justify-content:space-between;gap:16px;margin-top:48px;padding-top:24px;border-top:1px solid var(--kant);}
+  .nabo{display:flex;flex-direction:column;gap:4px;text-decoration:none;max-width:46%;}
+  .nabo.hoyre{text-align:right;margin-left:auto;}
+  .retning{font-family:var(--display);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blekk-mykt);font-weight:700;}
+  .navn{color:var(--indigo);font-weight:600;font-size:15px;}
+  .nabo:hover .navn{text-decoration:underline;}
+</style>
