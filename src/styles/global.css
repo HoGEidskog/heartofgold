@@ -98,7 +98,9 @@ section{padding:clamp(48px,7vw,76px) 0;}
 .topp-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:70px;}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--blekk);
   font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em;}
-.logo svg{width:30px;height:30px;flex:none;}
+/* Logoen er en fargesprut med luft i formen, så den tåler å være litt større
+   enn et kompakt ikon ville vært. */
+.logo img{height:34px;width:auto;flex:none;}
 .hovedmeny{display:flex;gap:22px;font-size:15px;font-weight:500;}
 .hovedmeny a{text-decoration:none;color:var(--blekk-mykt);padding:4px 0;}
 .hovedmeny a:hover{color:var(--magenta);}
