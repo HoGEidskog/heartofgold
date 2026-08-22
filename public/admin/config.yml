@@ -75,6 +75,9 @@ collections:
           - { name: fil, label: Bilde, widget: image }
           - { name: tekst, label: Bildetekst, widget: string, required: false }
           - { name: kreditering, label: Fotograf, widget: string, required: false }
+      - { name: hjelpere, label: Gode hjelpere, widget: relation, required: false, multiple: true,
+          collection: hjelpere, search_fields: [navn], value_field: '{{slug}}', display_fields: [navn],
+          hint: 'Hvem stilte opp med lokale, premier eller servering?' }
       - name: serie
         label: Del av et langvarig arbeid
         widget: select
@@ -138,3 +141,30 @@ collections:
           - { name: tekst, label: Bildetekst, widget: string, required: false }
           - { name: kreditering, label: Fotograf, widget: string, required: false }
       - { name: body, label: Tekst, widget: markdown }
+
+  - name: hjelpere
+    label: Gode hjelpere
+    label_singular: Hjelper
+    folder: src/content/hjelpere
+    create: true
+    slug: '{{slug}}'
+    summary: '{{navn}}'
+    sortable_fields: [rekkefolge, navn]
+    fields:
+      - { name: navn, label: Navn, widget: string }
+      - name: bidrag
+        label: Hva bidrar de med
+        widget: select
+        multiple: true
+        required: false
+        options:
+          - { label: Lokale, value: lokale }
+          - { label: Premier, value: premier }
+          - { label: Servering, value: servering }
+          - { label: Varer og samarbeid, value: varer }
+      - { name: logo, label: Logo, widget: image, required: false, hint: 'Be bedriften om logoen. Uten logo vises navnet som tekst, og siden ser like hel ut.' }
+      - { name: bilde, label: Bilde, widget: image, required: false }
+      - { name: bildetekst, label: Bildetekst, widget: string, required: false }
+      - { name: lenke, label: Nettside, widget: string, required: false }
+      - { name: rekkefolge, label: Rekkefølge, widget: number, value_type: int, default: 50, hint: 'Lavere tall kommer først.' }
+      - { name: body, label: Beskrivelse, widget: markdown }

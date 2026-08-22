@@ -16,6 +16,12 @@ const { Content } = await render(p);
 const { alle: bilder } = bilderFor(p.id, p.data, (arkiv.bilder ?? []) as any[]);
 const akt = finnAktivitet(p.data.type);
 
+// Hjelperne som bidro ved nettopp dette arrangementet
+const alleHjelpere = await getCollection('hjelpere');
+const hjelpere = p.data.hjelpere
+  .map(id => alleHjelpere.find(h => h.id === id))
+  .filter(Boolean);
+
 // Naboprosjektene, så man kan bla seg gjennom historien
 const sortert = (await getCollection('prosjekter')).sort((a, b) => {
   if (b.data.aar !== a.data.aar) return b.data.aar - a.data.aar;
@@ -67,6 +73,16 @@ const beskrivelse = p.data.mottaker
       )}
       {!p.data.medvirkende.length && p.data.konferansier && (
         <p class="konf">Konferansier: {p.data.konferansier}</p>
+      )}
+
+      {hjelpere.length > 0 && (
+        <div class="takk">
+          <h2>Takk til</h2>
+          <ul>
+            {hjelpere.map(h => <li>{h!.data.navn}</li>)}
+          </ul>
+          <p><a href="/gode-hjelpere/">Om de gode hjelperne våre →</a></p>
+        </div>
       )}
 
       {bilder.length > 0 && (
@@ -137,6 +153,16 @@ const beskrivelse = p.data.mottaker
   .medvirkende ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
   .medvirkende li{font-size:14px;padding:5px 12px;border-radius:999px;background:var(--tak);}
   .konf{margin-top:12px;font-size:14.5px;color:var(--blekk-mykt);}
+
+  .takk{margin-top:34px;padding-top:24px;border-top:1px solid var(--kant);}
+  .takk h2{font-family:var(--display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blekk-mykt);margin:0 0 12px;font-weight:700;}
+  .takk ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+  .takk li{font-size:14px;padding:5px 12px;border-radius:999px;
+    background:rgba(31,123,153,.14);color:#0E5C7A;font-weight:600;}
+  .takk p{margin:12px 0 0;font-size:14.5px;}
+  .takk a{color:var(--indigo);text-decoration:none;font-weight:600;}
+  .takk a:hover{text-decoration:underline;}
 
   .galleri{margin-top:40px;padding-top:26px;border-top:1px solid var(--kant);}
   .galleri h2{font-family:var(--display);font-size:13px;letter-spacing:.12em;text-transform:uppercase;

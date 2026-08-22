@@ -5,6 +5,9 @@ tittel: Heart of Gold-konsert på Magnordagen
 mottaker: Kreftforeningen
 belop: 22000
 type: konsert
+hjelpere:
+  - magnor-glassverk
+  - magnor-torg
 medvirkende:
   - Jan Vincents
   - Lars Ovlien

@@ -24,6 +24,9 @@ const prosjekter = defineCollection({
     // Knytter prosjektet til et langvarig arbeid, f.eks. skolen og barnehjemmet
     // i Nepal. Samler dem på en egen side uten å ta dem ut av tidslinjen.
     serie: z.enum(['nepal']).optional(),
+    // Id-ene til hjelpere som bidro. Brukes til å telle opp på /gode-hjelpere
+    // og til å takke dem på prosjektsiden.
+    hjelpere: z.array(z.string()).default([]),
     medvirkende: z.array(z.string()).default([]),
     konferansier: z.string().optional(),
     bilde: z.string().optional(),
@@ -59,4 +62,20 @@ const nepal = defineCollection({
   }),
 });
 
-export const collections = { nyheter, prosjekter, nepal };
+// Bedrifter og folk som har stilt opp med lokale, premier, servering eller varer.
+// Logo er valgfri – uten den vises navnet som et tekstkort, og siden ser like hel ut.
+const hjelpere = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/hjelpere' }),
+  schema: z.object({
+    navn: z.string(),
+    bidrag: z.array(z.enum(['lokale', 'premier', 'servering', 'varer'])).default([]),
+    logo: z.string().optional(),
+    bilde: z.string().optional(),
+    bildetekst: z.string().optional(),
+    lenke: z.string().optional(),
+    // Styrer rekkefølgen. Lavere tall først, ellers alfabetisk.
+    rekkefolge: z.number().default(50),
+  }),
+});
+
+export const collections = { nyheter, prosjekter, nepal, hjelpere };

@@ -4,6 +4,8 @@ maned: Oktober
 tittel: Heart of Gold-konsert og Vinylmessa
 mottaker: Demensforskning
 type: konsert
+hjelpere:
+  - spiseriet-karaket-og-meg
 medvirkende: []
 utfylt: false
 ---

@@ -4,6 +4,9 @@ maned: April
 tittel: Valborg på Magnor
 mottaker: Hjerte for alle
 type: quiz
+hjelpere:
+  - magnor-glassverk
+  - kiwi-magnor
 medvirkende: []
 utfylt: false
 ---

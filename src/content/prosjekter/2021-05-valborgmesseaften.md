@@ -4,6 +4,9 @@ maned: Mai
 tittel: Valborgmesseaften på Magnor
 mottaker: Hjerte for alle
 type: quiz
+hjelpere:
+  - magnor-glassverk
+  - bygdas-hjerte
 medvirkende: []
 utfylt: false
 ---
