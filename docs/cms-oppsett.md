@@ -68,8 +68,8 @@ Dette er «nøkkelen» CMS-et bruker for å be om innlogging.
    | Homepage URL | `https://heartofgold.pages.dev` |
    | Authorization callback URL | worker-adressen fra steg 2, med `/callback` bak |
 
-   Callback-adressen blir altså noe slikt:
-   `https://sveltia-cms-auth.NOE-HER.workers.dev/callback`
+   For dette oppsettet er den:
+   `https://sveltia-cms-auth.heart-of-gold-eidskog.workers.dev/callback`
 
 3. Trykk *Register application*
 4. På siden som kommer opp: kopier **Client ID**
@@ -106,22 +106,28 @@ dekker både dagens adresse og domenet når det kommer.
 
 ---
 
-## Steg 5 · Si fra til meg
+## Steg 5 · Ferdig
 
-Send meg worker-adressen, så fyller jeg den inn i `public/admin/config.yml` og
-pusher. Ett minutt senere virker innloggingen.
-
-Feltet som skal fylles ut ser slik ut i dag:
+Worker-adressen er fylt inn i `public/admin/config.yml`:
 
 ```yaml
 backend:
   name: github
   repo: HoGEidskog/heartofgold
   branch: main
-  base_url: https://AUTH-WORKER-ADRESSE.workers.dev   # ← denne
+  base_url: https://sveltia-cms-auth.heart-of-gold-eidskog.workers.dev
 ```
 
-Vil du gjøre det selv, er det bare å bytte ut adressen og pushe.
+Når steg 3 og 4 er gjort, virker innloggingen med én gang.
+
+### Sjekk om workeren er ferdig satt opp
+
+```
+curl "https://sveltia-cms-auth.heart-of-gold-eidskog.workers.dev/auth?provider=github&site_id=heartofgold.pages.dev"
+```
+
+Mangler nøkkelen, svarer den `OAuth app client ID or secret is not configured.`
+Er alt på plass, sender den deg videre til GitHub.
 
 ---
 

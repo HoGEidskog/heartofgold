@@ -7,7 +7,7 @@ backend:
   name: github
   repo: HoGEidskog/heartofgold
   branch: main
-  base_url: https://AUTH-WORKER-ADRESSE.workers.dev
+  base_url: https://sveltia-cms-auth.heart-of-gold-eidskog.workers.dev
 
 locale: no
 publish_mode: simple
