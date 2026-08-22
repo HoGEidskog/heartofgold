@@ -5,6 +5,8 @@ tittel: Heart of Gold-konsert på Magnor ungdomslokale
 mottaker: Renovering av scenen på Magnor ungdomslokale
 type: konsert
 medvirkende: []
+bilde: /bilder/2024-konsert-plakat.jpg
+bildetekst: Plakaten for konserten 26. oktober 2024
 utfylt: false
 ---
 

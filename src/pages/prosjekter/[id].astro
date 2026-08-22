@@ -128,7 +128,8 @@ const beskrivelse = p.data.mottaker
      stående bilde fra å ta over hele siden. */
   .rutenett{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
   .rutenett figure{margin:0;max-width:620px;}
-  .rutenett img{width:100%;display:block;border-radius:14px;background:var(--tak);}
+  .rutenett img{width:100%;display:block;border-radius:14px;background:var(--tak);
+    max-height:640px;object-fit:contain;}
   .rutenett figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
   .rutenett figcaption .kred{display:block;font-size:13px;}
 

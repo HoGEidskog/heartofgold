@@ -107,7 +107,9 @@ const aar = [...new Set(alle.map(p => p.data.aar))].sort((a, b) => b - a);
   .oppforing h3 a{color:inherit;text-decoration:none;}
   .oppforing h3 a:hover{text-decoration:underline;}
   .pbilde{display:block;margin:0 0 18px;max-width:620px;border-radius:14px;overflow:hidden;}
-  .pbilde img{width:100%;display:block;transition:transform .25s ease;}
+  /* Makshøyde så stående bilder ikke tar over oversikten. Hele bildet vises
+     på prosjektsiden. */
+  .pbilde img{width:100%;display:block;max-height:420px;object-fit:cover;transition:transform .25s ease;}
   .pbilde:hover img{transform:scale(1.02);}
   .mer{margin-top:18px;}
   .mer a{font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--indigo);text-decoration:none;}
