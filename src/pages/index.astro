@@ -34,19 +34,7 @@ const nyheter = (await getCollection('nyheter'))
         </div>
       </div>
       <div class="hjerte-boks">
-        <svg viewBox="0 0 200 190" role="img" aria-label="Heart of Gold">
-          <defs>
-            <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#E8437F"/><stop offset=".35" stop-color="#FF6B4A"/>
-              <stop offset=".65" stop-color="#FFC145"/><stop offset="1" stop-color="#1FB39C"/>
-            </linearGradient>
-            <linearGradient id="hg2" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#4B54C8"/><stop offset="1" stop-color="#E8437F"/>
-            </linearGradient>
-          </defs>
-          <path d="M100 178S12 126 12 66C12 32 38 10 66 10c15 0 28 8 34 20 6-12 19-20 34-20 28 0 54 22 54 56 0 60-88 112-88 112z" fill="url(#hg)"/>
-          <path d="M100 178S12 126 12 66C12 32 38 10 66 10c15 0 28 8 34 20 6-12 19-20 34-20 28 0 54 22 54 56 0 60-88 112-88 112z" fill="url(#hg2)" opacity=".28"/>
-        </svg>
+        <img src="/bilder/logo-hjerte.png" width="339" height="322" alt="Heart of Gold" fetchpriority="high" />
       </div>
     </div>
   </div>
@@ -74,26 +62,12 @@ const nyheter = (await getCollection('nyheter'))
         <div class="fkort">
           <div class="prikk" style="background:var(--indigo)">2</div>
           <h3>Bære minnet</h3>
-          <p>Hedre Robert Rønhovdes minne og videreføre hans åndelige arv. Hvert år støtter vi en ny hjertesak i hans navn.</p>
+          <p>Hedre <a href="/robert">Robert Rønhovdes</a> minne og videreføre hans åndelige arv. Hvert år støtter vi en ny hjertesak i hans navn.</p>
         </div>
       </div>
       <a class="lenke-videre" href="/om-oss">Mer om foreningen og historien →</a>
     </div>
   </section>
-
-  <div class="robert-blokk">
-    <div class="robert-inner">
-      <div>
-        <span class="merkelapp pa-morkt">Robert Rønhovde</span>
-        <h2>En gutt med det aller største hjertet</h2>
-      </div>
-      <div>
-        <p class="sitat">«Han dømte aldri noen. Han var glad i alle uansett form, farge eller kjønn.»</p>
-        <p>22. juli 2010 mistet vi Robert i en meningsløs og tragisk ulykke, 17 år gammel. I minneordene i kirken sa presten at Robert med sin væremåte gjorde verden til et bedre sted å være.</p>
-        <p><a class="gul-lenke" href="/robert">Les hele historien →</a></p>
-      </div>
-    </div>
-  </div>
 
   <section>
     <div class="wrap">
@@ -165,7 +139,9 @@ const nyheter = (await getCollection('nyheter'))
   .ingress{font-size:19px;color:var(--blekk-mykt);max-width:46ch;margin-top:22px;}
   .hero-knapper{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;}
   .hjerte-boks{display:grid;place-items:center;}
-  .hjerte-boks svg{width:min(100%,380px);height:auto;}
+  /* Kilden er 339 px bred, så vi viser den ikke større enn den er. Byttes ut
+     når foreningen finner logoen i høyere oppløsning. */
+  .hjerte-boks img{width:min(100%,339px);height:auto;}
 
   .tallrad{padding-bottom:12px;}
   .tall-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
@@ -184,14 +160,9 @@ const nyheter = (await getCollection('nyheter'))
   .fkort h3{margin-bottom:10px;}
   .fkort p{margin:0;color:var(--blekk-mykt);font-size:16px;}
 
-  .robert-blokk{background:var(--blekk);color:#EDEAF6;border-radius:var(--radius-stor);margin:0 24px;}
-  .robert-inner{max-width:calc(var(--maks) - 48px);margin:0 auto;padding:clamp(46px,6vw,74px) 34px;
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:52px;align-items:center;}
-  .robert-blokk h2{color:#fff;margin-top:18px;}
-  .robert-blokk p{color:#B7B1CB;}
-  .sitat{font-family:var(--display);font-weight:500;font-size:clamp(19px,2.7vw,26px);
-    line-height:1.35;color:#fff;border-left:3px solid var(--gul);padding-left:22px;margin:0 0 24px;}
-  .gul-lenke{color:var(--gul);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(255,193,69,.4);}
+  /* Lenken til minnesiden i «Bære minnet»-kortet */
+  .fkort p a{color:var(--indigo);text-decoration:none;border-bottom:1px solid var(--kant);}
+  .fkort p a:hover{border-bottom-color:var(--indigo);}
 
   .aktuelt-blokk{background:var(--tak);}
 
@@ -203,10 +174,8 @@ const nyheter = (await getCollection('nyheter'))
   @media (max-width:900px){
     .hero-inner{grid-template-columns:1fr;gap:34px;}
     .hjerte-boks{order:-1;}
-    .hjerte-boks svg{width:min(72%,260px);}
+    .hjerte-boks img{width:min(72%,260px);}
     .tall-grid{grid-template-columns:1fr;}
     .formal{grid-template-columns:1fr;}
-    .robert-inner{grid-template-columns:1fr;gap:28px;}
-    .robert-blokk{margin:0 16px;}
   }
 </style>
