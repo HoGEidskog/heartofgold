@@ -11,15 +11,32 @@ Det gjenstår to steg av publiseringen: domenet og innloggingen til redigeringsl
 | 1. GitHub-repo | **Ferdig.** github.com/HoGEidskog/heartofgold |
 | 2. Cloudflare Pages | **Ferdig.** Astro-preset, `npm run build` → `dist`, NODE_VERSION 22 |
 | 3. Domenet heartofgold.no | Gjenstår. Ligger hos **One.com** (ns01/ns02.no.brand.one.com) |
-| 4. CMS-innlogging | Gjenstår. Krever OAuth-app på GitHub og en gratis Cloudflare Worker |
+| 4. CMS-innlogging | **Ferdig.** Sveltia CMS på /admin, GitHub-innlogging via Cloudflare Worker |
 
 Cloudflare-konto: Heart.of.gold.eidskog@gmail.com, konto-ID bf3b2116a2cfcff9b2e601a8aebab689.
-Se `docs/publisering.md` for detaljerte steg.
+Innloggingstjeneste: `sveltia-cms-auth.heart-of-gold-eidskog.workers.dev`.
+Se `docs/publisering.md` for stegene, og `docs/cms-oppsett.md` for redigeringsløsningen.
 
 ### Tilgang
 GitHub-brukeren **HoGEidskog** eier repoet. **thoraj** er lagt til med `write`.
-Merk at OAuth-appen i steg 4 må opprettes av HoGEidskog selv – den ligger under
-kontoens Developer settings, ikke under repoet, og krever mer enn `write`.
+OAuth-appen «Heart of Gold CMS» ligger under HoGEidskog sine Developer settings.
+
+Siv trenger egen GitHub-konto med rollen **Write** på repoet før hun kommer inn
+i CMS-et. Uten det logger hun inn, men får ikke lagret – og feilmeldingen sier
+ikke hva som er galt.
+
+## Struktur
+Innholdet nås langs tre akser, som svarer på hvert sitt spørsmål:
+
+| Akse | Spørsmål | Hvor |
+|---|---|---|
+| Tid | Når skjedde det? | `/prosjekter` – tidslinjen |
+| Form | Hvordan ble pengene skaffet? | `/aktiviteter` – konsert, quiz, dugnad, støtte |
+| Mottaker | Hvem gikk de til? | `/nepal` – den største hjertesaken |
+
+Feltet `type` i frontmatter styrer aksen for form, `serie` styrer mottakerakse.
+Nepal er ikke en aktivitetstype: quizene går dit, men det gjorde konserten i
+2016 og Montessoriskolens julemarknad også.
 
 ## Valg som er tatt
 - **Designretning:** C «Fargesprut» – lyst og moderne
@@ -29,10 +46,10 @@ kontoens Developer settings, ikke under repoet, og krever mer enn `write`.
   `/prosjekter/` beholder full tekst, men viser bare ett utvalgt bilde per prosjekt
 
 ## Innhold som er migrert
-- **32 prosjekter, 2001–2026**, med beløp, mottaker og medvirkende musikere
+- **31 prosjekter, 2001–2026**, med beløp, mottaker og medvirkende musikere
 - Registrerte bidrag: **672 618 kr** (regnes ut fra `belop` i frontmatter, ikke hardkodet)
-- Sider: forside, om oss, Robert, prosjekter (+ 32 undersider), aktuelt, bilder,
-  støtt oss, kontakt, vedtekter, 404
+- Sider: forside, om oss, Robert, prosjekter (+ 31 undersider), aktiviteter
+  (+ 4 typesider), Nepal, aktuelt, bilder, støtt oss, kontakt, vedtekter, 404
 - **Vipps: #86319**
 - RSS, sitemap, favicon, robots.txt, omdirigering fra alle gamle Blogger-URL-er
 - Testet uten horisontal overflyt på 390, 820 og 1440 piksler
@@ -63,9 +80,18 @@ heartofgoldeidskog.blogspot.com. Autoritativ spørring mot One.coms navnetjenere
 foreningen har altså ikke e-post på domenet, og navnetjenerbyttet er risikofritt.
 
 ### Innhold (fase 2)
-- Sju beløp mangler: 2021, 2022, 2023, 2024, 2025 (konsert), 2025 (romjulspub)
-- Artistlister for konsertene i 2024 og 2025
-- Logo i høy oppløsning
+- **Åtte beløp mangler:** 2014 (strikkedugnaden), 2016 (gavekortene), 2021, 2022,
+  2023, 2024, 2025 (konsert), 2025 (romjulspub). De to første var trolig aldri
+  pengeinnsamlinger
+- **Bussen til Valfjellet** er nevnt, men finnes ikke i noen arkiver. Trenger år,
+  beløp og mottaker før den kan legges inn
+- **Artistlister for 2024 og 2025.** De finnes ikke på Facebook – verken som
+  bilder eller tekst. Plakaten for 2024 sier bare «60 lokale aktører»
+- **Logo i høy oppløsning.** Se eget avsnitt under
+- **Videoer til Nepal-siden.** Legges i Cloudflare R2, ikke i git. R2 er gratis
+  opp til 10 GB, og utgående trafikk koster ingenting
+- **Sivs navn i vedtektene** står fortsatt med det gamle etternavnet to steder.
+  Vedtektene er et vedtatt dokument, så ordlyden er foreningens avgjørelse
 - Organisasjonsnummer, og eventuelt kontonummer på Støtt oss-siden
 
 ## Kjente svakheter
