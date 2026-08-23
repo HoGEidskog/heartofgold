@@ -5,9 +5,6 @@ tittel: Heart of Gold-konsert på Magnordagen
 mottaker: Kreftforeningen
 belop: 22000
 type: konsert
-hjelpere:
-  - magnor-glassverk
-  - magnor-torg
 medvirkende:
   - Jan Vincents
   - Lars Ovlien
@@ -15,8 +12,11 @@ medvirkende:
   - Solid Unit
   - June Maribo & Botan
   - Einar Olsen
+konferansier: ''
+hjelpere:
+  - magnor-glassverk
+  - magnor-torg
 ---
-
 Lørdag 15. juni var vi igjen en del av Magnordagen. Konserten fant sted på Magnor Torg fra klokken
 16.00 til 18.00, og vi samlet inn penger til Kreftforeningen — kontant eller på Vipps. Til sammen
 kom det inn 22 000 kroner.
