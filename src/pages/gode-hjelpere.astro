@@ -2,31 +2,13 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
-const BIDRAG: Record<string, string> = {
-  lokale: 'Lokale',
-  premier: 'Premier',
-  servering: 'Servering',
-  varer: 'Varer og samarbeid',
-  penger: 'Pengebidrag',
-};
-
-const prosjekter = await getCollection('prosjekter');
-
 const hjelpere = (await getCollection('hjelpere')).sort((a, b) => {
   if (a.data.rekkefolge !== b.data.rekkefolge) return a.data.rekkefolge - b.data.rekkefolge;
   return a.data.navn.localeCompare(b.data.navn, 'nb');
 });
 
-// Hvor mange arrangementer hver har bidratt til, og hvilke år. Regnes ut fra
-// koblingene i prosjektene, så tallene kan ikke komme i utakt med innholdet.
-const medTall = await Promise.all(
-  hjelpere.map(async h => {
-    const mine = prosjekter
-      .filter(p => p.data.hjelpere.includes(h.id))
-      .sort((a, b) => b.data.aar - a.data.aar);
-    const aar = [...new Set(mine.map(p => p.data.aar))].sort((a, b) => b - a);
-    return { h, Innhold: (await render(h)).Content, antall: mine.length, aar };
-  }),
+const rendret = await Promise.all(
+  hjelpere.map(async h => ({ h, Innhold: (await render(h)).Content })),
 );
 
 ---
@@ -47,7 +29,7 @@ const medTall = await Promise.all(
       </div>
 
       <div class="hjelpere">
-        {medTall.map(({ h, Innhold, antall, aar }) => (
+        {rendret.map(({ h, Innhold }) => (
           <article class="kort">
             <div class="merke">
               {h.data.logo
@@ -62,20 +44,7 @@ const medTall = await Promise.all(
                   : h.data.navn}
               </h2>
 
-              {h.data.bidrag.length > 0 && (
-                <ul class="merkelapper">
-                  {h.data.bidrag.map(b => <li>{BIDRAG[b] ?? b}</li>)}
-                </ul>
-              )}
-
               <div class="tekst"><Innhold /></div>
-
-              {antall > 0 && (
-                <p class="teller">
-                  Har bidratt ved {antall} {antall === 1 ? 'arrangement' : 'arrangementer'}
-                  <span class="aar"> · {aar.join(', ')}</span>
-                </p>
-              )}
 
               {h.data.bilde && (
                 <figure>
@@ -141,15 +110,8 @@ const medTall = await Promise.all(
   .kort h2 a{color:inherit;text-decoration:none;border-bottom:2px solid var(--kant);}
   .kort h2 a:hover{border-bottom-color:var(--magenta);}
 
-  .merkelapper{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:12px 0 0;padding:0;}
-  .merkelapper li{font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px;
-    background:rgba(31,123,153,.14);color:#0E5C7A;}
-
   .tekst{margin-top:14px;color:var(--blekk-mykt);max-width:62ch;}
   .tekst :global(p){margin-bottom:.7em;}
-
-  .teller{margin:14px 0 0;font-size:14.5px;color:var(--blekk-mykt);}
-  .teller .aar{font-variant-numeric:tabular-nums;}
 
   .kort figure{margin:16px 0 0;}
   .kort figure img{width:100%;max-width:520px;border-radius:14px;}

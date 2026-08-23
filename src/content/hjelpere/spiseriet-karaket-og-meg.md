@@ -1,9 +1,5 @@
 ---
 navn: Spiseriet Karaket & Meg
-bidrag:
-  - lokale
-  - servering
-  - premier
 rekkefolge: 20
 ---
 

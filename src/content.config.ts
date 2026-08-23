@@ -68,7 +68,6 @@ const hjelpere = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/hjelpere' }),
   schema: z.object({
     navn: z.string(),
-    bidrag: z.array(z.enum(['lokale', 'premier', 'servering', 'varer', 'penger'])).default([]),
     logo: z.string().optional(),
     bilde: z.string().optional(),
     bildetekst: z.string().optional(),

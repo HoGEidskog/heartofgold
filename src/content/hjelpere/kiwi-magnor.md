@@ -1,7 +1,5 @@
 ---
 navn: Kiwi Magnor
-bidrag:
-  - premier
 logo: /bilder/logo-kiwi.png
 rekkefolge: 40
 ---

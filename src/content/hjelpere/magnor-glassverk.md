@@ -1,8 +1,5 @@
 ---
 navn: Magnor Glassverk
-bidrag:
-  - premier
-  - varer
 lenke: https://www.magnor.no
 logo: /bilder/logo-magnor.png
 rekkefolge: 10

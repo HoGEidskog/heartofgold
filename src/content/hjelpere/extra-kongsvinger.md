@@ -1,7 +1,5 @@
 ---
 navn: EXTRA Kongsvinger
-bidrag:
-  - premier
 logo: /bilder/logo-extra.png
 rekkefolge: 45
 ---

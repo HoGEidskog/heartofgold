@@ -1,7 +1,5 @@
 ---
 navn: Sør-Hedmark Næringshage
-bidrag:
-  - premier
 logo: /bilder/logo-naeringshage.png
 rekkefolge: 46
 ---

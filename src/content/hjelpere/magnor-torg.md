@@ -1,9 +1,5 @@
 ---
 navn: Magnor Torg
-bidrag:
-  - lokale
-  - servering
-  - penger
 rekkefolge: 30
 ---
 

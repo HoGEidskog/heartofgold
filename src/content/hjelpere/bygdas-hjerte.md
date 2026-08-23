@@ -1,7 +1,5 @@
 ---
 navn: Bygdas Hjerte
-bidrag:
-  - premier
 rekkefolge: 50
 ---
 
