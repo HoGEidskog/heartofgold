@@ -1,7 +1,7 @@
 ---
 tittel: Heart of Gold har fått ny nettside
 dato: 2026-08-22
-ingress: Etter mange år på den gamle bloggen har vi flyttet til et nytt nettsted som fungerer like godt på mobilen som på PC. Hurra
+ingress: Etter mange år på den gamle bloggen har vi flyttet til et nytt nettsted som fungerer like godt på mobilen som på PC.
 bildetekst: ''
 ---
 Den gamle nettsiden vår hadde tjent oss lenge, men var ikke laget for mobilen — og det er der de fleste av dere leser oss fra.
