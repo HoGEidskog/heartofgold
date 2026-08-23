@@ -30,4 +30,4 @@ Inngangen kostet 200 kroner i døra, med Vipps eller kontant.
 
 Årets inntekt gikk til renovering av scenen på lokalet.
 
-*Beløp og navn på de medvirkende fylles inn.*
+*Navnene på de medvirkende fylles inn.*

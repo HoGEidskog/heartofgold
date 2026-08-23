@@ -1,5 +1,12 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+
+// Rundet ned til nærmeste hundretusen, så «over» alltid stemmer og teksten
+// ikke blir foreldet neste gang et beløp legges inn.
+const prosjekter = await getCollection('prosjekter');
+const totalt = prosjekter.reduce((s, p) => s + (p.data.belop ?? 0), 0);
+const rundet = (Math.floor(totalt / 100000) * 100000).toLocaleString('nb-NO');
 ---
 <Base tittel="Om oss" beskrivelse="Heart of Gold er en frivillig forening i Eidskog. Her er historien, formålet og menneskene bak.">
   <section>
@@ -18,7 +25,7 @@ import Base from '../layouts/Base.astro';
 
         <h2>Historien</h2>
         <p>Heart of Gold har eksistert siden 2001. Fra 2001 til og med 2009 var Heart of Gold en årlig veldedighetskonsert arrangert av Siv Monica Berg og Bjørn Olav Rønhovde. I 2010 og 2011 var det ingen aktivitet. Fra 2012 ble Heart of Gold til foreningen som eksisterer i dag.</p>
-        <p>Siden den første konserten har over 600 000 kroner gått videre til alt fra CD-spillere på en barneavdeling og lekeapparater på Magnor skole, til et barnehjem i Katmandu og 360 håndstrikkede babyluer til Leger Uten Grenser.</p>
+        <p>Siden den første konserten har over {rundet} kroner gått videre til alt fra CD-spillere på en barneavdeling og lekeapparater på Magnor skole, til et barnehjem i Katmandu og 360 håndstrikkede babyluer til Leger Uten Grenser.</p>
 
         <h2>Hvem bestemmer hva pengene går til</h2>
         <p>Det er Bjørn Olav Rønhovde og Siv Monica Berg som bestemmer hvilket tiltak som til enhver tid skal støttes. Heart of Gold støtter hvert år én hjertesak. Ingen sak er for liten, og ingen sak er for stor.</p>

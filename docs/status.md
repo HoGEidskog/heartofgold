@@ -59,7 +59,7 @@ Nepal er ikke en aktivitetstype: quizene går dit, men det gjorde konserten i
 
 ## Innhold som er migrert
 - **31 prosjekter, 2001–2026**, med beløp, mottaker og medvirkende musikere
-- Registrerte bidrag: **672 618 kr** (regnes ut fra `belop` i frontmatter, ikke hardkodet)
+- Registrerte bidrag: **728 427 kr** (regnes ut fra `belop` i frontmatter, ikke hardkodet)
 - Sider: forside, om oss, Robert, prosjekter (+ 31 undersider), aktiviteter
   (+ 4 typesider), Nepal, aktuelt, bilder, støtt oss, kontakt, vedtekter, 404
 - **Vipps: #86319**
@@ -100,9 +100,9 @@ heartofgoldeidskog.blogspot.com. Autoritativ spørring mot One.coms navnetjenere
 foreningen har altså ikke e-post på domenet, og navnetjenerbyttet er risikofritt.
 
 ### Innhold (fase 2)
-- **Åtte beløp mangler:** 2014 (strikkedugnaden), 2016 (gavekortene), 2021, 2022,
-  2023, 2024, 2025 (konsert), 2025 (romjulspub). De to første var trolig aldri
-  pengeinnsamlinger
+- **Seks beløp mangler:** 2014 (strikkedugnaden), 2016 (gavekortene), 2021, 2022,
+  2023, 2025 (romjulspub). De to første var trolig aldri pengeinnsamlinger.
+  Siv fylte inn 2024 (29 150) og 2025-konserten (26 659) 23.08.2026
 - **Bussen til Valfjellet** er nevnt, men finnes ikke i noen arkiver. Trenger år,
   beløp og mottaker før den kan legges inn
 - **Artistlister for 2024 og 2025.** De finnes ikke på Facebook – verken som
