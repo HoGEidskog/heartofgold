@@ -3,7 +3,10 @@ aar: 2025
 maned: Oktober
 tittel: Heart of Gold-konsert og Vinylmessa
 mottaker: Demensforskning
+belop: 26659
 type: konsert
+medvirkende: []
+konferansier: ''
 bilde: /bilder/konsert-2025-band.jpg
 bildetekst: Konsert på Spiseriet Karaket & Meg
 bilder:
@@ -19,10 +22,8 @@ bilder:
     tekst: Mot slutten av kvelden
 hjelpere:
   - spiseriet-karaket-og-meg
-medvirkende: []
 utfylt: false
 ---
-
 Lørdag 25. oktober inviterte vi til Heart of Gold-konsert på Spiseriet Karaket & Meg. Konserten
 startet klokken 20.00, med mange flinke musikere og band på scenen. Billettene ble solgt på
 Spiseriet fra 1. oktober, med minstepris 200 kroner og begrenset antall.
