@@ -121,9 +121,16 @@ section{padding:clamp(48px,7vw,76px) 0;}
 .topp .kn-topp:hover{background:var(--magenta);}
 .meny-knapp{display:none;border:1px solid var(--kant);background:#fff;border-radius:999px;
   padding:9px 15px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;color:var(--blekk);}
-.mobilmeny{display:none;border-top:1px solid var(--kant);background:#fff;}
+/* Mens menyen er åpen slås blur-en av og toppen gjøres helt ugjennomsiktig.
+   backdrop-filter er dyr å male, og på mobil rakk ikke nettleseren å male laget
+   før innholdet under skinte gjennom menyen. */
+.topp:has(.mobilmeny.apen){background:#fff;backdrop-filter:none;}
+.mobilmeny{display:none;border-top:1px solid var(--kant);background:#fff;
+  position:relative;z-index:1;}
 .mobilmeny.apen{display:block;}
-.mobilmeny nav{display:flex;flex-direction:column;padding:12px 0 20px;}
+/* Bare loddrett padding her – den vannrette kommer fra .wrap, slik at menyen
+   får samme marg som resten av innholdet. */
+.mobilmeny nav{display:flex;flex-direction:column;padding-top:12px;padding-bottom:20px;}
 .mobilmeny a{text-decoration:none;color:var(--blekk);padding:12px 0;font-weight:600;border-bottom:1px solid var(--tak);}
 
 /* Bunn ---------------------------------------------------------------- */
