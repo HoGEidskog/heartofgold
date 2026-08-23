@@ -1,6 +1,6 @@
 ---
 aar: 2024
-tittel: Glassalg ved Eidskog ungdomsskole
+tittel: Glassalg til aksjonen ved Eidskog ungdomsskole
 mottaker: Barnekreftforeningen og elevrådet
 belop: 6100
 type: dugnad
@@ -9,9 +9,11 @@ hjelpere:
 medvirkende: []
 ---
 
-Elevene ved Eidskog ungdomsskole solgte glass fra Magnor Glassverk til inntekt for
-Barnekreftforeningen. Kristoffer Berg Johansen sto for aksjonen i samarbeid med
-Heart of Gold.
+Eidskog ungdomsskole holdt en innsamlingsaksjon til Barnekreftforeningen. Elevene
+skaffet penger hver på sin måte og ga inntektene til aksjonen.
 
-Overskuddet ble 6 100 kroner, fordelt med 80 prosent til Barnekreftforeningen og
+Kristoffer Berg Johansen valgte å samarbeide med Heart of Gold, og solgte glass
+fra Magnor Glassverk. Det ga 6 100 kroner.
+
+Inntektene fra aksjonen ble fordelt med 80 prosent til Barnekreftforeningen og
 20 prosent til elevrådet ved skolen.

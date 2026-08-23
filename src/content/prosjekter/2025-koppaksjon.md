@@ -1,14 +1,17 @@
 ---
 aar: 2025
-tittel: Koppsalg ved Eidskog ungdomsskole
+tittel: Koppsalg til aksjonen ved Eidskog ungdomsskole
 mottaker: Barnekreftforeningen og elevrådet
 belop: 7000
 type: dugnad
 medvirkende: []
 ---
 
-Året etter glassalget gjentok elevene ved Eidskog ungdomsskole aksjonen, denne gangen
-med kopper. Kristoffer Berg Johansen sto for den i samarbeid med Heart of Gold.
+Året etter gjentok Eidskog ungdomsskole innsamlingsaksjonen til
+Barnekreftforeningen, med samme opplegg: elevene skaffet penger hver på sin måte.
 
-De 7 000 kronene ble fordelt på samme måte som året før: 80 prosent til
-Barnekreftforeningen og 20 prosent til elevrådet.
+Kristoffer Berg Johansen samarbeidet igjen med Heart of Gold, denne gangen med
+salg av kopper. Det ga 7 000 kroner.
+
+Inntektene ble fordelt som året før – 80 prosent til Barnekreftforeningen og
+20 prosent til elevrådet.
