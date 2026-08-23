@@ -12,11 +12,9 @@ bilde: ''
 bildetekst: ''
 bildekreditering: ''
 ---
-Året etter gjentok Eidskog ungdomsskole innsamlingsaksjonen til
-Barnekreftforeningen, med samme opplegg: elevene skaffet penger hver på sin måte.
+Solidaritetsdager ved Eidskog ungdomsskole, elevene ved skolen skaffer penger hver på sin måte.
 
-Kristoffer Berg Johansen samarbeidet igjen med Heart of Gold, denne gangen med
-salg av hjertekrus. Det ga 7 000 kroner.
+Kristoffer Berg Johansen samarbeidet med Heart of Gold, denne gangen med salg av hjertekrus. Det ga 7 000 kroner.
 
-Inntektene ble fordelt som året før – 80 prosent til Barnekreftforeningen og
+Inntektene ble fordelt– 80 prosent til Barnekreftforeningen og
 20 prosent til elevrådet.
