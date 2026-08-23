@@ -20,6 +20,16 @@ bilder:
     tekst: Dansere på scenen
   - fil: /bilder/konsert-2024-publikum.jpg
     tekst: Publikum i salen
+  - fil: /bilder/konsert-2024-salen-2.jpg
+    tekst: Salen fylles opp
+  - fil: /bilder/konsert-2024-salen-3.jpg
+    tekst: Ungdomslokalet
+  - fil: /bilder/konsert-2024-scenen-2.jpg
+    tekst: På scenen
+  - fil: /bilder/konsert-2024-band-2.jpg
+    tekst: Bandet spiller
+  - fil: /bilder/konsert-2024-publikum-2.jpg
+    tekst: Publikum ved bordene
   - fil: /bilder/2024-konsert-plakat.jpg
     tekst: Plakaten for konserten
 utfylt: false

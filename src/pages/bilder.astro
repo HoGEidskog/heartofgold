@@ -1,14 +1,84 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import galleri from '../data/galleri.json';
 import arkiv from '../data/arkivbilder.json';
 
-// Galleriet er CMS-redigert. Arkivbildene hentes fra den gamle Blogger-siden
-// under bygging, og vises etter de nyere bildene.
-const arkivbilder = (arkiv.bilder ?? [])
-  .filter((b: any) => !b.skjulIGalleri)
-  .map((b: any) => ({ fil: b.fil, tekst: b.tekst, aar: b.aar, kreditering: b.kreditering ?? null }));
-const bilder = [...(galleri.bilder ?? []), ...arkivbilder];
+/**
+ * Samlegalleriet. Det henter fra alle kilder, slik at et bilde som legges inn
+ * på et prosjekt eller i en Nepal-oppdatering også dukker opp her – uten at
+ * noen må huske åføre det to steder.
+ */
+type Bilde = {
+  fil: string;
+  tekst: string;
+  aar: string | null;
+  kreditering: string | null;
+  lenke: string | null;
+  sted: string | null;
+};
+
+const ut: Bilde[] = [];
+
+// Fra prosjektene: utvalgt bilde og galleri
+for (const p of await getCollection('prosjekter')) {
+  const lenke = `/prosjekter/${p.id}/`;
+  const aar = String(p.data.aar);
+  if (p.data.bilde) {
+    ut.push({ fil: p.data.bilde, tekst: p.data.bildetekst || p.data.tittel, aar,
+              kreditering: p.data.bildekreditering ?? null, lenke, sted: p.data.tittel });
+  }
+  for (const b of p.data.bilder) {
+    ut.push({ fil: b.fil, tekst: b.tekst || p.data.tittel, aar,
+              kreditering: b.kreditering ?? null, lenke, sted: p.data.tittel });
+  }
+}
+
+// Fra oppdateringene om Nepal
+for (const o of await getCollection('nepal')) {
+  const aar = String(o.data.dato.getFullYear());
+  if (o.data.bilde) {
+    ut.push({ fil: o.data.bilde, tekst: o.data.bildetekst || o.data.tittel, aar,
+              kreditering: null, lenke: '/nepal/', sted: 'Nepal' });
+  }
+  for (const b of o.data.bilder) {
+    ut.push({ fil: b.fil, tekst: b.tekst || o.data.tittel, aar,
+              kreditering: b.kreditering ?? null, lenke: '/nepal/', sted: 'Nepal' });
+  }
+}
+
+// Fra Blogger-arkivet, hentet ved bygging
+for (const b of (arkiv.bilder ?? []) as any[]) {
+  if (b.skjulIGalleri) continue;
+  ut.push({ fil: b.fil, tekst: b.tekst, aar: b.aar ?? null,
+            kreditering: b.kreditering ?? null,
+            lenke: b.prosjekt ? `/prosjekter/${b.prosjekt}/` : null, sted: null });
+}
+
+// Fra CMS-galleriet
+for (const b of (galleri.bilder ?? []) as any[]) {
+  ut.push({ fil: b.fil, tekst: b.tekst, aar: b.aar ?? null,
+            kreditering: b.kreditering ?? null, lenke: null, sted: null });
+}
+
+// Samme fil kan stå flere steder. Første forekomst vinner, siden den bærer
+// teksten som hører til der bildet primært hører hjemme.
+const sett = new Set<string>();
+const alle = ut.filter(b => {
+  if (!b.fil || sett.has(b.fil)) return false;
+  sett.add(b.fil);
+  return true;
+});
+
+// Nyest først, og bilder uten årstall til slutt
+alle.sort((a, b) => {
+  if (a.aar === b.aar) return 0;
+  if (!a.aar) return 1;
+  if (!b.aar) return -1;
+  return b.aar.localeCompare(a.aar);
+});
+
+const aarene = [...new Set(alle.map(b => b.aar).filter(Boolean))] as string[];
 ---
 <Base tittel="Bilder" beskrivelse="Bilder fra konserter, quizkvelder og aksjoner gjennom Heart of Golds historie.">
   <section>
@@ -16,22 +86,55 @@ const bilder = [...(galleri.bilder ?? []), ...arkivbilder];
       <div class="tittelblokk">
         <span class="merkelapp">Bilder</span>
         <h1>Fra arkivet</h1>
-        <p class="undertekst">Bilder fra konserter, quizkvelder og aksjoner gjennom årene.</p>
+        <p class="undertekst">
+          {alle.length} bilder fra konserter, quizkvelder og aksjoner gjennom årene.
+          Klikk på et bilde for å lese om arrangementet.
+        </p>
       </div>
-      {bilder.length === 0 ? (
+
+      {aarene.length > 1 && (
+        <nav class="arvelger" aria-label="Hopp til år">
+          {aarene.map(a => <a href={`#aar-${a}`}>{a}</a>)}
+        </nav>
+      )}
+
+      {alle.length === 0 ? (
         <p class="undertekst">Bildene legges ut fortløpende.</p>
       ) : (
-        <div class="galleri">
-          {bilder.map((b: any) => (
-            <figure>
-              <img src={b.fil} alt={b.tekst} loading="lazy" />
-              <figcaption>
-                <span>{b.tekst}</span>
-                {b.aar && <span class="ar">{b.aar}</span>}
-                {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
-              </figcaption>
-            </figure>
-          ))}
+        aarene.map(a => (
+          <div class="argruppe" id={`aar-${a}`}>
+            <h2 class="artittel">{a}</h2>
+            <div class="galleri">
+              {alle.filter(b => b.aar === a).map(b => {
+                const innhold = (
+                  <>
+                    <img src={b.fil} alt={b.tekst} loading="lazy" />
+                    <figcaption>
+                      <span class="tekst">{b.tekst}</span>
+                      {b.kreditering && <span class="kred">Foto: {b.kreditering}</span>}
+                    </figcaption>
+                  </>
+                );
+                return b.lenke
+                  ? <figure><a href={b.lenke}>{innhold}</a></figure>
+                  : <figure>{innhold}</figure>;
+              })}
+            </div>
+          </div>
+        ))
+      )}
+
+      {alle.some(b => !b.aar) && (
+        <div class="argruppe">
+          <h2 class="artittel">Udatert</h2>
+          <div class="galleri">
+            {alle.filter(b => !b.aar).map(b => (
+              <figure>
+                <img src={b.fil} alt={b.tekst} loading="lazy" />
+                <figcaption><span class="tekst">{b.tekst}</span></figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -39,10 +142,33 @@ const bilder = [...(galleri.bilder ?? []), ...arkivbilder];
 </Base>
 
 <style>
-  .galleri{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
-  figure{margin:0;border:1px solid var(--kant);border-radius:var(--radius);overflow:hidden;background:#fff;}
-  figure img{width:100%;aspect-ratio:4/3;object-fit:cover;}
+  .arvelger{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;}
+  .arvelger a{text-decoration:none;font-family:var(--display);font-weight:700;font-size:14px;
+    padding:6px 14px;border-radius:999px;background:var(--tak);color:var(--indigo);}
+  .arvelger a:hover{background:var(--indigo);color:#fff;}
+
+  /* Samme grep som på prosjektsiden: én sveipbar linje på telefon i stedet for
+     seks rader med årstall før innholdet begynner. */
+  @media (max-width:700px){
+    .arvelger{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;
+      margin:0 -24px 26px;padding:2px 24px 8px;scrollbar-width:none;
+      -webkit-overflow-scrolling:touch;}
+    .arvelger::-webkit-scrollbar{display:none;}
+    .arvelger a{flex:none;scroll-snap-align:center;}
+  }
+
+  .argruppe{padding-top:14px;scroll-margin-top:90px;}
+  .argruppe + .argruppe{margin-top:44px;}
+  .artittel{font-size:clamp(30px,5vw,48px);font-weight:800;color:var(--kant);line-height:1;
+    border-bottom:1px solid var(--kant);padding-bottom:14px;margin-bottom:24px;
+    font-variant-numeric:tabular-nums;}
+
+  .galleri{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:20px;}
+  figure{margin:0;border:1px solid var(--kant);border-radius:var(--radius);overflow:hidden;
+    background:#fff;transition:border-color .18s ease;}
+  figure:hover{border-color:var(--magenta);}
+  figure a{text-decoration:none;color:inherit;display:block;}
+  figure img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
   figcaption{padding:16px 18px;display:flex;flex-direction:column;gap:4px;font-size:14.5px;}
-  figcaption .ar{font-family:var(--display);font-weight:700;color:var(--magenta);font-size:13px;}
   figcaption .kred{color:var(--blekk-mykt);font-size:13px;}
 </style>

@@ -18,8 +18,24 @@ bilder:
     tekst: Bandet spiller
   - fil: /bilder/konsert-2025-takk.jpg
     tekst: Takk til de medvirkende
+  - fil: /bilder/konsert-2025-salen.jpg
+    tekst: Fra lokalet
+  - fil: /bilder/konsert-2025-band-2.jpg
+    tekst: Bandet på scenen
+  - fil: /bilder/konsert-2025-band-3.jpg
+    tekst: Musikerne i sving
+  - fil: /bilder/konsert-2025-band-4.jpg
+    tekst: Under banneret
+  - fil: /bilder/konsert-2025-takk-2.jpg
+    tekst: Takketale
+  - fil: /bilder/konsert-2025-takk-3.jpg
+    tekst: Blomster til de medvirkende
+  - fil: /bilder/konsert-2025-takk-4.jpg
+    tekst: Applaus
   - fil: /bilder/konsert-2025-avslutning.jpg
     tekst: Mot slutten av kvelden
+  - fil: /bilder/konsert-2025-avslutning-2.jpg
+    tekst: Siste låt
 hjelpere:
   - spiseriet-karaket-og-meg
 utfylt: false
