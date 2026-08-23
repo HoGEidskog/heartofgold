@@ -1,16 +1,18 @@
 ---
 aar: 2024
-tittel: Glassalg til aksjonen ved Eidskog ungdomsskole
-mottaker: Barnekreftforeningen og elevrådet
+maned: ''
+tittel: Solidaritetsdager ved Eidskog ungdomskole. Salg av "Heart of Gold" -lysestaker.
+mottaker: Barnekreftforeningen og elevrådet ved Eidskog ungdomskole
 belop: 6100
 type: dugnad
+medvirkende: []
+konferansier: ''
+bildetekst: ''
+bildekreditering: ''
 hjelpere:
   - magnor-glassverk
-medvirkende: []
 ---
-
-Eidskog ungdomsskole holdt en innsamlingsaksjon til Barnekreftforeningen. Elevene
-skaffet penger hver på sin måte og ga inntektene til aksjonen.
+Hvert år avholdes solidaritetsdager ved Eidskog ungdomsskole. Elevene skaffer penger hver på sin måte og gir inntektene til aksjonen.
 
 Kristoffer Berg Johansen valgte å samarbeide med Heart of Gold, og solgte glass
 fra Magnor Glassverk. Det ga 6 100 kroner.
