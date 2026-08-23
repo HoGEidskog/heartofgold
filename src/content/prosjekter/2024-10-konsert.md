@@ -3,7 +3,10 @@ aar: 2024
 maned: Oktober
 tittel: Heart of Gold-konsert på Magnor ungdomslokale
 mottaker: Renovering av scenen på Magnor ungdomslokale
+belop: 29150
 type: konsert
+medvirkende: []
+konferansier: ''
 bilde: /bilder/konsert-2024-salen.jpg
 bildetekst: Fullsatt sal på Magnor ungdomslokale
 bilder:
@@ -19,10 +22,8 @@ bilder:
     tekst: Publikum i salen
   - fil: /bilder/2024-konsert-plakat.jpg
     tekst: Plakaten for konserten
-medvirkende: []
 utfylt: false
 ---
-
 Lørdag 26. oktober fylte vi Magnor ungdomslokale med **60 lokale aktører** – sangere, musikere
 og dansere. Dørene åpnet klokken 18.00 og konserten startet 19.00, med servering gjennom kvelden.
 Inngangen kostet 200 kroner i døra, med Vipps eller kontant.
