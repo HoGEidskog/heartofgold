@@ -35,6 +35,12 @@ bilder:
     tekst: Hyller til sekker og leker
   - fil: /bilder/nepal-skolen-vanntank.jpg
     tekst: Skolen utvendig
+  - fil: /bilder/nepal-klasserom-lekematte.jpg
+    tekst: Klasserommet med ny lekematte
+  - fil: /bilder/nepal-barn-sklie.jpg
+    tekst: Sklia innendørs
+  - fil: /bilder/nepal-klasserom-gruppe.jpg
+    tekst: Samlet i det ferdige klasserommet
 ---
 
 Bygget hadde knuste vinduer og tak som lekket. Med midler fra Heart of Gold ble
