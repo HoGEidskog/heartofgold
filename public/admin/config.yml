@@ -158,3 +158,17 @@ collections:
       - { name: lenke, label: Nettside, widget: string, required: false }
       - { name: rekkefolge, label: Rekkefølge, widget: number, value_type: int, default: 50, hint: 'Lavere tall kommer først.' }
       - { name: body, label: Beskrivelse, widget: markdown }
+
+  - name: sider
+    label: Faste sider
+    files:
+      - name: om-oss
+        label: Om oss
+        file: src/content/sider/om-oss.md
+        fields:
+          - { name: merkelapp, label: Merkelapp, widget: string, hint: 'Den lille teksten over overskriften.' }
+          - { name: tittel, label: Overskrift, widget: string }
+          - { name: undertekst, label: Undertekst, widget: string, required: false }
+          - { name: bilde, label: Toppbilde, widget: image, required: false }
+          - { name: bildetekst, label: Bildebeskrivelse, widget: string, required: false, hint: 'Beskriver bildet for dem som ikke ser det. Vises ikke på siden.' }
+          - { name: body, label: Tekst, widget: markdown, hint: 'Skriv {{totalt}} der det samlede beløpet skal stå. Det regnes ut fra prosjektene og oppdaterer seg selv – ikke skriv tallet for hånd.' }
