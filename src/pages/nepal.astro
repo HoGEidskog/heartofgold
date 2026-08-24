@@ -149,6 +149,25 @@ const alleBilder = [...fraProsjekter, ...fraOppdateringer].filter(b => {
                 </figure>
               )}
               <div class="tekst"><Innhold /></div>
+              {o.data.videoer.length > 0 && (
+                <div class="videoer">
+                  {o.data.videoer.map(v => (
+                    <figure>
+                      <video controls playsinline preload="none" poster={v.plakat}>
+                        <source src={v.fil} type="video/mp4" />
+                        <p>Nettleseren din kan ikke spille av denne videoen.
+                          <a href={v.fil}>Last den ned i stedet</a>.</p>
+                      </video>
+                      {(v.tekst || v.kreditering) && (
+                        <figcaption>
+                          {v.tekst}
+                          {v.kreditering && <span class="kred">Video: {v.kreditering}</span>}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              )}
             </article>
           ))}
         </div>
@@ -234,6 +253,12 @@ const alleBilder = [...fraProsjekter, ...fraOppdateringer].filter(b => {
   .oppdatering img{width:100%;max-width:620px;border-radius:14px;}
   .oppdatering figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
   .oppdatering .tekst{color:var(--blekk-mykt);}
+
+  .videoer{display:grid;gap:18px;margin:18px 0 0;}
+  .videoer figure{margin:0;}
+  .videoer video{width:100%;max-width:620px;border-radius:14px;background:var(--blekk);display:block;}
+  .videoer figcaption{font-size:14px;color:var(--blekk-mykt);margin-top:8px;}
+  .videoer figcaption .kred{display:block;font-size:13px;}
 
   .rutenett{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
   .rutenett figure{margin:0;max-width:620px;}

@@ -140,6 +140,18 @@ collections:
           - { name: fil, label: Bilde, widget: image }
           - { name: tekst, label: Bildetekst, widget: string, required: false }
           - { name: kreditering, label: Fotograf, widget: string, required: false }
+      - name: videoer
+        label: Videosnutter
+        label_singular: Video
+        widget: list
+        required: false
+        summary: '{{fields.tekst}}'
+        hint: 'Korte klipp fra skolen. Husk stillbilde til hvert klipp – uten det står ruta svart til noen trykker play.'
+        fields:
+          - { name: fil, label: Videofil, widget: file, hint: 'MP4. Maks 25 MB – en rå telefonvideo på ett minutt er gjerne fem ganger så stor og må komprimeres først. Er den for stor, stopper publiseringen.' }
+          - { name: plakat, label: Stillbilde, widget: image, required: false, hint: 'Vises før avspilling. Ta gjerne et skjermbilde fra klippet.' }
+          - { name: tekst, label: Bildetekst, widget: string, required: false }
+          - { name: kreditering, label: Filmet av, widget: string, required: false }
       - { name: body, label: Tekst, widget: markdown }
 
   - name: hjelpere

@@ -59,6 +59,20 @@ const nepal = defineCollection({
     bilder: z
       .array(z.object({ fil: z.string(), tekst: z.string().optional(), kreditering: z.string().optional() }))
       .default([]),
+    // Videosnutter fra skolen. `fil` tar både en sti i public/ og en full URL,
+    // slik at klippene kan flyttes til ekstern lagring uten at koden endres.
+    // `plakat` er stillbildet som vises før avspilling – uten det står ruta svart,
+    // fordi videoen med vilje ikke lastes ned før noen trykker play.
+    videoer: z
+      .array(
+        z.object({
+          fil: z.string(),
+          tekst: z.string().optional(),
+          plakat: z.string().optional(),
+          kreditering: z.string().optional(),
+        }),
+      )
+      .default([]),
   }),
 });
 

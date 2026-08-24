@@ -77,6 +77,23 @@ bildeserver ved hvert bygg av et `prebuild`-skript. Det er fjernet, fordi Blogge
 skal tas ned – lar du bygget avhenge av en kilde utenfor repoet, forsvinner bildene stille
 den dagen kilden dør.
 
+### Video
+
+Nepal-oppdateringene har et `videoer`-felt: `fil`, `plakat`, `tekst`, `kreditering`.
+Lokale klipp legges i `public/videoer/`, men `fil` tar like gjerne en full URL — feltet
+er med vilje en URL og ikke en repo-sti, slik at klippene kan flyttes til ekstern
+lagring uten at koden endres. Sveltia CMS har innebygd støtte for Cloudflare R2, og en
+`media_libraries.cloudflare_r2`-blokk i `config.yml` er da alt som skal til.
+
+To ting styrer avspilleren: `preload="none"` gjør at ingen videobytes lastes ned før
+noen trykker play, og `plakat` er stillbildet som vises i mellomtiden. Uten plakat står
+ruta svart.
+
+**Cloudflare Pages tåler maks 25 MiB per fil**, og det er en hard grense. En rå
+telefonvideo på ett minutt er gjerne 125 MB og må kodes om — 720p ved ~1,5 Mbit/s gir
+omtrent 11 MB. Legges en for stor fil inn, feiler publiseringen; forrige vellykkede
+utgave blir stående, så nettstedet går ikke ned.
+
 ### Tall og beløp
 
 Totalsummer regnes alltid ut fra `belop` i frontmatter (`reduce` over collection-en) –
