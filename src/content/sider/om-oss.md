@@ -28,7 +28,7 @@ stor.
 
 ## Hvem er aktive i Heart of Gold
 
-Foreningen drives av Bjørn Olav Rønhovde og Siv Monica Berg i nært samarbeid med June Maribo og Thor Arne Johansen. 
+Foreningen drives av Bjørn Olav Rønhovde og Siv Monica Berg i nært samarbeid med June Maribo Rønhovde og Thor Arne Johansen. 
 
 Foreningen har egen gruppe som arrangerer quizkvelder og den består av Thor Arne Johansen, Siv Monica Berg, Ingen Johansen, Trine Aanerud, June Bjørndalen, Tom Olav Snekkerbakken, Marita Aasen, Vidar Strandseter, Kristoffer Berg Johansen, Kevin Rønhovde og Emma Bakke.
 
