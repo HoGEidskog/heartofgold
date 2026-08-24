@@ -23,9 +23,13 @@ Siden den første konserten har over {{totalt}} kroner gått videre til alt fra 
 barneavdeling og lekeapparater på Magnor skole, til et barnehjem i Katmandu og 360 håndstrikkede
 babyluer til Leger Uten Grenser.
 
-## Hva går pengene til
-
-For hvert arrangement bestemmer foreningen hva pengene skal gå til. Heart of Gold støtter hvert år en eller flere hjertesaker. Ingen sak er for liten, og ingen sak er for
+Formålet bestemmes av foreningen i forkant av hvert arrangement. Ingen sak er for liten, og ingen sak er for
 stor.
+
+## Hvem er aktive i Heart of Gold
+
+Foreningen drives av Bjørn Olav Rønhovde og Siv Monica Berg i nært samarbeid med June Maribo og Thor Arne Johansen. 
+
+Foreningen har egen gruppe som arrangerer quizkvelder og den består av Thor Arne Johansen, Siv Monica Berg, Ingen Johansen, Trine Aanerud, June Bjørndalen, Tom Olav Snekkerbakken, Marita Aasen, Vidar Strandseter, Kristoffer Berg Johansen, Kevin Rønhovde og Emma Bakke.
 
 [Les foreningens vedtekter →](/vedtekter)
