@@ -183,3 +183,25 @@ collections:
           - { name: bilde, label: Toppbilde, widget: image, required: false }
           - { name: bildetekst, label: Bildebeskrivelse, widget: string, required: false, hint: 'Beskriver bildet for dem som ikke ser det. Vises ikke på siden.' }
           - { name: body, label: Tekst, widget: markdown, hint: 'Skriv {{totalt}} der det samlede beløpet skal stå. Det regnes ut fra prosjektene og oppdaterer seg selv – ikke skriv tallet for hånd.' }
+      - name: kontakt
+        label: Kontakt
+        file: src/content/sider/kontakt.md
+        fields:
+          - { name: merkelapp, label: Merkelapp, widget: string }
+          - { name: tittel, label: Overskrift, widget: string }
+          - { name: undertekst, label: Undertekst, widget: text, required: false }
+          - { name: epost, label: Felles e-postadresse, widget: string, required: false, hint: 'Vises i den store fargede boksen. Står den tom, forsvinner boksen helt.' }
+          - { name: facebook, label: Facebook-side, widget: string, required: false, hint: 'Full adresse. Brukes i bunnteksten på alle sider.' }
+          - name: personer
+            label: Kontaktbokser
+            label_singular: Kontaktboks
+            widget: list
+            required: false
+            summary: '{{fields.navn}}'
+            hint: 'Legg til, fjern eller flytt om på boksene. Er lista tom, vises ingen bokser.'
+            fields:
+              - { name: navn, label: Navn, widget: string }
+              - { name: rolle, label: Rolle eller yrke, widget: string, required: false }
+              - { name: telefon, label: Telefon, widget: string, required: false, hint: 'Skriv nummeret slik det skal vises, for eksempel 413 39 911. Landkoden legges på automatisk.' }
+              - { name: epost, label: E-post, widget: string, required: false }
+          - { name: body, label: Tekst nederst, widget: markdown, hint: 'Vises under kontaktboksene. Her ligger blant annet lenka til Facebook-siden.' }

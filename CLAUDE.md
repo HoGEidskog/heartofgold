@@ -114,8 +114,17 @@ Grunnen til strengen er `{{totalt}}`: redaktøren skriver den plassholderen i te
 bytter den ut med det utregnede beløpet. Uten det ville noen før eller siden skrevet tallet for
 hånd, og det ville gått ut på dato ved neste `belop` som legges inn.
 
-Resten av de faste sidene (`robert`, `vedtekter`, `kontakt`, `stott-oss`) har fortsatt teksten
-hardkodet i `.astro`-fila. Skal de gjøres redigerbare, er mønsteret over det som skal følges:
+`/kontakt` følger samme mønster, men uten plassholder — der holder `<Content />` fra samme
+direkte import. Kontaktboksene er en liste i frontmatter, så de kan legges til og fjernes
+fra CMS-et.
+
+**Bunnteksten leser fra `src/content/sider/kontakt.md`.** E-post, navn, telefonnumre og
+Facebook-lenka sto tidligere hardkodet i `Footer.astro` i tillegg til på kontaktsida. Endres
+et nummer nå, slår det gjennom begge steder. Legger du kontaktopplysninger et tredje sted,
+hent dem herfra.
+
+Resten av de faste sidene (`robert`, `vedtekter`, `stott-oss`) har fortsatt teksten hardkodet
+i `.astro`-fila. Skal de gjøres redigerbare, er mønsteret over det som skal følges:
 markdownfil i `src/content/sider/`, direkte import, og en ny oppføring under `sider` i
 `public/admin/config.yml`.
 

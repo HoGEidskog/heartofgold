@@ -1,34 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
+import { telefonlenke } from '../lib/format';
+import { frontmatter, Content } from '../content/sider/kontakt.md';
+
+// Innholdet redigeres i CMS-et under «Faste sider». Kontaktboksene er en liste,
+// så de kan legges til og fjernes uten at noen rører koden.
+const personer = frontmatter.personer ?? [];
 ---
 <Base tittel="Kontakt" beskrivelse="Ta kontakt med Heart of Gold i Eidskog.">
   <section>
     <div class="wrap">
       <div class="tittelblokk">
-        <span class="merkelapp">Kontakt</span>
-        <h1>Ta kontakt</h1>
-        <p class="undertekst">Har du en sak du mener vi bør støtte, vil bidra på et arrangement, eller bare lurer på noe? Vi hører gjerne fra deg.</p>
+        <span class="merkelapp">{frontmatter.merkelapp}</span>
+        <h1>{frontmatter.tittel}</h1>
+        {frontmatter.undertekst && <p class="undertekst">{frontmatter.undertekst}</p>}
       </div>
 
-      <div class="epostboks">
-        <p class="etikett">E-post</p>
-        <p class="epost"><a href="mailto:heart.of.gold.eidskog@gmail.com">heart.of.gold.eidskog@gmail.com</a></p>
-      </div>
-
-      <div class="personer">
-        <div class="person">
-          <h3>Siv Monica Berg</h3>
-          <p class="rolle">Sykepleier ved Kongsvinger DPS</p>
-          <p><a href="tel:+4741339911">413 39 911</a></p>
+      {frontmatter.epost && (
+        <div class="epostboks">
+          <p class="etikett">E-post</p>
+          <p class="epost"><a href={`mailto:${frontmatter.epost}`}>{frontmatter.epost}</a></p>
         </div>
-        <div class="person">
-          <h3>Bjørn Olav Rønhovde</h3>
-          <p class="rolle">Glassblåser ved Magnor Glassverk og musiker</p>
-          <p><a href="tel:+4741330162">413 30 162</a></p>
-        </div>
-      </div>
+      )}
 
-      <p class="fb">Vi legger også ut det meste på <a href="https://www.facebook.com/heartofgoldeidskog/" rel="noopener">Facebook-siden vår</a>.</p>
+      {personer.length > 0 && (
+        <div class="personer">
+          {personer.map((p: any) => (
+            <div class="person">
+              <h3>{p.navn}</h3>
+              {p.rolle && <p class="rolle">{p.rolle}</p>}
+              {p.telefon && <p><a href={`tel:${telefonlenke(p.telefon)}`}>{p.telefon}</a></p>}
+              {p.epost && <p><a href={`mailto:${p.epost}`}>{p.epost}</a></p>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div class="fb"><Content /></div>
     </div>
   </section>
 </Base>
@@ -46,4 +54,5 @@ import Base from '../layouts/Base.astro';
   .person a{color:var(--indigo);font-weight:700;text-decoration:none;}
   .fb{margin-top:30px;color:var(--blekk-mykt);}
   .fb a{color:var(--indigo);}
+  .fb p:last-child{margin-bottom:0;}
 </style>

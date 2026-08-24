@@ -1,5 +1,12 @@
 ---
+// Kontaktopplysningene hentes fra samme fil som /kontakt bruker, slik at et bytte
+// av telefonnummer i CMS-et slår gjennom både her og der. Sto de to stedene hver
+// for seg, ville bunnteksten på hver eneste side blitt stående med gamle tall.
+import { frontmatter as kontakt } from '../content/sider/kontakt.md';
+import { telefonlenke } from '../lib/format';
+
 const aar = new Date().getFullYear();
+const personer = (kontakt.personer ?? []).filter((p: any) => p.telefon || p.epost);
 ---
 <footer class="bunn">
   <div class="wrap">
@@ -11,15 +18,21 @@ const aar = new Date().getFullYear();
       <div>
         <h4>Kontakt</h4>
         <p>
-          <a href="mailto:heart.of.gold.eidskog@gmail.com">heart.of.gold.eidskog@gmail.com</a><br>
-          Siv Monica Berg · <a href="tel:+4741339911">413 39 911</a><br>
-          Bjørn Olav Rønhovde · <a href="tel:+4741330162">413 30 162</a>
+          {kontakt.epost && <><a href={`mailto:${kontakt.epost}`}>{kontakt.epost}</a><br /></>}
+          {personer.map((p: any) => (
+            <>
+              {p.navn} · {p.telefon
+                ? <a href={`tel:${telefonlenke(p.telefon)}`}>{p.telefon}</a>
+                : <a href={`mailto:${p.epost}`}>{p.epost}</a>}
+              <br />
+            </>
+          ))}
         </p>
       </div>
       <div>
         <h4>Mer</h4>
         <p>
-          <a href="https://www.facebook.com/heartofgoldeidskog/" rel="noopener">Facebook</a><br>
+          {kontakt.facebook && <><a href={kontakt.facebook} rel="noopener">Facebook</a><br /></>}
           <a href="/nepal/">Arbeidet i Nepal</a><br>
           <a href="/gode-hjelpere/">Gode hjelpere</a><br>
           <a href="/robert">Til minne om Robert</a><br>
