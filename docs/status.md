@@ -67,14 +67,14 @@ Nepal er ikke en aktivitetstype: quizene går dit, men det gjorde konserten i
 - Testet uten horisontal overflyt på 320, 390, 700, 820 og 1440 piksler
 
 ### Bilder
-Alle **15** bildene fra `bildemanifest.md` hentes fra Blogger-arkivet under bygging av
-`scripts/hent-bilder.mjs`, skaleres til maks 1600 px og legges i `public/bilder/`.
-Skriptet feiler stille, så bygget stopper aldri på et gammelt bilde.
+Alle **15** bildene fra `bildemanifest.md` er nå **committet** i `public/bilder/`, og
+`src/data/arkivbilder.json` ligger utfylt i git. Bygget henter ingenting utenfra.
 
-Bildene er **ikke** committet – de hentes på nytt ved hvert bygg. Det betyr at
-`src/data/arkivbilder.json` skal ligge **tom** i git; den fylles ved bygging. Bygger du
-lokalt, blir fila fylt på disk – ikke commit den i den tilstanden, ellers peker
-HTML-en på filer som ikke finnes dersom nedlastingen skulle svikte.
+Fram til 24.08.2026 ble bildene lastet ned fra Bloggers bildeserver ved hvert bygg, av
+`scripts/hent-bilder.mjs`. Skriptet og `prebuild`-linja er slettet, og `sharp` er tatt ut
+av `dependencies` – den lå der bare for skriptets skyld. Grunnen til endringen er at
+Blogger-bloggen skal tas ned når det nye nettstedet går live; med den gamle løsningen
+ville alle 15 bildene forsvunnet stille ved neste bygg.
 
 Manifestet inneholder også målene på hvert bilde. De brukes til å luke ut det som
 ikke tåler å vises stort – jubileumskavalkaden hopper over alt under 400 px og alt
@@ -84,9 +84,8 @@ Seks bilder hentet fra Facebook ligger derimot **committet** i `public/bilder/`,
 de ikke kan hentes på nytt automatisk: tre fra quizen i 2026, konsertplakaten fra 2024,
 et udatert bilde fra Magnor og logoen.
 
-> **Merk:** `publisering.md` sier at Blogger-bloggen kan slettes når alt er verifisert.
-> Gjør ikke det før arkivbildene enten er committet eller erstattet med originaler –
-> ellers forsvinner alle 15 ved neste bygg.
+> **Avklart:** Blogger-bloggen kan trygt slettes. Arkivbildene er committet, og bygget
+> er ikke lenger avhengig av noen ekstern kilde.
 
 ## Gjenstår
 

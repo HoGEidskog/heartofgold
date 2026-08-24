@@ -1,13 +1,18 @@
 # Bildemanifest – gammel heartofgold.no (Blogger)
 
-15 bilder ligger på Bloggers bildeserver. Alle finnes i full oppløsning via /s1600/.
+> **Historisk dokument.** Alle 15 bildene er hentet ned og ligger nå committet i
+> `public/bilder/`, med metadata i `src/data/arkivbilder.json`. Bygget henter ingenting
+> fra Blogger lenger, og bloggen kan slettes. Tabellen står igjen fordi den dokumenterer
+> hvor bildene kom fra og hvilke rettigheter som hefter ved dem.
+
+15 bilder lå på Bloggers bildeserver. Alle fantes i full oppløsning via /s1600/.
 Base: https://blogger.googleusercontent.com/img/b/R29vZ2xl/
 
 | # | Fil | Brukt til | Merknad |
 |---|---|---|---|
 | 1 | AAAA+HoG_hvit.jpg | Logo (hvit HoG) | Foreningens egen |
 | 2 | quiz.jpg (1600×1600) | Quizkveld 2018 | Egen |
-| 3 | klovner-1-Ⓒ-Foto-Lisa-Selin.jpg (1600×1065) | Sykehusklovnene 2017 | **Foto: Lisa Selin – tredjepart, må klareres** |
+| 3 | klovner-1-Ⓒ-Foto-Lisa-Selin.jpg (1600×1065) | Sykehusklovnene 2017 | Fotograf navngitt i filnavnet. Brukes, kreditert «Lisa Selin» |
 | 4 | AAAAAAAAAAAAAAAAAAAAAAAAA.jpg | Gavekort Oslo 2016 | Egen |
 | 5 | aaaaaaaa…aa.jpg | 2015 T-skjorter/armbånd | Egen |
 | 6 | aaaaaaaa…aaaaa.jpg | 2015 | Egen |
@@ -15,7 +20,7 @@ Base: https://blogger.googleusercontent.com/img/b/R29vZ2xl/
 | 8 | 12.jpg | Konsert Elveparken 2013 | Egen |
 | 9 | hog1.jpg | 2009 | Egen |
 | 10 | heart 1.JPG | Glomdalen-omtale 2007 | Egen/avisfoto – sjekkes |
-| 11 | fa.jpg | Frelsesarmeen 2004 | **Hentet fra frelsesarmeen.no – tredjepart, brukes ikke** |
+| 11 | fa.jpg | Frelsesarmeen 2004 | Tredjepart fra frelsesarmeen.no. **Brukes, kreditert «Frelsesarmeen»** (besluttet 24.08.2026) |
 | 12 | handå holde.jpg | «En hånd å holde i» 2002 | Logo tredjepart – sjekkes |
 | 13 | siv og linda.jpg | Konsert 2001 | Egen |
 | 14 | siv(2).jpg | Portrett Siv Monica Berg | Egen |

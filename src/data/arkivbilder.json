@@ -1,3 +1,154 @@
 {
-  "bilder": []
+  "bilder": [
+    {
+      "fil": "/bilder/hog-gullhjerte.jpg",
+      "tekst": "Heart of Gold-logoen",
+      "aar": null,
+      "prosjekt": null,
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 327,
+      "hoyde": 328
+    },
+    {
+      "fil": "/bilder/2018-quizkveld.jpg",
+      "tekst": "Quizkveld til inntekt for Nepal",
+      "aar": "2018",
+      "prosjekt": "2018-02-nepal",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 1600,
+      "hoyde": 1599
+    },
+    {
+      "fil": "/bilder/2017-sykehusklovnene.jpg",
+      "tekst": "Sykehusklovnene",
+      "aar": "2017",
+      "prosjekt": "2017-sykehusklovnene",
+      "kreditering": "Lisa Selin",
+      "skjulIGalleri": false,
+      "bredde": 1600,
+      "hoyde": 1065
+    },
+    {
+      "fil": "/bilder/2016-gavekort-oslo.jpg",
+      "tekst": "Gavekort til uteliggere i Oslo",
+      "aar": "2016",
+      "prosjekt": "2016-08-gavekort-oslo",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 480,
+      "hoyde": 640
+    },
+    {
+      "fil": "/bilder/2015-flyktninger-a.jpg",
+      "tekst": "T-skjorter og armbånd til inntekt for flyktninger",
+      "aar": "2015",
+      "prosjekt": "2015-flyktninger",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 959,
+      "hoyde": 960
+    },
+    {
+      "fil": "/bilder/2015-flyktninger-b.jpg",
+      "tekst": "Innsats for andre ved Eidskog ungdomsskole",
+      "aar": "2015",
+      "prosjekt": null,
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 959,
+      "hoyde": 960
+    },
+    {
+      "fil": "/bilder/2014-strikkeaksjon.jpg",
+      "tekst": "360 babyluer til Leger Uten Grenser",
+      "aar": "2014",
+      "prosjekt": "2014-strikkeaksjon",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 924,
+      "hoyde": 915
+    },
+    {
+      "fil": "/bilder/2013-elveparken.jpg",
+      "tekst": "Konsert i Elveparken",
+      "aar": "2013",
+      "prosjekt": "2013-frivilligsentral",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 698,
+      "hoyde": 465
+    },
+    {
+      "fil": "/bilder/2009-heart-of-gold.jpg",
+      "tekst": "Heart of Gold-konsert",
+      "aar": "2009",
+      "prosjekt": "2009-fattighuset",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 500,
+      "hoyde": 375
+    },
+    {
+      "fil": "/bilder/2007-magnordagen.jpg",
+      "tekst": "Fra konserten i 2007",
+      "aar": "2007",
+      "prosjekt": "2007-magnor-skole",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 640,
+      "hoyde": 427
+    },
+    {
+      "fil": "/bilder/2004-frelsesarmeen.jpg",
+      "tekst": "Suppebussen til Frelsesarmeen",
+      "aar": "2004",
+      "prosjekt": "2004-suppebussen",
+      "kreditering": "Frelsesarmeen",
+      "skjulIGalleri": false,
+      "bredde": 615,
+      "hoyde": 410
+    },
+    {
+      "fil": "/bilder/2002-en-hand-a-holde-i.jpg",
+      "tekst": "Støtteforeningen En hånd å holde i",
+      "aar": "2002",
+      "prosjekt": "2002-en-hand-a-holde-i",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 563,
+      "hoyde": 136
+    },
+    {
+      "fil": "/bilder/2001-siv-og-linda.jpg",
+      "tekst": "Siv og Linda på den aller første konserten",
+      "aar": "2001",
+      "prosjekt": "2001-ulleval",
+      "kreditering": null,
+      "skjulIGalleri": false,
+      "bredde": 80,
+      "hoyde": 75
+    },
+    {
+      "fil": "/bilder/portrett-siv.jpg",
+      "tekst": "Siv Monica Berg",
+      "aar": null,
+      "prosjekt": null,
+      "kreditering": null,
+      "skjulIGalleri": true,
+      "bredde": 663,
+      "hoyde": 918
+    },
+    {
+      "fil": "/bilder/portrett-bjorn-olav.jpg",
+      "tekst": "Bjørn Olav Rønhovde",
+      "aar": null,
+      "prosjekt": null,
+      "kreditering": null,
+      "skjulIGalleri": true,
+      "bredde": 121,
+      "hoyde": 170
+    }
+  ]
 }
