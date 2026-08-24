@@ -11,16 +11,16 @@ bilder:
     tekst: Vindu før utskifting
   - fil: /bilder/nepal-arbeid-vindu.jpg
     tekst: Nye vinduer settes inn
-  - fil: /bilder/nepal-arbeid-plater.jpg
-    tekst: Arbeid med veggplater
+  - fil: /bilder/nepal-solfanger.jpg
+    tekst: Solfangeren monteres på taket. Den gir varmtvann til vask og bading
   - fil: /bilder/nepal-arbeid-tak.jpg
     tekst: Takplater på plass
   - fil: /bilder/nepal-ny-vask.jpg
     tekst: Ny vask
   - fil: /bilder/nepal-vanntank.jpg
-    tekst: Vanntank
+    tekst: Vanntanken på bakken, over brønnen
   - fil: /bilder/nepal-vanntank-stativ.jpg
-    tekst: Vanntanken på stativ
+    tekst: Høydetanken som gir trykk på kranene
   - fil: /bilder/nepal-nymalt-rom.jpg
     tekst: Nymalt rom
   - fil: /bilder/nepal-ny-benk.jpg
