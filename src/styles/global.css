@@ -101,8 +101,11 @@ section{padding:clamp(48px,7vw,76px) 0;}
   border-bottom:1px solid var(--kant);
 }
 .topp-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:70px;}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--blekk);
-  font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em;}
+/* Ordmerket får full størrelse der det er plass. Under ca. 500 px krymper det
+   ned mot 19px igjen – ved 23px sprenger toppraden 320 px med fire piksler. */
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--blekk);
+  font-family:var(--display);font-weight:800;font-size:clamp(19px,4.6vw,23px);
+  letter-spacing:-.02em;}
 /* Logoen er en fargesprut med luft i formen, så den tåler å være litt større
    enn et kompakt ikon ville vært. */
 .logo img{height:34px;width:auto;flex:none;}

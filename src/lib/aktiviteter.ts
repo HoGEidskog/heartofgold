@@ -9,7 +9,7 @@
  */
 
 export type Aktivitet = {
-  verdi: 'konsert' | 'quiz' | 'dugnad' | 'stotte' | 'annet';
+  verdi: 'konsert' | 'quiz' | 'dugnad' | 'stotte';
   navn: string;
   flertall: string;
   ingress: string;
@@ -43,13 +43,15 @@ export const AKTIVITETER: Aktivitet[] = [
   },
   {
     verdi: 'dugnad',
-    navn: 'Dugnad',
-    flertall: 'Dugnader',
-    ingress: 'Når noen lager noe eller samler inn på egen hånd.',
+    navn: 'Dugnad eller arrangement',
+    flertall: 'Dugnader og andre arrangementer',
+    ingress: 'Når noen lager noe, samler inn på egen hånd, eller finner på noe annet.',
     beskrivelse:
       'Ikke alt skjer på en scene. Noen strikker, noen selger, noen samler inn i klassen sin. ' +
       'Strikkedugnaden ga 360 babyluer til Leger Uten Grenser, og elevene ved Finnskogen ' +
-      'Montessoriskole har samlet inn til Nepal både gjennom julemarknad og egen innsats.',
+      'Montessoriskole har samlet inn til Nepal både gjennom julemarknad og egen innsats. ' +
+      'Her hører også pubkvelder, sammenkomster og andre påfunn hjemme – alt som samler ' +
+      'folk og penger uten å være en konsert eller en quiz.',
     farge: 'gul',
   },
   {
@@ -62,16 +64,9 @@ export const AKTIVITETER: Aktivitet[] = [
       'fordi behovet dukket opp, og foreningen hadde midler.',
     farge: 'turkis',
   },
-  {
-    verdi: 'annet',
-    navn: 'Annet arrangement',
-    flertall: 'Andre arrangementer',
-    ingress: 'Det som ikke passer i de andre båsene.',
-    beskrivelse:
-      'Pubkvelder, sammenkomster og andre påfunn som samler folk og penger.',
-    farge: 'korall',
-  },
 ];
 
+// «dugnad» er samlekategorien etter at «andre arrangementer» ble slått inn i den,
+// og er derfor det ukjente verdier faller tilbake på.
 export const finnAktivitet = (verdi: string) =>
-  AKTIVITETER.find(a => a.verdi === verdi) ?? AKTIVITETER[AKTIVITETER.length - 1];
+  AKTIVITETER.find(a => a.verdi === verdi) ?? AKTIVITETER.find(a => a.verdi === 'dugnad')!;

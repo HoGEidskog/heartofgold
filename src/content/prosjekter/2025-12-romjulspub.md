@@ -2,7 +2,7 @@
 aar: 2025
 maned: Desember
 tittel: Romjulspub på Magnor
-type: annet
+type: dugnad
 medvirkende:
   - Glenn Emil Sundsbø
 utfylt: false

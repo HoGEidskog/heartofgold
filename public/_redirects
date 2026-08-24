@@ -6,3 +6,4 @@
 /feeds/posts/default/*                              /rss.xml      301
 /feeds/*                                            /rss.xml      301
 /p/*                                                /             301
+/aktiviteter/annet                                  /aktiviteter/dugnad  301

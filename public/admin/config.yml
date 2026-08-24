@@ -52,13 +52,12 @@ collections:
       - name: type
         label: Type arrangement
         widget: select
-        default: annet
+        default: dugnad
         options:
           - { label: Konsert, value: konsert }
           - { label: Quizkveld, value: quiz }
-          - { label: Dugnad, value: dugnad }
+          - { label: Dugnad eller annet arrangement, value: dugnad }
           - { label: Direkte støtte, value: stotte }
-          - { label: Annet, value: annet }
       - { name: medvirkende, label: Medvirkende, widget: list, required: false, hint: 'Ett navn eller band per linje.' }
       - { name: konferansier, label: Konferansier, widget: string, required: false }
       - { name: bilde, label: Utvalgt bilde, widget: image, required: false, hint: 'Bildet som vises i oversikten over prosjekter. Står det tomt, brukes det første bildet i galleriet.' }

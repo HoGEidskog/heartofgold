@@ -20,7 +20,7 @@ const prosjekter = defineCollection({
     tittel: z.string(),
     mottaker: z.string().optional(),
     belop: z.number().optional(),
-    type: z.enum(['konsert', 'quiz', 'dugnad', 'stotte', 'annet']).default('annet'),
+    type: z.enum(['konsert', 'quiz', 'dugnad', 'stotte']).default('dugnad'),
     // Knytter prosjektet til et langvarig arbeid, f.eks. skolen og barnehjemmet
     // i Nepal. Samler dem på en egen side uten å ta dem ut av tidslinjen.
     serie: z.enum(['nepal']).optional(),
