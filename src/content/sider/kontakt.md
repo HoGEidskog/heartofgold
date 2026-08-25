@@ -6,10 +6,12 @@ epost: heart.of.gold.eidskog@gmail.com
 facebook: https://www.facebook.com/heartofgoldeidskog/
 personer:
   - navn: Siv Monica Berg
-    rolle: Sykepleier ved Kongsvinger DPS
+    rolle: ''
     telefon: 413 39 911
+    epost: ''
   - navn: Bjørn Olav Rønhovde
-    rolle: Glassblåser ved Magnor Glassverk og musiker
+    rolle: ''
     telefon: 413 30 162
+    epost: ''
 ---
 Vi legger også ut det meste på [Facebook-siden vår](https://www.facebook.com/heartofgoldeidskog/).
